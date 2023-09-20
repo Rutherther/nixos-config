@@ -35,7 +35,7 @@
       color-scheme = "prefer-dark";
       enable-hot-corners = false;
       clock-show-weekday = true;
-      gtk-theme = "Adwaita-dark";
+      #gtk-theme = "Adwaita-dark";
     };
     "org/gnome/desktop/privacy" = {
       report-technical-problems = "false";

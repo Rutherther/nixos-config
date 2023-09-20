@@ -14,9 +14,7 @@
 { config, lib, pkgs, inputs, user, ... }:
 
 {
-  imports =
-    (import ../modules/editors) ++          # Native doom emacs instead of nix-community flake
-    (import ../modules/shell);
+  hardware.pulseaudio.enable = false;
 
   users.users.${user} = {                   # System User
     isNormalUser = true;
@@ -62,6 +60,7 @@
       EDITOR = "nvim";
       VISUAL = "nvim";
     };
+    pathsToLink = [ "/share/zsh" ];
     systemPackages = with pkgs; [           # Default packages installed system-wide
       alsa-utils
       jq
@@ -159,10 +158,6 @@
   nixpkgs.config.allowUnfree = true;        # Allow proprietary software.
 
   system = {                                # NixOS settings
-    #autoUpgrade = {                         # Allow auto update (not useful in flakes)
-    #  enable = true;
-    #  channel = "https://nixos.org/channels/nixos-unstable";
-    #};
-    stateVersion = "22.05";
+    stateVersion = "23.05";
   };
 }

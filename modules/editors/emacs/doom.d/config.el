@@ -243,26 +243,26 @@
 (setq rmh-elfeed-org-files (list "~/Documents/notes/org/elfeed.org"))
 
 ;; tree sitter and navigation
-(setq treesit-language-source-alist
-      '((rust "https://github.com/tree-sitter/tree-sitter-rust")
-        (vhdl "https://github.com/alemuller/tree-sitter-vhdl")
-        (python "https://github.com/tree-sitter/tree-sitter-python")))
+;;(setq treesit-language-source-alist
+;;      '((rust "https://github.com/tree-sitter/tree-sitter-rust")
+;;        (vhdl "https://github.com/alemuller/tree-sitter-vhdl")
+;;        (python "https://github.com/tree-sitter/tree-sitter-python")))
 
-(use-package! combobulate
-  :preface (setq combobulate-key-prefix "SPC k"))
+;;(use-package! combobulate
+;;  :preface (setq combobulate-key-prefix "SPC k"))
 
-(setq major-mode-remap-alist
- '((yaml-mode . yaml-ts-mode)
-   ;;(rust-mode . rust-ts-mode)
-   ;;(rustic-mode . rust-ts-mode)
-   (c-mode . c-ts-mode)
-   ;;(vhdl-mode . vhdl-ts-mode)
-   (bash-mode . bash-ts-mode)
-   (js2-mode . js-ts-mode)
-   (typescript-mode . typescript-ts-mode)
-   (json-mode . json-ts-mode)
-   (css-mode . css-ts-mode)
-   (python-mode . python-ts-mode)))
+;;(setq major-mode-remap-alist
+;; '((yaml-mode . yaml-ts-mode)
+;;   ;;(rust-mode . rust-ts-mode)
+;;   ;;(rustic-mode . rust-ts-mode)
+;;   (c-mode . c-ts-mode)
+;;   ;;(vhdl-mode . vhdl-ts-mode)
+;;   (bash-mode . bash-ts-mode)
+;;   (js2-mode . js-ts-mode)
+;;   (typescript-mode . typescript-ts-mode)
+;;   (json-mode . json-ts-mode)
+;;   (css-mode . css-ts-mode)
+;;   (python-mode . python-ts-mode)))
 
 ;;(add-hook 'lsp-ui-mode
 ;;  (lambda ()

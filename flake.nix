@@ -28,13 +28,13 @@
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
-      doom-emacs = {                                                        # Nix-community Doom Emacs
+      doom-emacs = {
         url = "github:nix-community/nix-doom-emacs";
         inputs.nixpkgs.follows = "nixpkgs";
       };
     };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, home-manager, nur, nixgl, doom-emacs, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
+  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, home-manager, doom-emacs, nur, nixgl, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
     let                                                                     # Variables that can be used in the config files.
       user = "ruther";
       location = "$HOME/.setup";

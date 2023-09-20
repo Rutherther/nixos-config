@@ -33,8 +33,6 @@
     ];
   };
 
-  services.pipewire.enable = false;
-
   environment = {
     systemPackages = with pkgs; [                 # Packages installed
       gnome.dconf-editor

@@ -26,7 +26,7 @@
     loader = {                                  # For legacy boot
       grub = {
         enable = true;
-        device = "/dev/sda";                    # Name of hard drive (can also be vda)
+        device = "/dev/vda";                    # Name of hard drive (can also be vda)
       };
       timeout = 1;                              # Grub auto select timeout
     };

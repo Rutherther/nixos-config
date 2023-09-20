@@ -12,24 +12,22 @@
       vimAlias = true;
 
       plugins = with pkgs.vimPlugins; [
-        # Syntax
         vim-nix
         vim-markdown
 
-        # Quality of life
-        vim-lastplace         # Opens document where you left it
-        auto-pairs            # Print double quotes/brackets/etc
-        vim-gitgutter         # See uncommitted changes of file :GitGutterEnable
+        vim-lastplace
+        auto-pairs
+        vim-gitgutter
 
-        # File Tree
-        nerdtree              # File Manager - set in extraConfig to F6
+        wombat256-vim
+        srcery-vim
 
-        # Customization
-        wombat256-vim         # Color scheme for lightline
-        srcery-vim            # Color scheme for text
+        lightline-vim
+        indent-blankline-nvim
 
-        lightline-vim         # Info bar at bottom
-        indent-blankline-nvim # Indentation lines
+        nvim-surround
+        vim-easymotion
+        vim-sneak
       ];
 
       extraConfig = ''
@@ -44,8 +42,6 @@
         hi Normal guibg=NONE ctermbg=NONE         " Remove background, better for personal theme
 
         set number                                " Set numbers
-
-        nmap <F6> :NERDTreeToggle<CR>             " F6 opens NERDTree
       '';
     };
   };

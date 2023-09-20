@@ -16,6 +16,8 @@
 { 
   imports =                                   # Home Manager Modules
     (import ../modules/programs) ++
+    (import ../modules/shell/home.nix) ++
+    (import ../modules/editors/home.nix) ++
     (import ../modules/services);
 
   home = {
@@ -106,7 +108,7 @@
       #deluge           # Torrents
       discord           # Chat
       telegram-desktop  # Chat
-      cinny-desktop     # Chat
+      unstable.cinny-desktop     # Chat
       ffmpeg           # Video Support (dslr)
       #gmtp             # Mount MTP (GoPro)
       #gphoto2          # Digital Photography

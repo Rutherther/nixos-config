@@ -1,7 +1,5 @@
 #
-# Doom Emacs: Personally not a fan of github:nix-community/nix-doom-emacs due to performance issues
-# This is an ideal way to install on a vanilla NixOS installion.
-# You will need to import this from somewhere in the flake (Obviously not in a home-manager nix file)
+# Personal Emacs config. Can be set up with vanilla nixos or with home-manager (see comments at bottom)
 #
 # flake.nix
 #   ├─ ./hosts
@@ -9,34 +7,27 @@
 #   └─ ./modules
 #       └─ ./editors
 #           └─ ./emacs
-#               └─ ./doom-emacs
-#                   └─ ./alt
-#                       └─ native.nix *
+#               └─ default.nix *
 #
 
 
-{ pkgs, ... }:
+{ config, user, unstable, pkgs, doom-emacs, location, ... }:
 
 let
-  doom-emacs = pkgs.callPackage (builtins.fetchTarball {
-    url = https://github.com/vlaci/nix-doom-emacs/archive/master.tar.gz;
-    sha256 = "1sczbw6q80l5qasbkp0lnsw8zsh79xg2prhnpv8qxn4zih72kx73";
-  }) {
-    doomPrivateDir = ./doom.d;  # Directory containing your config.el init.el
-                                # and packages.el files
-  };
+  emacs-with-packages = ((pkgs.emacsPackagesFor pkgs.emacs29).emacsWithPackages (epkgs: [
+      epkgs.vterm
+      epkgs.sqlite
+      epkgs.treesit-grammars.with-all-grammars
+    ]));
 in {
-  home.packages = [ doom-emacs ];
-  home.file.".emacs.d/init.el".text = ''
-      (load "default.el")
-  '';
+  services.emacs = {
+    enable = true;
+    package = emacs-with-packages;
+  };
 
-  programs.emacs.package = doom-emacs;
-
-  environment.systemPackages = with pkgs; [
-    ripgrep
-    coreutils
-    fd
-    git
-  ];
+  programs.doom-emacs = {
+    enable = true;
+    doomPrivateDir = ./doom.d;
+    emacsPackage = emacs-with-packages;
+  };
 }
