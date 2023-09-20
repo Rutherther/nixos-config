@@ -18,8 +18,8 @@
     xserver = {
       enable = true;
 
-      layout = "us, cz";                              # Keyboard layout & €-sign
-      xkbLayout = ", qwerty";
+      layout = "us,cz";                              # Keyboard layout & €-sign
+      xkbVariant = ",qwerty";
       xkbOptions = "eurosign:e";
       libinput.enable = true;
       modules = [ pkgs.xf86_input_wacom ];        # Both needed for wacom tablet usage
@@ -33,7 +33,7 @@
     ];
   };
 
-  hardware.pipewire.enable = false;
+  services.pipewire.enable = false;
 
   environment = {
     systemPackages = with pkgs; [                 # Packages installed

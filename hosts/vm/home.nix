@@ -16,7 +16,8 @@
 {
   imports =
     [
-      ../../modules/desktop/qtile/home.nix  #Window Manager
+      ../../modules/desktop/gnome/home.nix  #Window Manager
+      ../../modules/editors/emacs/home.nix  #Doom emacs
     ];
 
   home = {                                  # Specific packages for desktop

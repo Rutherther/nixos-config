@@ -17,8 +17,4 @@
   services.emacs = {
     enable = true;
   };
-
-  home.packages = [
-    pkgs.emacs
-  ];
 }
