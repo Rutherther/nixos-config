@@ -15,18 +15,7 @@
   };
 
   services = {
-    xserver = {
-      enable = true;
-
-      layout = "us,cz";                              # Keyboard layout & €-sign
-      xkbVariant = ",qwerty";
-      xkbOptions = "eurosign:e";
-      libinput.enable = true;
-      modules = [ pkgs.xf86_input_wacom ];        # Both needed for wacom tablet usage
-      wacom.enable = true;
-
-      desktopManager.gnome.enable = true;         # Window Manager
-    };
+    xserver.desktopManager.gnome.enable = true;
     udev.packages = with pkgs; [
       gnome.gnome-settings-daemon
     ];

@@ -15,6 +15,7 @@
 
 {
   imports =                                   # Home Manager Modules
+    [(import ../modules/desktop)] ++
     (import ../modules/services);
 
   hardware.pulseaudio.enable = false;
