@@ -88,7 +88,7 @@
     };
   };
 
-  systemd.services."home-manager-${user}".serviceConfig.TimeoutStartSec = lib.mkForce "10m";
+  systemd.services."home-manager-${user}".serviceConfig.TimeoutStartSec = lib.mkForce "20m";
 
   nix = {                                   # Nix Package Manager settings
     settings ={
