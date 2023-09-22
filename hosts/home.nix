@@ -15,7 +15,7 @@
 
 { 
   imports =                                   # Home Manager Modules
-    (import ../modules/programs) ++
+    (import ../modules/programs/home.nix) ++
     (import ../modules/shell/home.nix) ++
     (import ../modules/editors/home.nix) ++
     (import ../modules/services/home.nix);
