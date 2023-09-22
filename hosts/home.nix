@@ -131,8 +131,7 @@
       #libreoffice      # Office Tools
       #simple-scan      # Scanning
       #
-      # Flatpak
-      obs-studio       # Recording/Live Streaming
+      #obs-studio       # Recording/Live Streaming
       thunderbird       # email client
       spotify
       obsidian        # Text Editor

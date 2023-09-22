@@ -13,4 +13,5 @@
 [
   ./alacritty.nix
   ./rofi.nix
+  ./clipmenu.nix
 ]
