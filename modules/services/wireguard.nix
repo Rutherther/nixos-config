@@ -5,9 +5,18 @@
     allowedUDPPorts = [ 51820 ];
   };
 
+  networking.nameservers = [
+    "${inputs.semi-secrets.wg.lan.serverIp}"
+    "1.1.1.1"
+    "1.0.0.1"
+  ];
+
+  networking.resolvconf.extraOptions = [
+    "timeout: 2"
+  ];
+
   networking.wireguard.interfaces = {
     wg0 = {
-      ips = [ "192.168.32.50/32" ];
       listenPort = 51820;
 
       generatePrivateKeyFile = true;
