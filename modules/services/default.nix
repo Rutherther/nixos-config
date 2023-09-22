@@ -12,6 +12,7 @@
 
 [
   ./syncthing.nix
+  ./wireguard.nix
 ]
 
 # redshift and media temporarely disables
