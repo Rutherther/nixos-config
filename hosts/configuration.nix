@@ -14,6 +14,9 @@
 { config, lib, pkgs, inputs, user, ... }:
 
 {
+  imports =                                   # Home Manager Modules
+    (import ../modules/services);
+
   hardware.pulseaudio.enable = false;
 
   users.users.${user} = {                   # System User

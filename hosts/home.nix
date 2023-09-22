@@ -18,7 +18,7 @@
     (import ../modules/programs) ++
     (import ../modules/shell/home.nix) ++
     (import ../modules/editors/home.nix) ++
-    (import ../modules/services);
+    (import ../modules/services/home.nix);
 
   home = {
     username = "${user}";

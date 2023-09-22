@@ -11,7 +11,11 @@
 #
 
 [
-  ./syncthing.nix
+  ./dunst.nix
+  ./flameshot.nix
+  ./picom.nix
+  ./udiskie.nix
+  ./redshift.nix
 ]
 
 # redshift and media temporarely disables
