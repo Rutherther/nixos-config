@@ -22,6 +22,7 @@ in {
 
       yzhang.markdown-all-in-one # Write markdown
 
+      mkhl.direnv # Directory env
     ]) ++ (with extensions.vscode-marketplace; [
       arrterian.nix-env-selector # Nix environment
     ]);
