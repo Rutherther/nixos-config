@@ -27,6 +27,11 @@
         url = "github:guibou/nixGL";
         inputs.nixpkgs.follows = "nixpkgs";
       };
+
+      nix-vscode-extensions = {
+        url = "github:nix-community/nix-vscode-extensions";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
     };
 
   outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, home-manager, nur, nixgl, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.

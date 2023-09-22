@@ -46,7 +46,7 @@ in
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
-          inherit unstable user location;
+          inherit inputs unstable user location;
           host = {
             hostName = "laptop";
             mainMonitor = "eDP-1";
@@ -77,7 +77,7 @@ in
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
-          inherit unstable user location;
+          inherit inputs unstable user location;
           host = {
             hostName = "vm";
             mainMonitor = "Virtual-1";
@@ -110,7 +110,7 @@ in
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
-          inherit unstable user location;
+          inherit inputs unstable user location;
           host = {
             hostName = "desktop";       #For Xorg iGPU  | Hyprland iGPU
             mainMonitor = "HDMI-A-1";   #HDMIA3         | HDMI-A-3
