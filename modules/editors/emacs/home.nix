@@ -46,9 +46,7 @@
 
           rm -rf $HOME/.doom.d
           ln -s ${location}/modules/editors/emacs/doom.d $HOME/.doom.d
-          bash -c "yes || true" | $EMACS/bin/doom sync
-        else
-          bash -c "yes || true" | $EMACS/bin/doom sync
+          $EMACS/bin/doom sync
         fi'';
     };
   };
