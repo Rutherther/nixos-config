@@ -11,23 +11,60 @@
 #
 
 
-{ config, user, unstable, pkgs, doom-emacs, location, ... }:
+{ config, user, unstable, pkgs, inputs, location, ... }:
 
-let
-  emacs-with-packages = ((pkgs.emacsPackagesFor pkgs.emacs29).emacsWithPackages (epkgs: [
+{
+  services.emacs = {
+    enable = true;
+    client = {
+      enable = true;
+    };
+    startWithUserSession = "graphical";
+  };
+
+  programs.emacs = {
+    enable = true;
+    package = pkgs.emacs29-gtk3;
+    extraPackages = epkgs: [
       epkgs.vterm
       epkgs.sqlite
       epkgs.treesit-grammars.with-all-grammars
-    ]));
-in {
-  services.emacs = {
-    enable = true;
-    package = emacs-with-packages;
+    ];
   };
 
-  programs.doom-emacs = {
-    enable = true;
-    doomPrivateDir = ./doom.d;
-    emacsPackage = emacs-with-packages;
+  home.activation = {
+    installDoomEmacs = {
+      after = [ "writeBoundary" "createXdgUserDirectories" ];
+      before = [ ];
+      data = ''
+        EMACS="$HOME/.emacs.d"
+
+        if [ ! -d "$EMACS" ]; then
+          ${pkgs.git}/bin/git clone https://github.com/hlissner/doom-emacs.git $EMACS
+
+          bash -c "yes || true" | $EMACS/bin/doom install
+
+          rm -rf $HOME/.doom.d
+          ln -s ${location}/modules/editors/emacs/doom.d $HOME/.doom.d
+          bash -c "yes || true" | $EMACS/bin/doom sync
+        else
+          bash -c "yes || true" | $EMACS/bin/doom sync
+        fi'';
+    };
   };
+
+  home.packages = with pkgs; [
+    emacs-all-the-icons-fonts
+    #binutils # for native comp
+
+    ## Doom emacs dependencies
+    gnutls
+    fd
+    ripgrep
+
+    ## Optional dependencies
+    fd
+    imagemagick
+    #zstd
+  ];
 }

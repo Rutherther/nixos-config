@@ -27,14 +27,9 @@
         url = "github:guibou/nixGL";
         inputs.nixpkgs.follows = "nixpkgs";
       };
-
-      doom-emacs = {
-        url = "github:nix-community/nix-doom-emacs";
-        inputs.nixpkgs.follows = "nixpkgs";
-      };
     };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, home-manager, doom-emacs, nur, nixgl, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
+  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, home-manager, nur, nixgl, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
     let                                                                     # Variables that can be used in the config files.
       user = "ruther";
       location = "$HOME/.setup";
@@ -43,7 +38,7 @@
       nixosConfigurations = (                                               # NixOS configurations
         import ./hosts {                                                    # Imports ./hosts/default.nix
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-unstable home-manager nur user location doom-emacs;   # Also inherit home-manager so it does not need to be defined here.
+          inherit inputs nixpkgs nixpkgs-unstable home-manager nur user location;   # Also inherit home-manager so it does not need to be defined here.
         }
       );
 

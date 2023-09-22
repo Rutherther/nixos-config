@@ -21,14 +21,14 @@
     extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "kvm" "libvirtd" "plex" ];
     shell = pkgs.zsh;                       # Default shell
   };
-  security.sudo.wheelNeedsPassword = false; # User does not need to give password when using sudo.
+  security.sudo.wheelNeedsPassword = true;
 
-  time.timeZone = "Europe/Brussels";        # Time zone and internationalisation
+  time.timeZone = "Europe/Prague";        # Time zone and internationalisation
   i18n = {
     defaultLocale = "en_US.UTF-8";
     extraLocaleSettings = {                 # Extra locale settings that need to be overwritten
-      LC_TIME = "nl_BE.UTF-8";
-      LC_MONETARY = "nl_BE.UTF-8";
+      LC_TIME = "cs_CZ.UTF-8";
+      LC_MONETARY = "cs_CZ.UTF-8";
     };
   };
 
@@ -75,32 +75,8 @@
     ];
   };
 
-  programs = {
-    thunar = {
-      enable = true;
-      plugins = with pkgs.xfce; [
-        thunar-archive-plugin
-        thunar-volman
-        thunar-media-tags-plugin
-      ];
-    };
-  };
-
   services = {
     tumbler.enable = true;
-    printing = {                                # Printing and drivers for TS5300
-      enable = true;
-      #drivers = [ pkgs.cnijfilter2 ];          # There is the possibility cups will complain about missing cmdtocanonij3. I guess this is just an error that can be ignored for now. Also no longer need required since server uses ipp to share printer over network.
-    };
-    avahi = {                                   # Needed to find wireless printer
-      enable = true;
-      nssmdns = true;
-      publish = {                               # Needed for detecting the scanner
-        enable = true;
-        addresses = true;
-        userServices = true;
-      };
-    };
     pipewire = {                            # Sound
       enable = true;
       alsa = {
@@ -110,33 +86,9 @@
       pulse.enable = true;
       jack.enable = true;
     };
-    openssh = {                             # SSH: secure shell (remote connection to shell of server)
-      enable = true;                        # local: $ ssh <user>@<ip>
-                                            # public:
-                                            #   - port forward 22 TCP to server
-                                            #   - in case you want to use the domain name insted of the ip:
-                                            #       - for me, via cloudflare, create an A record with name "ssh" to the correct ip without proxy
-                                            #   - connect via ssh <user>@<ip or ssh.domain>
-                                            # generating a key:
-                                            #   - $ ssh-keygen   |  ssh-copy-id <ip/domain>  |  ssh-add
-                                            #   - if ssh-add does not work: $ eval `ssh-agent -s`
-      allowSFTP = true;                     # SFTP: secure file transfer protocol (send file to server)
-                                            # connect: $ sftp <user>@<ip/domain>
-                                            #   or with file browser: sftp://<ip address>
-                                            # commands:
-                                            #   - lpwd & pwd = print (local) parent working directory
-                                            #   - put/get <filename> = send or receive file
-      extraConfig = ''
-        HostKeyAlgorithms +ssh-rsa
-      '';                                   # Temporary extra config so ssh will work in guacamole
-    };
-    flatpak.enable = true;                  # download flatpak file from website - sudo flatpak install <path> - reboot if not showing up
-                                            # sudo flatpak uninstall --delete-data <app-id> (> flatpak list --app) - flatpak uninstall --unused
-                                            # List:
-                                            # com.obsproject.Studio
-                                            # com.parsecgaming.parsec
-                                            # com.usebottles.bottles
   };
+
+  systemd.services."home-manager-${user}".serviceConfig.TimeoutStartSec = lib.mkForce "10m";
 
   nix = {                                   # Nix Package Manager settings
     settings ={

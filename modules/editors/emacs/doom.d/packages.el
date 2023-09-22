@@ -52,7 +52,7 @@
 (package! arm-mode :recipe (:host github :repo "charje/arm-mode"))
 (package! dumb-jump)
 (package! imenu-list)
-(package! combobulate)
+;(package! combobulate)
 (package! vhdl-ext
   :recipe (:host github :repo "gmlarumbe/vhdl-ext"
                  :files (:defaults "snippets" "ts-mode/*.el")))

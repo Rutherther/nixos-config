@@ -11,7 +11,7 @@
 #            └─ ./home.nix 
 #
 
-{ lib, inputs, nixpkgs, nixpkgs-unstable, home-manager, doom-emacs, nur, user, location, ... }:
+{ lib, inputs, nixpkgs, nixpkgs-unstable, home-manager, nur, user, location, ... }:
 
 let
   system = "x86_64-linux";                                  # System architecture
@@ -46,14 +46,14 @@ in
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
-          inherit unstable user;
+          inherit unstable user location;
           host = {
             hostName = "laptop";
             mainMonitor = "eDP-1";
           };
         };
         home-manager.users.${user} = {
-          imports = [doom-emacs.hmModule] ++ [(import ./home.nix)] ++ [(import ./laptop/home.nix)];
+          imports = [(import ./home.nix)] ++ [(import ./laptop/home.nix)];
         };
       }
     ];
@@ -77,7 +77,7 @@ in
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
-          inherit unstable user;
+          inherit unstable user location;
           host = {
             hostName = "vm";
             mainMonitor = "Virtual-1";
@@ -85,7 +85,7 @@ in
           };
         };
         home-manager.users.${user} = {
-          imports = [doom-emacs.hmModule] ++ [(import ./home.nix)] ++ [(import ./vm/home.nix)];
+          imports = [(import ./home.nix)] ++ [(import ./vm/home.nix)];
         };
       }
     ];
@@ -110,7 +110,7 @@ in
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
-          inherit unstable user;
+          inherit unstable user location;
           host = {
             hostName = "desktop";       #For Xorg iGPU  | Hyprland iGPU
             mainMonitor = "HDMI-A-1";   #HDMIA3         | HDMI-A-3
@@ -119,7 +119,6 @@ in
         };                                                  # Pass flake variable
         home-manager.users.${user} = {
           imports = [
-            doom-emacs.hmModule
             ./home.nix
             ./desktop/home.nix
           ];
