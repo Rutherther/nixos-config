@@ -21,8 +21,7 @@
 {
   imports =                                               # For now, if applying to other system, swap files
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
-    [(import ../../modules/desktop/bspwm/default.nix)] ++ # Window Manager
-    [(import ../../modules/desktop/virtualisation/docker.nix)] ++  # Docker
+    [(import ../../modules/desktop/qtile/default.nix)] ++ # Window Manager
     (import ../../modules/hardware);                      # Hardware devices
 
   boot = {                                  # Boot options
@@ -44,51 +43,21 @@
     };
   };
 
-  hardware.sane = {                         # Used for scanning with Xsane
-    enable = true;
-    extraBackends = [ pkgs.sane-airscan ];
-  };
-
   environment = {
     systemPackages = with pkgs; [
-      simple-scan
+      xorg.xf86videointel
     ];
   };
 
   programs = {                              # No xbacklight, this is the alterantive
-    dconf.enable = true;
     light.enable = true;
   };
 
   services = {
     tlp.enable = true;                      # TLP and auto-cpufreq for power management
-    #logind.lidSwitch = "ignore";           # Laptop does not go to sleep when lid is closed
+    logind.lidSwitch = "ignore";           # Laptop does not go to sleep when lid is closed
     auto-cpufreq.enable = true;
     blueman.enable = true;
-    printing = {                            # Printing and drivers for TS5300
-      enable = true;
-      drivers = [ pkgs.cnijfilter2 ];
-    };
-    avahi = {                               # Needed to find wireless printer
-      enable = true;
-      nssmdns = true;
-      publish = {                           # Needed for detecting the scanner
-        enable = true;
-        addresses = true;
-        userServices = true;
-      };
-    };
-    samba = {
-      enable = true;
-      shares = {
-        share = {
-          "path" = "/home/${user}";
-          "guest ok" = "no";
-          "read only" = "no";
-        };
-      };
-      openFirewall = true;
-    };
   };
 
   networking.wireguard.interfaces = {
@@ -96,10 +65,4 @@
       ips = [ "${inputs.semi-secrets.wg.lan.laptopIp}/32" ];
     };
   };
-
-  #temporary bluetooth fix
-  systemd.tmpfiles.rules = [
-    "d /var/lib/bluetooth 700 root root - -"
-  ];
-  systemd.targets."bluetooth".after = ["systemd-tmpfiles-setup.service"];
 }
