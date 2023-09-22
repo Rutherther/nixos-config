@@ -42,6 +42,12 @@ in {
     };
   };
 
+  networking.wireguard.interfaces = {
+    wg0 = {
+      ips = [ "${inputs.semi-secrets.wg.lan.laptopIp}/32" ];
+    };
+  };
+
   services = {
     xserver = {                                 
       resolutions = [

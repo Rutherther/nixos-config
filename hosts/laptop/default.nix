@@ -91,6 +91,12 @@
     };
   };
 
+  networking.wireguard.interfaces = {
+    wg0 = {
+      ips = [ "${inputs.semi-secrets.wg.lan.laptopIp}/32" ];
+    };
+  };
+
   #temporary bluetooth fix
   systemd.tmpfiles.rules = [
     "d /var/lib/bluetooth 700 root root - -"

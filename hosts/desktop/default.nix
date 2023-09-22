@@ -95,6 +95,12 @@
     };
   };
 
+  networking.wireguard.interfaces = {
+    wg0 = {
+      ips = [ "${inputs.semi-secrets.wg.lan.desktopIp}/32" ];
+    };
+  };
+
   nixpkgs.overlays = [                          # This overlay will pull the latest version of Discord
     (self: super: {
       discord = super.discord.overrideAttrs (
