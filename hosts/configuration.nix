@@ -92,6 +92,18 @@
     };
   };
 
+  environment.etc = {
+    "wireplumber/bluetooth.lua.d/51-bluez-config.lua".text = ''
+      bluez_monitor.properties = {
+        ["bluez5.msbc-support"] = true;
+        ["bluez5.sbc-xq-support"] = true;
+        ["bluez5.enable-faststream"] = true;
+        ["bluez5.headset-roles"] = "[ hsp_hs hsp_ag ]";
+        ["bluez5.hfphsp-backend"] = "hsphfpd";
+      }
+    '';
+  };
+
   systemd.services."home-manager-${user}".serviceConfig.TimeoutStartSec = lib.mkForce "20m";
 
   nix = {                                   # Nix Package Manager settings
