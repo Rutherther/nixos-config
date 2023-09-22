@@ -12,6 +12,8 @@
       vimAlias = true;
 
       plugins = with pkgs.vimPlugins; [
+        direnv-vim
+
         vim-nix
         vim-markdown
 
