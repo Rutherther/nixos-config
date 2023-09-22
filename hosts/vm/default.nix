@@ -12,12 +12,22 @@
 #               └─ bspwm.nix
 #
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
-{
+let
+  mkSure = lib.mkOverride 0;
+in {
   imports =  [                                  # For now, if applying to other system, swap files
     ./hardware-configuration.nix                # Current system hardware config @ /etc/nixos/hardware-configuration.nix
     ../../modules/desktop/gnome/default.nix     # Window Manager
+    ../../modules/desktop/dm/sddm.nix           # Desktop Manager
+  ];
+
+  services.spice-vdagentd.enable = mkSure true;
+  services.qemuGuest.enable = true;
+  environment.systemPackages = with pkgs; [
+    spice-vdagent
+    pkgs.xorg.xf86videoqxl
   ];
 
   boot = {                                      # Boot options
