@@ -30,6 +30,8 @@
 
   security.sudo.wheelNeedsPassword = true;
 
+  programs.dconf.enable = true;
+
   time.timeZone = "Europe/Prague";        # Time zone and internationalisation
   i18n = {
     defaultLocale = "en_US.UTF-8";

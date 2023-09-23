@@ -22,12 +22,9 @@ in {
     };
   };
 
-  home.activations = {
-    ensureScreensDirCreated = {
-      after = [ "writeBoundary" ];
-      data = ''
-        mkdir -p ${screensDir}
-      '';
-    };
+  home.activation = {
+    ensureScreensDirCreated = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      mkdir -p ${screensDir}
+    '';
   };
 }
