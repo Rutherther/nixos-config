@@ -130,6 +130,7 @@ in
         };                                                  # Pass flake variable
         home-manager.users.${user} = {
           imports = [
+            nur.nixosModules.nur
             ./home.nix
             ./desktop/home.nix
           ];
