@@ -31,6 +31,7 @@
 
   boot = {                                      # Boot options
     kernelPackages = pkgs.linuxPackages_latest;
+    supportedFilesystems = [ "ntfs" ];
     initrd.kernelModules = [ "amdgpu" ];        # Video drivers
 
     loader = {                                  # For legacy boot:
