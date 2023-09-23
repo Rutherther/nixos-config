@@ -13,7 +13,9 @@
 
 { config, user, unstable, pkgs, inputs, location, ... }:
 
-{
+let
+  doomRev = "844a82c";
+in {
   services.emacs = {
     enable = true;
     client = {
@@ -30,6 +32,24 @@
       epkgs.sqlite
       epkgs.treesit-grammars.with-all-grammars
     ];
+  };
+
+  home.activation = {
+    linkDoomConfig = {
+      after = [ "writeBoundary" "createXdgUserDirectories" ];
+      before = [  ];
+      data =
+        ''
+            EMACS=$HOME/.emacs.d
+            if [ ! -d "$EMACS" ]; then
+              ${pkgs.git}/bin/git clone https://github.com/doomemacs/doomemacs $EMACS
+              (cd $EMACS && ${pkgs.git}/bin/git checkout ${doomRev})
+            fi
+            if [ ! -d "$HOME/.doom.d" ]; then
+                ln -s ${location}/modules/editors/emacs/doom.d $HOME/.doom.d
+            fi
+        '';
+    };
   };
 
   home.packages = with pkgs; [
