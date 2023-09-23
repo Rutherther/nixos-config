@@ -21,6 +21,7 @@ in {
     ./hardware-configuration.nix                # Current system hardware config @ /etc/nixos/hardware-configuration.nix
     ../../modules/desktop/gnome/default.nix     # Window Manager
     ../../modules/desktop/dm/sddm.nix           # Desktop Manager
+    ../../modules/desktop/qtile/default.nix           # Qtile
   ];
 
   services.spice-vdagentd.enable = mkSure true;

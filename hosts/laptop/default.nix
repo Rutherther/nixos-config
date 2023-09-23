@@ -21,6 +21,7 @@
 {
   imports =                                               # For now, if applying to other system, swap files
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
+    [(import ../../modules/desktop/dm/sddm.nix)] ++       # Desktop manager
     [(import ../../modules/desktop/qtile/default.nix)] ++ # Window Manager
     (import ../../modules/hardware);                      # Hardware devices
 
