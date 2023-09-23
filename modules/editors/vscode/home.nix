@@ -311,6 +311,58 @@ in {
           ];
         }
       ];
+      "vspacecode.bindingOverrides" = [
+          {
+              "keys" = ";";
+              "name" = "Show editors in active group";
+              "type" = "command";
+              "command" ="workbench.action.showEditorsInActiveGroup";
+          }
+          {
+              "keys" = "g.g";
+              "name" = "Show git status";
+              "type" = "command";
+              "command" = "magit.status";
+          }
+          {
+              "keys" = "t.b";
+              "name" = "Toggle bar";
+              "type" = "command";
+              "command" = "workbench.action.toggleSidebarVisibility";
+          }
+          {
+              "keys" = "t.a";
+              "name" = "Toggle bar";
+              "type" = "command";
+              "command" = "workbench.action.toggleActivityBarVisibility";
+          }
+          {
+              "keys" = "t.t";
+              "name" = "Toggle terminal";
+              "type" = "command";
+              "command" = "workbench.action.terminal.toggleTerminal";
+          }
+          {
+              "keys" = "t.m";
+              "name" = "Toggle menu bar";
+              "type" = "command";
+              "command" = "workbench.action.toggleMenuBar";
+          }
+          {
+              "keys" = "s.f";
+              "position" = 2;
+              "name" = "Search in current buffer";
+              "type" = "command";
+              "command" = "actions.find";
+          }
+          {
+              "keys" = "s.F";
+              "position" = 8;
+              "name" = "Replace in current buffer";
+              "type" = "command";
+              "command" = "editor.action.startFindReplaceAction";
+          }
+      ];
     };
   };
 }
