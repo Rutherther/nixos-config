@@ -30,6 +30,8 @@
         nvim-surround
         vim-easymotion
         vim-sneak
+
+        vim-commentary
       ];
 
       extraConfig = ''

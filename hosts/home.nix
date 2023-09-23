@@ -47,6 +47,7 @@
       # File Management
       zathura            # PDF Viewer
       evince            # PDF Viewer
+      foliate           # Ebook viewer
       rsync             # Syncer - $ rsync -r dir1/ dir2/
       unzip             # Zip Files
       unrar             # Rar Files
@@ -71,8 +72,6 @@
       #xorg.xrandr      # Screen Settings
       #
       # Xorg home-manager
-      flameshot         # Screenshot
-      picom             # Compositer
       #
       # Desktop
       discord           # Chat

@@ -17,5 +17,3 @@
   ./udiskie.nix
   ./redshift.nix
 ]
-
-# redshift and media temporarely disables
