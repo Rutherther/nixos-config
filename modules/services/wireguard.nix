@@ -20,7 +20,7 @@
       listenPort = 51820;
 
       generatePrivateKeyFile = true;
-      privateKeyFile = "/home/${user}/.config/wireguard/pk.pem";
+      privateKeyFile = "/etc/wireguard/pk.pem";
 
       peers = [
         {
