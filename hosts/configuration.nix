@@ -25,6 +25,9 @@
     extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "kvm" "libvirtd" "plex" ];
     shell = pkgs.zsh;                       # Default shell
   };
+  programs.zsh.enable = true; # has to be here to set shell to zsh
+    # zsh is configured at home-manager level afterwards
+
   security.sudo.wheelNeedsPassword = true;
 
   time.timeZone = "Europe/Prague";        # Time zone and internationalisation

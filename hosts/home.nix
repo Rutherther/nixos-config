@@ -31,6 +31,7 @@
       gtop              # Resource Manager
       htop              # Resource Manager
       ranger            # File Manager
+      cinnamon.nemo     # GUI File Manager
       tldr              # Helper
       lazygit           # Git tool
 
