@@ -20,6 +20,8 @@
     (import ../modules/editors/home.nix) ++
     (import ../modules/services/home.nix);
 
+  services.mpris-proxy.enable = true;
+
   home = {
     username = "${user}";
     homeDirectory = "/home/${user}";
@@ -124,12 +126,5 @@
       Description = "Home Manager System Tray";
       Requires = [ "graphical-session-pre.target" ];
     };
-  };
-
-  systemd.user.services.mpris-proxy = {
-    description = "Mpris proxy";
-    after = [ "network.target" "sound.target" ];
-    wantedBy = [ "default.target" ];
-    serviceConfig.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
   };
 }
