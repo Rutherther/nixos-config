@@ -7,7 +7,7 @@
 
       layout = "us,cz";                              # Keyboard layout & €-sign
       xkbVariant = ",qwerty";
-      xkbOptions = "eurosign:e";
+      xkbOptions = "grp:alt_shift_toggle";
       libinput.enable = true;
       modules = [ pkgs.xf86_input_wacom ];        # Both needed for wacom tablet usage
       wacom.enable = true;
