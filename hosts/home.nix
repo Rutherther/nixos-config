@@ -43,7 +43,6 @@
       blueman           # Bluetooth manager
 
       # Apps
-      firefox           # Browser
       chromium          # Browser
 
       # File Management

@@ -29,6 +29,7 @@ let
   lib = nixpkgs.lib;
 in
 {
+
   laptop = lib.nixosSystem {                                # Laptop profile
     inherit system;
     specialArgs = {
@@ -39,6 +40,7 @@ in
       };
     };
     modules = [
+      nur.nixosModules.nur
       ./laptop
       ./configuration.nix
 
@@ -53,7 +55,11 @@ in
           };
         };
         home-manager.users.${user} = {
-          imports = [(import ./home.nix)] ++ [(import ./laptop/home.nix)];
+          imports = [
+            nur.hmModules.nur
+            (import ./home.nix)
+            (import ./laptop/home.nix)
+          ];
         };
       }
     ];
@@ -70,6 +76,7 @@ in
       };
     };
     modules = [
+      nur.nixosModules.nur
       ./vm
       ./configuration.nix
 
@@ -85,7 +92,11 @@ in
           };
         };
         home-manager.users.${user} = {
-          imports = [(import ./home.nix)] ++ [(import ./vm/home.nix)];
+          imports = [
+            nur.hmModules.nur
+            (import ./home.nix)
+            (import ./vm/home.nix)
+          ];
         };
       }
     ];

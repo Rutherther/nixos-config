@@ -21,15 +21,6 @@
 
   home = {                                # Specific packages for desktop
     packages = with pkgs; [
-      # Applications
-      ansible           # Automation
-      sshpass           # Ansible Dependency
-      hugo              # Static Website Builder
-
-      # Dependencies
-      ispell            # Emacs spelling
-
-      #steam            # Game Launcher
     ];
   };
 }
