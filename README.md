@@ -1,3 +1,9 @@
+# Check if in UEFI
+
+``` sh
+[ -d /sys/firmware/efi/efivars ] && echo "UEFI" || echo "Legacy"
+```
+
 # File systems and swap files
 ## fat32
 
