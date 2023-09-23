@@ -7,28 +7,30 @@
 #       └─ pacman.nix *
 #
 
-{ config, pkgs, inputs, nixgl, user, ... }:
+{ config, pkgs, inputs, nixgl, user, location, ... }:
 
 {
+  imports =
+    (import ../modules/editors/home.nix) ++
+    # (import ../modules/programs/home.nix) ++ # Some problems with alacritty, see nixGL, but still, the .desktop files are not great
+    (import ../modules/shell/home.nix);
+
+  fonts.fontconfig.enable = true;
   home = {
-    packages = [
-      (import nixgl { inherit pkgs; }).nixGLIntel       # OpenGL for GUI apps. Add to aliases is recommended.
-                                     #.nixVulkanIntel
-      pkgs.hello
-      pkgs.emacs
+    packages = with pkgs; [
+      # Fonts
+      carlito                                 # NixOS
+      vegur                                   # NixOS
+      source-code-pro
+      jetbrains-mono
+      font-awesome                            # Icons
+      corefonts                               # MS
+      (nerdfonts.override {                   # Nerdfont Icons override
+        fonts = [
+          "FiraCode"
+        ];
+      })
     ];
-
-    #file.".bash_aliases".text = ''
-    #  alias alacritty="nixGLIntel ${pkgs.alacritty}/bin/alacritty"
-    #'';                                                 # Aliases for packages that need openGL using nixGL. Change to your shell alias file. Note that home.shellAliases does not work...
-
-    activation = {                                      # Run script during rebuild/switch.
-      linkDesktopApplications = {                       # Script that will add all packages to the system menu. (Mainly tested on Gnome)
-        after = [ "writeBoundary" "createXdgUserDirectories" ];
-        before = [ ];
-        data = "sudo /usr/bin/update-desktop-database"; # This will update the database, requires sudo. Not recommended to install via home-manager so do it manually for your distro.
-      };
-    };
   };
 
   xdg = {

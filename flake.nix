@@ -50,7 +50,7 @@
       homeConfigurations = (                                                # Non-NixOS configurations
         import ./nix {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-unstable home-manager nixgl user;
+          inherit inputs nixpkgs nixpkgs-unstable home-manager nixgl user location;
         }
       );
     };

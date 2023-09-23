@@ -36,7 +36,7 @@
         syntax enable                             " Syntax highlighting
         colorscheme srcery                        " Color scheme text
 
-        set iskeyword=!-~,^*,^45,^124,^34,192-255,^_,^.,^,
+        set iskeyword=!-~,^*,^45,^124,^34,192-255,^_,^.,^,,^/,^\
 
         let g:lightline = {
           \ 'colorscheme': 'wombat',

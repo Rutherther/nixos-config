@@ -6,7 +6,7 @@
 #       └─ default.nix *
 #
 
-{ lib, inputs, nixpkgs, home-manager, nixgl, user, ... }:
+{ lib, inputs, nixpkgs, home-manager, nixgl, user, location, ... }:
 
 let
   system = "x86_64-linux";
@@ -14,8 +14,11 @@ let
 in
 {
   pacman = home-manager.lib.homeManagerConfiguration {    # Currently only host that can be built
-    inherit pkgs;
-    extraSpecialArgs = { inherit inputs nixgl user; };
+    pkgs = import nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+    };
+    extraSpecialArgs = { inherit inputs nixgl user location; };
     modules = [
       ./pacman.nix
       {
