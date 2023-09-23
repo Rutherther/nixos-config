@@ -329,12 +329,12 @@ def create_bottom_bar():
     ], 30)
 
 def init_screen(top_bar, wallpaper, index):
-    return Screen(top=top_bar, bottom=create_bottom_bar(), wallpaper=wallpaper, x=1920*index, y=0, width=1920, height=1080)
+    return Screen(top=top_bar, bottom=create_bottom_bar(), wallpaper=wallpaper, width=1920, height=1080)
 
 screens = [
-    init_screen(create_top_bar(), '/usr/share/backgrounds/dark futuristic city 3.png', 0),
-    init_screen(create_top_bar(systray = True), '/usr/share/backgrounds/dark futuristic city č.png', 1),
-    init_screen(create_top_bar(), '/usr/share/backgrounds/synthwave futuristic city.png', 2),
+    init_screen(create_top_bar(), f'{setupLocation}/wall.png'),
+    init_screen(create_top_bar(systray = True), f'{setupLocation}/wall.png'),
+    init_screen(create_top_bar(), f'{setupLocation}/wall.png'),
 ]
 
 # Keys
