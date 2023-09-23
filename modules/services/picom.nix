@@ -36,6 +36,7 @@
     #  "100:name = 'Picture-in-Picture'"
     #  "85:class_i ?= 'rofi'"
       "80:class_i *= 'discord'"
+      "80:class_i *= 'telegram-desktop'"
       "80:class_i *= 'emacs'"
       "80:class_i *= 'Alacritty'"
     #  "100:fullscreen"
