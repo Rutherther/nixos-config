@@ -32,25 +32,6 @@
     ];
   };
 
-  home.activation = {
-    installDoomEmacs = {
-      after = [ "writeBoundary" "createXdgUserDirectories" ];
-      before = [ ];
-      data = ''
-        EMACS="$HOME/.emacs.d"
-
-        if [ ! -d "$EMACS" ]; then
-          ${pkgs.git}/bin/git clone https://github.com/hlissner/doom-emacs.git $EMACS
-
-          bash -c "yes || true" | $EMACS/bin/doom install
-
-          rm -rf $HOME/.doom.d
-          ln -s ${location}/modules/editors/emacs/doom.d $HOME/.doom.d
-          $EMACS/bin/doom sync
-        fi'';
-    };
-  };
-
   home.packages = with pkgs; [
     emacs-all-the-icons-fonts
     #binutils # for native comp

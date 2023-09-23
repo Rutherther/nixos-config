@@ -104,8 +104,6 @@
     '';
   };
 
-  systemd.services."home-manager-${user}".serviceConfig.TimeoutStartSec = lib.mkForce "20m";
-
   nix = {                                   # Nix Package Manager settings
     settings ={
       auto-optimise-store = true;           # Optimise syslinks
