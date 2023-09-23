@@ -23,10 +23,10 @@
 {
   imports =                                               # For now, if applying to other system, swap files
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
-    [(import ../../modules/programs/games.nix)] ++        # Gaming
+    #[(import ../../modules/programs/games.nix)] ++        # Gaming
     [(import ../../modules/desktop/dm/sddm.nix)] ++       # Desktop manager
     [(import ../../modules/desktop/qtile/default.nix)] ++ # Window Manager
-    (import ../../modules/desktop/virtualisation) ++      # Virtual Machines & VNC
+    #(import ../../modules/desktop/virtualisation) ++      # Virtual Machines & VNC
     (import ../../modules/hardware);                      # Hardware devices
 
   boot = {                                      # Boot options
@@ -44,16 +44,8 @@
   };
 
   hardware = {
-    sane = {                                    # Used for scanning with Xsane
-      enable = true;
-      extraBackends = [ pkgs.sane-airscan ];
-    };
     opengl = {
       enable = true;
-      extraPackages = with pkgs; [
-        linuxKernel.packages.linux_latest_libre.amdgpu-pro
-        xorg.xf86videoamdgpu
-      ];
       driSupport = true;
       driSupport32Bit = true;
     };
