@@ -16,6 +16,7 @@ from qtile_extras.widget.decorations import BorderDecoration, PowerLineDecoratio
 from tasklist import TaskList
 from mpris2widget import Mpris2
 from bluetooth import Bluetooth
+import xmonad
 from nixenvironment import setupLocation, configLocation
 
 colors = {
@@ -109,9 +110,9 @@ layout_theme = {
 }
 
 layouts = [
-    layout.MonadTall(**layout_theme),
+    xmonad.MonadTall(**layout_theme),
     layout.Max(**layout_theme),
-    layout.MonadWide(**layout_theme),
+    xmonad.MonadWide(**layout_theme),
 ]
 
 widget_defaults = dict(
@@ -332,8 +333,8 @@ def init_screen(top_bar, wallpaper):
     return Screen(top=top_bar, bottom=create_bottom_bar(), wallpaper=wallpaper, width=1920, height=1080)
 
 screens = [
-    init_screen(create_top_bar(systray = True), f'{setupLocation}/wall.png'),
     init_screen(create_top_bar(), f'{setupLocation}/wall.png'),
+    init_screen(create_top_bar(systray = True), f'{setupLocation}/wall.png'),
     init_screen(create_top_bar(), f'{setupLocation}/wall.png'),
 ]
 
@@ -359,6 +360,8 @@ keys.extend([
     EzKey('M-<Return>', lazy.layout.swap_main()),
     EzKey('M-<Space>', lazy.next_layout()),
     EzKey('M-S-<Space>', lazy.to_layout_index(0), desc = 'Default layout'),
+    EzKey('M-<comma>', lazy.layout.increase_nmaster()),
+    EzKey('M-<period>', lazy.layout.decrease_nmaster()),
 ])
 
 # Spwning programs
@@ -426,12 +429,14 @@ keys.extend([
     EzKey('M-S-c', lazy.window.kill()),
     EzKey('M-C-r', lazy.reload_config()),
     EzKey('M-C-q', lazy.shutdown()),
+
+    #EzKey(f'M-r', lazy.to_screen(0), desc = f'Move focus to screen {i}'),
 ])
 
 # Monitor navigation
 monitor_navigation_keys = ['w', 'e', 'r']
-monitor_index_map = [ 1, 2, 0 ]
 for i, key in enumerate(monitor_navigation_keys):
+    monitor_index_map = [ 2, 1, 0 ]
     keys.extend([
         EzKey(f'M-{key}', lazy.to_screen(monitor_index_map[i]), desc = f'Move focus to screen {i}'),
         EzKey(f'M-S-{key}', lazy.window.toscreen(monitor_index_map[i]), desc = f'Move focus to screen {i}'),
@@ -576,7 +581,7 @@ def startup_applications(client: Window):
     if client.match(Match(wm_class = 'firefox')) and firefoxInstance <= 1:
         client.togroup(groups[firefoxInstance].name)
         firefoxInstance += 1
-    elif client.match(Match(wm_class = 'discord')) or client.match(Match(wm_class = 'cinny')):
+    elif client.match(Match(wm_class = 'discord')) or client.match(Match(wm_class = 'telegram-desktop')) or client.match(Match(wm_class = 'cinny')):
         client.togroup(groups[8].name)
 
 # Turn off fullscreen on unfocus
