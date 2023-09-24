@@ -106,7 +106,6 @@
       unstable.cinny-desktop     # Chat
       ffmpeg           # Video Support (dslr)
 
-      thunderbird       # email client
       spotify
       obsidian        # Text Editor
     ];
@@ -123,6 +122,8 @@
     };
     stateVersion = "23.05";
   };
+
+  programs.command-not-found.enable = true;
 
   programs = {
     home-manager.enable = true;
