@@ -11,6 +11,10 @@ in {
         name = "Default";
         isDefault = true;
 
+        userChrome = ''
+          #navigator-toolbox { font-family:Ubuntu !important }
+        '';
+
         extensions = with nur.rycee.firefox-addons; [
           # Basic
           proton-pass                # Password manager
