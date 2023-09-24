@@ -16,20 +16,20 @@
       "phone" = { id = inputs.semi-secrets.syncthing.devices.phone; };
     };
     folders = {
-      "University" = {
-        path = "/home/${user}/Documents/uni";
+      "uni" = {
+        path = "/home/${user}/doc/uni";
         devices = [ "phone" ];
       };
-      "Notes" = {
-        path = "/home/${user}/Documents/notes/obsidian/Notes";
+      "notes" = {
+        path = "/home/${user}/doc/notes/obsidian/Notes";
         devices = [ "phone" ];
       };
-      "Camera" = {
-        path = "/home/${user}/Documents/camera";
+      "camera" = {
+        path = "/home/${user}/doc/camera";
         devices = [ "phone" ];
       };
       "study" = {
-        path = "/home/${user}/Documents/study";
+        path = "/home/${user}/doc/study";
         devices = [ "phone" ];
       };
     };
