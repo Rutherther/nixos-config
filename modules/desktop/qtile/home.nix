@@ -78,7 +78,7 @@
   xdg.configFile."qtile/bluetooth.py".source = ./config/bluetooth.py;
   xdg.configFile."qtile/mpris2widget.py".source = ./config/mpris2widget.py;
   xdg.configFile."qtile/tasklist.py".source = ./config/tasklist.py;
-  xdg.configFile."qtile/xmonad.py".source = ./config/xmonad.py;
+  xdg.configFile."qtile/xmonadcustom.py".source = ./config/xmonadcustom.py;
 
   xdg.configFile."qtile/nixenvironment.py".text = ''
 from string import Template

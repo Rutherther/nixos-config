@@ -16,7 +16,7 @@ from qtile_extras.widget.decorations import BorderDecoration, PowerLineDecoratio
 from tasklist import TaskList
 from mpris2widget import Mpris2
 from bluetooth import Bluetooth
-import xmonad
+import xmonadcustom
 from nixenvironment import setupLocation, configLocation
 
 colors = {
@@ -110,9 +110,9 @@ layout_theme = {
 }
 
 layouts = [
-    xmonad.MonadTall(**layout_theme),
+    xmonadcustom.MonadTall(**layout_theme),
     layout.Max(**layout_theme),
-    xmonad.MonadWide(**layout_theme),
+    xmonadcustom.MonadWide(**layout_theme),
 ]
 
 widget_defaults = dict(
@@ -429,14 +429,12 @@ keys.extend([
     EzKey('M-S-c', lazy.window.kill()),
     EzKey('M-C-r', lazy.reload_config()),
     EzKey('M-C-q', lazy.shutdown()),
-
-    #EzKey(f'M-r', lazy.to_screen(0), desc = f'Move focus to screen {i}'),
 ])
 
 # Monitor navigation
 monitor_navigation_keys = ['w', 'e', 'r']
 for i, key in enumerate(monitor_navigation_keys):
-    monitor_index_map = [ 2, 1, 0 ]
+    monitor_index_map = [ 2, 0, 1 ]
     keys.extend([
         EzKey(f'M-{key}', lazy.to_screen(monitor_index_map[i]), desc = f'Move focus to screen {i}'),
         EzKey(f'M-S-{key}', lazy.window.toscreen(monitor_index_map[i]), desc = f'Move focus to screen {i}'),
@@ -584,6 +582,13 @@ def startup_applications(client: Window):
     elif client.match(Match(wm_class = 'discord')) or client.match(Match(wm_class = 'telegram-desktop')) or client.match(Match(wm_class = 'cinny')):
         client.togroup(groups[8].name)
 
+@hook.subscribe.screen_change
+@lazy.function
+def set_screens(qtile, event):
+    if not os.path.exists(os.path.expanduser('~/NO-AUTORANDR')):
+        subprocess.run(["autorandr", "--change"])
+        qtile.cmd_restart()
+
 # Turn off fullscreen on unfocus
 @hook.subscribe.client_focus
 def exit_fullscreen_on_focus_changed(client: Window):
@@ -608,3 +613,4 @@ def scratchpad_startup():
             return hide_dropdown
 
         hook.subscribe.client_managed(wrapper(dropdown_name))
+
