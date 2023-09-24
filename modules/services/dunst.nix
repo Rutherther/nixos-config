@@ -18,7 +18,7 @@ in
     };
     settings = with colors.scheme.doom; {               # Settings
       global = {
-        monitor = 0;
+        monitor = 2;
         # geometry [{width}x{height}][+/-{x}+/-{y}]
         # geometry = "600x50-50+65";
         width = 300;
