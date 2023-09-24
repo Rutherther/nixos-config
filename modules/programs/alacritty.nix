@@ -8,6 +8,13 @@
 
 {
   programs = {
+    dircolors = {
+      enable = true;
+      settings = {
+        OTHER_WRITABLE = "01;35"; # Make ntfs colors readable
+      };
+    };
+
     alacritty = {
       enable = true;
       settings = {
