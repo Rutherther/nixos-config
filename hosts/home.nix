@@ -22,6 +22,17 @@
 
   services.mpris-proxy.enable = true;
 
+  xdg = {
+    userDirs = let dir = s: "${config.home.homeDirectory}/${s}"; in {
+      documents = dir "doc";
+      download = dir "download";
+      music = dir "music";
+      pictures = dir "photos";
+      publicShare = dir "public";
+      videos = dir "videos";
+    };
+  };
+
   home = {
     username = "${user}";
     homeDirectory = "/home/${user}";
