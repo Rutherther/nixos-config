@@ -17,7 +17,7 @@ from tasklist import TaskList
 from mpris2widget import Mpris2
 from bluetooth import Bluetooth
 import xmonadcustom
-from nixenvironment import setupLocation, configLocation
+from nixenvironment import setupLocation, configLocation, sequenceDetectorExec
 
 colors = {
     'primary': '51afef',
@@ -409,11 +409,11 @@ keys.extend([
 
 # media keys
 keys.extend([
-    EzKey('<XF86AudioPlay>', lazy.spawn('playerctl play')),
-    EzKey('<XF86AudioPause>', lazy.spawn('playerctl pause')),
-    EzKey('<XF86AudioStop>', lazy.spawn('playerctl stop')),
-    EzKey('<XF86AudioNext>', lazy.spawn('playerctl next')),
-    EzKey('<XF86AudioPrev>', lazy.spawn('playerctl previous')),
+    EzKey('<XF86AudioPlay>', lazy.spawn(f'{sequenceDetectorExec} -g mpris play')),
+    EzKey('<XF86AudioPause>', lazy.spawn(f'{sequenceDetectorExec} -g mpris pause')),
+    EzKey('<XF86AudioStop>', lazy.spawn(f'{sequenceDetectorExec} -g mpris stop')),
+    EzKey('<XF86AudioNext>', lazy.spawn(f'{sequenceDetectorExec} -g mpris next')),
+    EzKey('<XF86AudioPrev>', lazy.spawn(f'{sequenceDetectorExec} -g mpris prev')),
     EzKey('<XF86AudioMute>', lazy.spawn('amixer -D pulse set Master 1+ toggle')),
     EzKey('<XF86MonBrightnessUp>', lazy.spawn('xbacklight -inc 5')),
     EzKey('<XF86MonBrightnessDown>', lazy.spawn('xbacklight -dec 5')),

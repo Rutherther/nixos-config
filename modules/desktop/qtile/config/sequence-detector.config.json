@@ -1,0 +1,18 @@
+{
+    "debounce_time": 500,
+    "groups": [
+        {
+            "group_id": "mpris",
+            "sequences": [
+                { "keys": ["next"], "action": "playerctl next" },
+                { "keys": ["prev"], "action": "playerctl previous" },
+                { "keys": ["play"], "action": "playerctl play" },
+                { "keys": ["pause"], "action": "playerctl pause" },
+                { "keys": ["volup"], "action": "amixer set Master 10%+ unmute" },
+                { "keys": ["voldown"], "action": "amixer set Master 10%- unmute" },
+                { "keys": ["next", "next"], "action": "playerctl --player=firefox play-pause" },
+                { "keys": ["next", "prev"], "action": "playerctl --player=spotify play-pause" }
+            ]
+        }
+    ]
+}

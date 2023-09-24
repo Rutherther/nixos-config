@@ -4,7 +4,6 @@
   imports = [(import ./python-overlay.nix)];
 
   environment.systemPackages = with pkgs; [
-    playerctl
     xkblayout-state
   ];
 

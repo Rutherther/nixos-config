@@ -1,11 +1,33 @@
-{ config, lib, pkgs, location, ... }:
+{ config, lib, pkgs, user, location, ... }:
 
-{
+let
+  sequence-detector-src = pkgs.fetchFromGitHub {
+    owner = "Rutherther";
+    repo = "sequence-detector";
+    rev = "f9052a0232d8d4377446cb7aa813382977ed25a3";
+    hash = "sha256-YJ7U/G9EOGaf25zqTAMMGK0A6dY0wmtcpesp3d2uzTk=";
+  };
+
+  sequence-detector-pkg = pkgs.rustPlatform.buildRustPackage {
+    pname = "sequence-detector";
+    version = "0.1";
+    src = sequence-detector-src;
+    cargoHash = "sha256-7S8TXqtKWR4utBeUe9Q7RrmHgJg5lqkLdmo9b+MTRGg=";
+    hash = "sha256-7S8TXqtKWR4utBeUe9Q7RrmHgJg5lqkLdmo9b+MTRGg=";
+  };
+in {
   # services.udev.extraRules =
   #     ''ACTION=="change", SUBSYSTEM=="drm", RUN+="${pkgs.autorandr}/bin/autorandr -c"'';
   services.autorandr = {
     enable = true;
   };
+
+  home.packages = with pkgs; [
+    playerctl
+    sequence-detector-pkg
+  ];
+
+  services.playerctld.enable = true;
 
   programs.autorandr = {
     enable = true;
@@ -79,6 +101,7 @@
   xdg.configFile."qtile/mpris2widget.py".source = ./config/mpris2widget.py;
   xdg.configFile."qtile/tasklist.py".source = ./config/tasklist.py;
   xdg.configFile."qtile/xmonadcustom.py".source = ./config/xmonadcustom.py;
+  xdg.configFile."qtile/sequence-detector.config.json".source = ./config/sequence-detector.config.json;
 
   xdg.configFile."qtile/nixenvironment.py".text = ''
 from string import Template
@@ -89,5 +112,7 @@ configLocationRef = Template("${location}/modules/desktop/qtile/config")
 
 setupLocation = setupLocationRef.substitute(os.environ)
 configLocation = configLocationRef.substitute(os.environ)
+
+sequenceDetectorExec = "sequence_detector -c /home/${user}/.config/qtile/sequence-detector.config.json "
   '';
 }
