@@ -29,6 +29,12 @@
       fsType = "vfat";
     };
 
+  fileSystems."/home/ruther/doc" =
+    { device = "/data/Shared/Documents";
+      fsType = "none";
+      options = [ "bind" ];
+    };
+
   swapDevices =
     [ { device = "/dev/disk/by-label/swap"; }
     ];
