@@ -11,7 +11,7 @@
 #           └─ default.nix
 #
 
-{ config, lib, pkgs, unstable, user, location, ... }:
+{ config, lib, nixpkgs, pkgs, unstable, user, location, ... }:
 
 { 
   imports =                                   # Home Manager Modules
@@ -21,6 +21,8 @@
     (import ../modules/services/home.nix);
 
   services.mpris-proxy.enable = true;
+
+  nixpkgs.config.allowUnfree = true;
 
   xdg = {
     userDirs = let dir = s: "${config.home.homeDirectory}/${s}"; in {

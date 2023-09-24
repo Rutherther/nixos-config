@@ -33,11 +33,7 @@ in
   laptop = lib.nixosSystem {                                # Laptop profile
     inherit system;
     specialArgs = {
-      inherit unstable inputs user location;
-      host = {
-        hostName = "laptop";
-        mainMonitor = "eDP-1";
-      };
+      inherit inputs unstable user location;
     };
     modules = [
       nur.nixosModules.nur
@@ -45,14 +41,9 @@ in
       ./configuration.nix
 
       home-manager.nixosModules.home-manager {
-        home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
           inherit inputs unstable user location;
-          host = {
-            hostName = "laptop";
-            mainMonitor = "eDP-1";
-          };
         };
         home-manager.users.${user} = {
           imports = [
@@ -68,12 +59,7 @@ in
   vm = lib.nixosSystem {                                    # VM profile
     inherit system;
     specialArgs = {
-      inherit unstable inputs user location;
-      host = {
-        hostName = "vm";
-        mainMonitor = "Virtual-1";
-        secondMonitor = "Virtual-2";
-      };
+      inherit inputs unstable user location;
     };
     modules = [
       nur.nixosModules.nur
@@ -81,15 +67,9 @@ in
       ./configuration.nix
 
       home-manager.nixosModules.home-manager {
-        home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
           inherit inputs unstable user location;
-          host = {
-            hostName = "vm";
-            mainMonitor = "Virtual-1";
-            secondMonitor = "Virtual-2";
-          };
         };
         home-manager.users.${user} = {
           imports = [
@@ -106,11 +86,6 @@ in
     inherit system;
     specialArgs = {
       inherit inputs unstable system user location;
-      host = {
-        hostName = "desktop";
-        mainMonitor = "HDMI-A-1";
-        secondMonitor = "HDMI-A-2";
-      };
     };                                                      # Pass flake variable
     modules = [                                             # Modules that are used.
       nur.nixosModules.nur
@@ -118,15 +93,9 @@ in
       ./configuration.nix
 
       home-manager.nixosModules.home-manager {              # Home-Manager module that is used.
-        home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
           inherit inputs unstable user location;
-          host = {
-            hostName = "desktop";       #For Xorg iGPU  | Hyprland iGPU
-            mainMonitor = "HDMI-A-1";   #HDMIA3         | HDMI-A-3
-            secondMonitor = "HDMI-A-2"; #DP1            | DP-1
-          };
         };                                                  # Pass flake variable
         home-manager.users.${user} = {
           imports = [
