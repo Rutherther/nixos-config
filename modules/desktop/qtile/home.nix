@@ -3,6 +3,10 @@
 {
   # services.udev.extraRules =
   #     ''ACTION=="change", SUBSYSTEM=="drm", RUN+="${pkgs.autorandr}/bin/autorandr -c"'';
+  services.autorandr = {
+    enable = true;
+  };
+
   programs.autorandr = {
     enable = true;
     hooks = {
@@ -59,7 +63,7 @@
             position = "0x0";
             mode = "1920x1080";
           };
-          Virtual-2= {
+          Virtual-2 = {
             enable = true;
             primary = false;
             position = "1920x0";
