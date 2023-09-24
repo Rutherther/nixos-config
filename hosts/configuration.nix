@@ -50,6 +50,8 @@
   security.polkit.enable = true;
 
   fonts.fonts = with pkgs; [                # Fonts
+    ubuntu_font_family
+    fira-code
     carlito                                 # NixOS
     vegur                                   # NixOS
     source-code-pro
@@ -62,6 +64,14 @@
       ];
     })
   ];
+
+  fonts.fontconfig = {
+    defaultFonts = {
+      serif = [ "Ubuntu" ];
+      sansSerif = [ "Ubuntu" ];
+      monospace = [ "FiraCode" ];
+    };
+  };
 
   environment = {
     variables = {
