@@ -186,8 +186,8 @@
   (setq vhdl-clock-name "clk_i")
   (setq vhdl-reset-kind 'sync)
   (setq vhdl-reset-name "rst_in")
-  (setq lsp-vhdl--params '(server-path "/home/ruther/Documents/git_cloned/rust_hdl/target/debug/vhdl_ls" server-args nil))
-  (setq lsp-vhdl-server-path "/home/ruther/Documents/git_cloned/rust_hdl/target/debug/vhdl_ls"))
+  ;;(setq lsp-vhdl--params '(server-path "/home/ruther/Documents/git_cloned/rust_hdl/target/debug/vhdl_ls" server-args nil))
+  ;;(setq lsp-vhdl-server-path "/home/ruther/Documents/git_cloned/rust_hdl/target/debug/vhdl_ls"))
 (setq lsp-vhdl-server 'vhdl-ls)
 
 (add-hook 'vhdl-mode-hook 'my-vhdl-setup)
@@ -240,7 +240,7 @@
 :modes vhdl-mode)
 
 ;; org-mdoe
-(setq rmh-elfeed-org-files (list "~/Documents/notes/org/elfeed.org"))
+(setq rmh-elfeed-org-files (list "~/doc/notes/org/elfeed.org"))
 
 ;; tree sitter and navigation
 ;;(setq treesit-language-source-alist
@@ -291,7 +291,7 @@ https://github.com/magit/magit/issues/460 (@cpitclaudel)."
 (use-package org-roam
   :ensure t
   :custom
-  (org-roam-directory "~/Documents/notes/org-roam")
+  (org-roam-directory "~/doc/notes/org-roam")
   (org-roam-dailies-directory "journals/")
   (org-roam-capture-templates
    '(("d" "default" plain
