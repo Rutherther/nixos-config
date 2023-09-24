@@ -12,7 +12,7 @@
 #               └─ bspwm.nix
 #
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, user, ... }:
 
 let
   mkSure = lib.mkOverride 0;
@@ -21,7 +21,12 @@ in {
     ./hardware-configuration.nix                # Current system hardware config @ /etc/nixos/hardware-configuration.nix
     ../../modules/desktop/dm/sddm.nix           # Desktop Manager
     ../../modules/desktop/qtile/default.nix           # Qtile
+    <nixpkgs/nixos/modules/virtualisation/qemu-vm.nix>
   ];
+
+  users.users.${user} = {                   # System User
+    initialPassword = "1234";
+  };
 
   services.spice-vdagentd.enable = mkSure true;
   services.qemuGuest.enable = true;
@@ -29,6 +34,11 @@ in {
     spice-vdagent
     pkgs.xorg.xf86videoqxl
   ];
+
+  virtualisation.vmVariant = {
+    memorySize = 4096;
+    cores = 6;
+  };
 
   boot = {                                      # Boot options
     kernelPackages = pkgs.linuxPackages_latest;

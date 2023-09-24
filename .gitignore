@@ -3,4 +3,5 @@
 *.log
 tmp/
 
+*.qcow2
 result
