@@ -14,23 +14,24 @@
     overrideFolders = true;
     devices = {
       "phone" = { id = inputs.semi-secrets.syncthing.devices.phone; };
+      "nixos-desktop" = { id = inputs.semi-secrets.syncthing.devices.desktop; };
     };
     folders = {
       "uni" = {
         path = "/home/${user}/doc/uni";
-        devices = [ "phone" ];
+        devices = [ "phone" "nixos-desktop" ];
       };
       "notes" = {
         path = "/home/${user}/doc/notes/obsidian/Notes";
-        devices = [ "phone" ];
+        devices = [ "phone" "nixos-desktop" ];
       };
       "camera" = {
         path = "/home/${user}/doc/camera";
-        devices = [ "phone" ];
+        devices = [ "phone" "nixos-desktop" ];
       };
       "study" = {
         path = "/home/${user}/doc/study";
-        devices = [ "phone" ];
+        devices = [ "phone" "nixos-desktop" ];
       };
     };
     extraOptions.options = {
