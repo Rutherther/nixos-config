@@ -18,16 +18,18 @@
 #           └─ default.nix
 #
 
-{ pkgs, lib, user, ... }:
+{ pkgs, lib, user, config, ... }:
 
 {
   imports =                                               # For now, if applying to other system, swap files
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
-    #[(import ../../modules/programs/games.nix)] ++        # Gaming
     [(import ../../modules/desktop/dm/sddm.nix)] ++       # Desktop manager
     [(import ../../modules/desktop/qtile/default.nix)] ++ # Window Manager
-    #(import ../../modules/desktop/virtualisation) ++      # Virtual Machines & VNC
-    (import ../../modules/hardware);                      # Hardware devices
+    (import ../../modules/hardware) ++                    # Hardware devices
+    [(import ../../modules/programs/fpga/vivado {
+      inherit pkgs lib config;
+      vivadoPath = "/data/Linux/fpga/apps/xilinx/Vivado/2023.1/bin/vivado";
+    })];
 
   boot = {                                      # Boot options
     kernelPackages = pkgs.linuxPackages_latest;
