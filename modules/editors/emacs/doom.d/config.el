@@ -76,6 +76,8 @@
 ;; they are implemented.
 
 
+(setq evil-snipe-scope 'buffer)
+
 (setq doom-localleader-key ",")
 
 (map! :leader
@@ -130,8 +132,6 @@
 ;  ("\\section{%s}" . "\\section*{%s}")
 ;  ("\\subsection{%s}" . "\\subsection*{%s}")
 ;  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
-
-(remove-hook 'doom-first-input-hook #'evil-snipe-mode)
 
 (setq lsp-julia-default-environment "~/.julia/environments/v1.8")
 
