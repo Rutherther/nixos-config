@@ -58,6 +58,7 @@
     jetbrains-mono
     font-awesome                            # Icons
     corefonts                               # MS
+    vistafonts
     (nerdfonts.override {                   # Nerdfont Icons override
       fonts = [
         "FiraCode"
@@ -122,6 +123,13 @@
   nix = {                                   # Nix Package Manager settings
     settings ={
       auto-optimise-store = true;           # Optimise syslinks
+      substituters = [
+        "https://cache.nixos.org"
+        "https://rutherther.cachix.org"
+      ];
+      trusted-public-keys = [
+        "rutherther.cachix.org-1:O9st5Dq/VHb0T8+vwZ0aP4sjzzCn7Ry60wSyXaRW7j8="
+      ];
     };
     gc = {                                  # Automatic garbage collection
       automatic = true;
