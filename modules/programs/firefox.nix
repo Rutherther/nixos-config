@@ -1,8 +1,22 @@
-{ inputs, config, lib, pkgs, ... }:
+{ inputs, config, lib, nixpkgs, pkgs, ... }:
 
 let
   nur = config.nur.repos;
+  buildFirefoxXpiAddon = pkgs.nur.repos.rycee.firefox-addons.buildFirefoxXpiAddon;
+  my-nur = import (builtins.fetchTarball {
+    url = "https://github.com/Rutherther/nur-pkgs/archive/20501f6cb2fafd9668bf8c081a14177452569f51.tar.gz";
+    sha256 = "12jiw3i93wfn164nsb8iszj6h6n03wdr1cawq5fg3fz74wbpcmrh";
+  }) { inherit pkgs; };
 in {
+  nixpkgs.overlays = [
+    my-nur.overlays.firefoxpwa
+    my-nur.overlays.firefox-native-messaging
+  ];
+
+  home.packages = [
+    pkgs.firefoxpwa
+  ];
+
   programs.firefox = {
     enable = true;
     profiles = {
