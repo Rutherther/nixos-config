@@ -13,6 +13,5 @@
 [
   ./syncthing.nix
   ./wireguard.nix
+  ./ssh.nix
 ]
-
-# redshift and media temporarely disables
