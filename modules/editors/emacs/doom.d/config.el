@@ -105,53 +105,6 @@
   (lsp-ui-sideline-show-hover t)
   (lsp-ui-doc-enable nil))
 
-(require 'dap-cpptools)
-
-(with-eval-after-load 'dap-cpptools
-;; Add a template specific for debugging Rust programs.
-;; It is used for new projects, where I can M-x dap-edit-debug-template
-(dap-register-debug-template "Rust::CppTools Run Configuration"
-                                (list :type "cppdbg"
-                                :request "launch"
-                                :name "Rust::Run"
-                                :MIMode "gdb"
-                                :miDebuggerPath "rust-gdb"
-                                :environment []
-                                :program "${workspaceFolder}/target/debug/hello / replace with binary"
-                                :cwd "${workspaceFolder}"
-                                :console "external"
-                                :dap-compilation "cargo build"
-                                :dap-compilation-dir "${workspaceFolder}")))
-
-(with-eval-after-load 'dap-mode
-        (setq dap-default-terminal-kind "integrated") ;; Make sure that terminal programs open a term for I/O in an Emacs buffer
-        (dap-auto-configure-mode +1))
-
-;(add-to-list 'org-latex-classes
-;'("ctuslides" "\\documentclass[presentation]{ctuslides}"
-;  ("\\section{%s}" . "\\section*{%s}")
-;  ("\\subsection{%s}" . "\\subsection*{%s}")
-;  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
-
-(setq lsp-julia-default-environment "~/.julia/environments/v1.8")
-
-;; latex
-
-(defun run-latexmk ()
-  (interactive)
-  (let ((TeX-save-query nil)
-        (TeX-process-asynchronous nil)
-        (master-file (TeX-master-file)))
-    (TeX-save-document "")
-    (TeX-run-TeX "latexmk"
-                 (TeX-command-expand "latexmk -pdf %O %S" 'TeX-master-file)
-                 master-file))
-    (if (plist-get TeX-error-report-switches (intern master-file))
-        (TeX-next-error t)
-      (progn
-        (demolish-tex-help)
-        (minibuffer-message "latexmk: done."))))
-
 (after! centaur-tabs (centaur-tabs-group-by-projectile-project))
 
 ;; imenu
@@ -166,18 +119,6 @@
 ;; vhdl
 
 (add-hook 'vhdl-mode-hook #'lsp!)
-(add-hook 'vhdl-ts-mode-hook #'lsp!)
-
-(defvar-local my/flycheck-local-cache nil)
-
-(defun my/flycheck-checker-get (fn checker property)
-  (or (alist-get property (alist-get checker my/flycheck-local-cache))
-      (funcall fn checker property)))
-
-(advice-add 'flycheck-checker-get :around 'my/flycheck-checker-get)
-
-(add-hook 'vhdl-ts-mode-hook #'vhdl-electric-mode)
-(add-hook 'vhdl-ts-mode-hook #'vhdl-stutter-mode)
 (add-hook 'vhdl-mode-hook #'vhdl-electric-mode)
 (add-hook 'vhdl-mode-hook #'vhdl-stutter-mode)
 
@@ -186,6 +127,7 @@
   (setq vhdl-clock-name "clk_i")
   (setq vhdl-reset-kind 'sync)
   (setq vhdl-reset-name "rst_in")
+)
   ;;(setq lsp-vhdl--params '(server-path "/home/ruther/Documents/git_cloned/rust_hdl/target/debug/vhdl_ls" server-args nil))
   ;;(setq lsp-vhdl-server-path "/home/ruther/Documents/git_cloned/rust_hdl/target/debug/vhdl_ls"))
 (setq lsp-vhdl-server 'vhdl-ls)
@@ -197,31 +139,6 @@
 ;;          (lambda ()
 ;;            (when (derived-mode-p 'vhdl-mode)
 ;;              (setq my/flycheck-local-cache '((lsp . ((next-checkers . (vhdl-ghdl)))))))))
-
-(use-package! vhdl-ext
-  :after vhdl-mode
-  :demand
-  :mode (("\\.vhd\\'"  . vhdl-mode)
-         ("\\.vhdl\\'" . vhdl-mode))
-  :init
-  (setq vhdl-ext-feature-list
-        '(font-lock
-          ;;eglot
-          lsp
-          ;;flycheck
-          beautify
-          navigation
-          template
-          compilation
-          imenu
-          which-func
-          hideshow
-          time-stamp
-          company-keywords
-          ports))
-  :hook ((vhdl-mode . vhdl-ext-mode))
-  :config
-  (vhdl-ext-mode-setup))
 
 (flycheck-define-checker vhdl-ghdl
 "A VHDL syntax checker using ghdl."
@@ -238,9 +155,6 @@
 ((error line-start (file-name) ":" line ":" column
                 ": " (message) line-end))
 :modes vhdl-mode)
-
-;; org-mdoe
-(setq rmh-elfeed-org-files (list "~/doc/notes/org/elfeed.org"))
 
 ;; tree sitter and navigation
 ;;(setq treesit-language-source-alist
@@ -274,20 +188,6 @@
   (setq lsp-ui-doc-max-height 30))
 (add-hook 'lsp-mode-hook 'my-lsp-ui-setup)
 
-(defun ~/magit-process-environment (env)
-  "Add GIT_DIR and GIT_WORK_TREE to ENV when in a special directory.
-https://github.com/magit/magit/issues/460 (@cpitclaudel)."
-  (let ((default (file-name-as-directory (expand-file-name default-directory)))
-        (home (expand-file-name "~/")))
-    (when (string= default home)
-      (let ((gitdir (expand-file-name "~/.dotFiles/")))
-        (push (format "GIT_WORK_TREE=%s" home) env)
-        (push (format "GIT_DIR=%s" gitdir) env))))
-  env)
-
-(advice-add 'magit-process-environment
-            :filter-return #'~/magit-process-environment)
-
 (use-package org-roam
   :ensure t
   :custom
@@ -299,5 +199,3 @@ https://github.com/magit/magit/issues/460 (@cpitclaudel)."
       (file+head "pages/${slug}.org" "#+title: ${title}\n")
       :unnarrowed t)))
   :config (org-roam-db-autosync-enable))
-
-(add-hook 'python-mode-hook #'lsp)
