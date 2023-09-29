@@ -37,6 +37,7 @@ in
     };
     modules = [
       nur.nixosModules.nur
+      { nixpkgs.overlays = [ nur.overlay ]; }
       ./laptop
       ./configuration.nix
 
@@ -48,6 +49,7 @@ in
         home-manager.users.${user} = {
           imports = [
             nur.hmModules.nur
+            { nixpkgs.overlays = [ nur.overlay ]; }
             (import ./home.nix)
             (import ./laptop/home.nix)
           ];
@@ -63,6 +65,7 @@ in
     };
     modules = [
       nur.nixosModules.nur
+      { nixpkgs.overlays = [ nur.overlay ]; }
       ./vm
       ./configuration.nix
 
@@ -74,6 +77,7 @@ in
         home-manager.users.${user} = {
           imports = [
             nur.hmModules.nur
+            { nixpkgs.overlays = [ nur.overlay ]; }
             (import ./home.nix)
             (import ./vm/home.nix)
           ];
@@ -89,6 +93,7 @@ in
     };                                                      # Pass flake variable
     modules = [                                             # Modules that are used.
       nur.nixosModules.nur
+      { nixpkgs.overlays = [ nur.overlay ]; }
       ./desktop
       ./configuration.nix
 
@@ -99,7 +104,8 @@ in
         };                                                  # Pass flake variable
         home-manager.users.${user} = {
           imports = [
-            nur.nixosModules.nur
+            nur.hmModules.nur
+            { nixpkgs.overlays = [ nur.overlay ]; }
             ./home.nix
             ./desktop/home.nix
           ];
