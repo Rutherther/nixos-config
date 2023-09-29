@@ -40,8 +40,8 @@
       crypted = {
         device = "/dev/disk/by-label/root";
         preLVM = true;
-      }
-    }
+      };
+    };
   };
 
   environment = {
