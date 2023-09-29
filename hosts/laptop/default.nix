@@ -31,17 +31,17 @@
     loader = {                              # EFI Boot
       efi = {
         canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot";
       };
-      grub = {                              # Most of grub is set up for dual boot
-        enable = true;
-        devices = [ "nodev" ];
-        efiSupport = true;
-        useOSProber = true;                 # Find all boot options
-        configurationLimit = 2;
-      };
+      systemd-boot.enable = true;
       timeout = 1;                          # Grub auto select time
     };
+
+    initrd.luks.devices = {
+      crypted = {
+        device = "/dev/disk/by-label/root";
+        preLVM = true;
+      }
+    }
   };
 
   environment = {
