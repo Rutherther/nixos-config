@@ -61,6 +61,15 @@
     logind.lidSwitch = "ignore";           # Laptop does not go to sleep when lid is closed
     auto-cpufreq.enable = true;
     blueman.enable = true;
+
+    xserver.libinput = {
+      enable = true;
+      touchpad = {
+        naturalScrolling = true;
+        tapping = true;
+        tappingDragLock = true;
+      };
+    };
   };
 
   networking.wireguard.interfaces = {
