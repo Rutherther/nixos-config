@@ -4,7 +4,7 @@
 # Hardcoded as terminal for rofi and doom emacs
 #
 
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   programs = {
@@ -21,7 +21,7 @@
         font = rec {                          # Font - Laptop has size manually changed at home.nix
           normal.family = "FiraCode Nerd Font";
           bold = { style = "Bold"; };
-          size = 12;
+          size = lib.mkForce 12;
         };
         offset = {                            # Positioning
           x = -1;
