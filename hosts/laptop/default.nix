@@ -59,8 +59,8 @@
 
   networking.networkmanager.enable = true;
 
-  programs = {                              # No xbacklight, this is the alterantive
-    light.enable = true;
+  hardware = {                              # No xbacklight, this is the alterantive
+    brillo.enable = true;
   };
 
   services = {

@@ -415,8 +415,8 @@ keys.extend([
     EzKey('<XF86AudioNext>', lazy.spawn(f'{sequenceDetectorExec} -g mpris next')),
     EzKey('<XF86AudioPrev>', lazy.spawn(f'{sequenceDetectorExec} -g mpris prev')),
     EzKey('<XF86AudioMute>', lazy.spawn('amixer -D pulse set Master 1+ toggle')),
-    EzKey('<XF86MonBrightnessUp>', lazy.spawn('xbacklight -inc 5')),
-    EzKey('<XF86MonBrightnessDown>', lazy.spawn('xbacklight -dec 5')),
+    EzKey('<XF86MonBrightnessUp>', lazy.spawn(f'{configLocation}/brightness.sh up')),
+    EzKey('<XF86MonBrightnessDown>', lazy.spawn(f'{configLocation}/brightness.sh down')),
 ])
 
 # Printscreen
