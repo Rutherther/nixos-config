@@ -7,10 +7,10 @@ function send_notification() {
 
 case $1 in
     up)
-        brillo -A 5 -q
+        brillo -A 2 -q
         ;;
     down)
-        brillo -U 5 -q -c 2
+        brillo -U 2 -q
         ;;
 esac
 
