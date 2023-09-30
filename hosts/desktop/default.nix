@@ -31,6 +31,8 @@
       vivadoPath = "/data/Linux/fpga/apps/xilinx/Vivado/2023.1/bin/vivado";
     })];
 
+  networking.hostName = "nixos-desktop";
+
   boot = {                                      # Boot options
     kernelPackages = pkgs.linuxPackages_latest;
     supportedFilesystems = [ "ntfs" ];

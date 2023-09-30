@@ -25,6 +25,8 @@
     [(import ../../modules/desktop/qtile/default.nix)] ++ # Window Manager
     (import ../../modules/hardware);                      # Hardware devices
 
+  networking.hostName = "nixos-laptop";
+
   boot = {                                  # Boot options
     kernelPackages = pkgs.linuxPackages_latest;
 
