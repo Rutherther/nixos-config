@@ -6,8 +6,13 @@
     version = "1.2";
     dontBuild = true;
     installPhase = ''
-      mkdir -p $out/share/sddm/themes
-      cp -aR $src $out/share/sddm/themes/sugar-dark
+      mkdir -p $out/share/sddm/themes/sugar-dark
+
+      cat << EOT >> theme.conf.user
+        ForceHideCompletePassword="true"
+      EOT
+
+      cp -aR $src/* theme.conf.user $out/share/sddm/themes/sugar-dark/
     '';
     src = fetchFromGitHub {
       owner = "MarianArlt";
