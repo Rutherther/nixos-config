@@ -11,18 +11,21 @@
 #              └─ home.nix
 #
 
-{ pkgs, ... }:
+{ pkgs, lib, config, unstable, ... }:
 
 {
   imports =
     [
       ../../modules/desktop/qtile/home.nix # Window Manager
+      (import ../../modules/programs/fpga/vivado/home.nix {
+        inherit pkgs lib config;
+        vivadoPath = "/data/fpga/xilinx/Vivado/2023.1/bin/vivado";
+      })
     ];
 
   home = {                                # Specific packages for laptop
     packages = with pkgs; [
-      # Applications
-      libreoffice                         # Office packages
+      unstable.distrobox
 
       # Display
       #light                              # xorg.xbacklight not supported. Other option is just use xrandr.
