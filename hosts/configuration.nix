@@ -18,6 +18,11 @@
     [(import ../modules/desktop)] ++
     (import ../modules/services);
 
+  boot.tmp = {
+    cleanOnBoot = true;
+    useTmpfs = true;
+  };
+
   hardware.pulseaudio.enable = false;
 
   users.users.${user} = {                   # System User
