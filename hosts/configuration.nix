@@ -47,6 +47,16 @@
   };
 
   security.rtkit.enable = true;
+  systemd.services.rtkit-daemon = {
+    serviceConfig = {
+      LogLevelMax = 4;
+      ExecStart = [
+        ""
+        "${pkgs.rtkit}/libexec/rtkit-daemon --processes-per-user-max=1000 --processes-per-user-max=10000 --actions-per-burst-max=1000 --actions-burst-sec=10 --canary-cheep-msec=30000 --canary-watchdog-msec=60000"
+      ];
+    };
+  };
+
   security.polkit.enable = true;
 
   fonts.fonts = with pkgs; [                # Fonts
@@ -87,7 +97,6 @@
       killall
       nano
       pciutils
-      pulseaudio
       ripgrep
       socat
       usbutils
