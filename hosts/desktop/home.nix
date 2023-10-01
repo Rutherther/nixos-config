@@ -11,7 +11,7 @@
 #               └─ home.nix
 #
 
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, unstable, ... }:
 
 {
   imports =
@@ -25,6 +25,7 @@
 
   home = {                                # Specific packages for desktop
     packages = with pkgs; [
+      unstable.distrobox
     ];
   };
 }
