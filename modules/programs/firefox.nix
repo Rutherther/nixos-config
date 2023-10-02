@@ -62,9 +62,53 @@ in {
         ];
 
         settings = {
+          "beacon.enabled" = false;
+          "browser.contentblocking.category" = "strict";
+
           "browser.newtabpage.enabled" = false; # Blank new tab page.
           "browser.startup.page" = 3; # Resume last session.
           "browser.tabs.closeWindowWithLastTab" = false;
+
+          "browser.download.dir" = "${config.home.homeDirectory}/download";
+          "browser.toolbars.bookmarks.visibility" = "newtab";
+          "signon.rememberSignons" = false;
+          "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons" = false;
+          "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features" = false;
+
+          "layout.css.prefers-color-scheme.content-override" = 2;
+          "browser.uidensity" = 1; # Dense.
+          "extensions.unifiedExtensions.enabled" = false; # Disable extensions symbol in bar
+          "layout.css.devPixelsPerPx" = 1; # Default zoom?
+
+          "media.ffmpeg.vaapi.enabled" = true;
+          "gfx.webrender.all" = true;
+
+          "network.IDN_show_punycode" = true;
+
+          "permissions.default.shortcuts" = 3; # Don't steal my shortcuts!
+
+          "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+
+          # Privacy
+          "browser.search.hiddenOneOffs" =
+            "Google,Yahoo,Bing,Amazon.com,Twitter";
+          "browser.send_pings" = false;
+          "dom.battery.enabled" = false;
+          "dom.security.https_only_mode" = true;
+          "network.dns.disablePrefetch" = true;
+          "geo.enabled" = false;
+          "browser.urlbar.speculativeConnect.enabled" = false; # Do not resolve dns before clicking
+          "network.prefetch-next" = false;
+          "media.video_stats.enabled" = false;
+
+          "network.http.referer.XOriginPolicy" = 2;
+          "network.http.referer.XOriginTrimmingPolicy" = 2;
+          "network.http.referer.trimmingPolicy" = 1;
+
+          "privacy.donottrackheader.enabled" = true;
+          "privacy.donottrackheader.value" = 1;
+          "privacy.firstparty.isolate" = true;
+
           # Fully disable Pocket. See
           # https://www.reddit.com/r/linux/comments/zabm2a.
           "extensions.pocket.enabled" = false;
