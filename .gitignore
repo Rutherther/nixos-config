@@ -5,3 +5,5 @@ tmp/
 
 *.qcow2
 result
+
+.direnv
