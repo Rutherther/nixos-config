@@ -251,6 +251,12 @@ class MonadTall(_SimpleLayoutBase):
     def remove(self, client: Window) -> Window | None:
         "Remove client from layout"
         self.do_normalize = True
+        index = self.clients.index(client)
+        if index < self.master_length:
+            self.decrease_nmaster(False)
+        elif len(self.clients) - self.master_length - 1 == 0:
+            self.decrease_nmaster(False)
+
         return self.clients.remove(client)
 
     @expose_command()
@@ -789,20 +795,24 @@ class MonadTall(_SimpleLayoutBase):
         self.group.focus(self.clients.current_client)
 
     @expose_command()
-    def decrease_nmaster(self):
+    def decrease_nmaster(self, normalize=True):
         self.master_length -= 1
         if self.master_length <= 0:
             self.master_length = 1
-        self.group.layout_all()
-        self.normalize()
+
+        if normalize:
+            self.group.layout_all()
+            self.normalize()
 
     @expose_command()
-    def increase_nmaster(self):
+    def increase_nmaster(self, normalize=True):
         self.master_length += 1
         if self.master_length >= len(self.clients):
             self.master_length = len(self.clients) - 1
-        self.group.layout_all()
-        self.normalize()
+
+        if normalize:
+            self.group.layout_all()
+            self.normalize()
 
     @expose_command
     def focus_first(self):
