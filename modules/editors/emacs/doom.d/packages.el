@@ -58,3 +58,6 @@
                  :files (:defaults "snippets" "ts-mode/*.el")))
 (package! fancy-narrow)
 (package! topsy)
+
+(package! ein)
+(package! ob-ipython)
