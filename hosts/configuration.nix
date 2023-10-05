@@ -77,6 +77,7 @@
     (nerdfonts.override {                   # Nerdfont Icons override
       fonts = [
         "FiraCode"
+        "Ubuntu"
       ];
     })
   ];
@@ -85,7 +86,7 @@
     defaultFonts = {
       serif = [ "Ubuntu" ];
       sansSerif = [ "Ubuntu" ];
-      monospace = [ "FiraCode" ];
+      monospace = [ "Ubuntu Mono" ];
     };
   };
 
