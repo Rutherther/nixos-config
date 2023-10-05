@@ -15,9 +15,6 @@ let
     cargoHash = "sha256-7S8TXqtKWR4utBeUe9Q7RrmHgJg5lqkLdmo9b+MTRGg=";
     hash = "sha256-7S8TXqtKWR4utBeUe9Q7RrmHgJg5lqkLdmo9b+MTRGg=";
   };
-
-  currentDirectory = builtins.toString ./.;
-  rootConfigDirectory = builtins.toString ./../../../.;
 in {
   # services.udev.extraRules =
   #     ''ACTION=="change", SUBSYSTEM=="drm", RUN+="${pkgs.autorandr}/bin/autorandr -c"'';
@@ -110,8 +107,8 @@ in {
 from string import Template
 import os
 
-setupLocationRef = Template("${rootConfigDirectory}")
-configLocationRef = Template("${currentDirectory}/config")
+setupLocationRef = Template("${location}")
+configLocationRef = Template("${location}/modules/desktop/qtile/config")
 
 setupLocation = setupLocationRef.substitute(os.environ)
 configLocation = configLocationRef.substitute(os.environ)
