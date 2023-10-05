@@ -65,8 +65,8 @@ in {
         ];
 
         settings = {
-          "beacon.enabled" = false;
-          "browser.contentblocking.category" = "strict";
+          # "beacon.enabled" = false;
+          # "browser.contentblocking.category" = "strict";
 
           "browser.newtabpage.enabled" = false; # Blank new tab page.
           "browser.startup.page" = 3; # Resume last session.
@@ -88,19 +88,19 @@ in {
 
           # "network.IDN_show_punycode" = true;
 
-          "permissions.default.shortcuts" = 3; # Don't steal my shortcuts!
+          # "permissions.default.shortcuts" = 3; # Don't steal my shortcuts!
 
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
 
           # Privacy
           "browser.search.hiddenOneOffs" =
             "Google,Yahoo,Bing,Amazon.com,Twitter";
-          "browser.send_pings" = false;
+          # "browser.send_pings" = false;
           "dom.battery.enabled" = false;
-          "dom.security.https_only_mode" = true;
+          # "dom.security.https_only_mode" = true;
           "network.dns.disablePrefetch" = true;
           "geo.enabled" = false;
-          "browser.urlbar.speculativeConnect.enabled" = false; # Do not resolve dns before clicking
+          # "browser.urlbar.speculativeConnect.enabled" = false; # Do not resolve dns before clicking
           "network.prefetch-next" = false;
           "media.video_stats.enabled" = false;
 
@@ -108,9 +108,9 @@ in {
           # "network.http.referer.XOriginTrimmingPolicy" = 2;
           # "network.http.referer.trimmingPolicy" = 1;
 
-          "privacy.donottrackheader.enabled" = true;
-          "privacy.donottrackheader.value" = 1;
-          "privacy.firstparty.isolate" = true;
+          # "privacy.donottrackheader.enabled" = true;
+          # "privacy.donottrackheader.value" = 1;
+          # "privacy.firstparty.isolate" = true;
 
           # Fully disable Pocket. See
           # https://www.reddit.com/r/linux/comments/zabm2a.
