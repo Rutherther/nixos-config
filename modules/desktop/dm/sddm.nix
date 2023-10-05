@@ -10,7 +10,6 @@ let
 in {
   environment.systemPackages = with pkgs; [
     themes.sddm-sugar-dark
-    xsecurelock
 
     # Dependencies of sugar dark theme
     libsForQt5.qt5.qtquickcontrols2

@@ -426,7 +426,7 @@ keys.extend([
 
 # Locking
 keys.extend([
-    EzKey('M-S-m', lazy.spawn('xsecurelock')),
+    EzKey('M-S-m', lazy.spawn('loginctl lock-session')),
 ])
 
 # Qtile control
