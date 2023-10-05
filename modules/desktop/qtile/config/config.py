@@ -424,6 +424,11 @@ keys.extend([
     EzKey('<Print>', lazy.spawn('flameshot gui')),
 ])
 
+# Locking
+keys.extend([
+    EzKey('M-S-m', lazy.spawn('xsecurelock')),
+])
+
 # Qtile control
 keys.extend([
     EzKey('M-S-c', lazy.window.kill()),
