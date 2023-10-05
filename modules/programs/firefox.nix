@@ -86,7 +86,7 @@ in {
           "media.ffmpeg.vaapi.enabled" = true;
           "gfx.webrender.all" = true;
 
-          "network.IDN_show_punycode" = true;
+          # "network.IDN_show_punycode" = true;
 
           "permissions.default.shortcuts" = 3; # Don't steal my shortcuts!
 
@@ -104,9 +104,9 @@ in {
           "network.prefetch-next" = false;
           "media.video_stats.enabled" = false;
 
-          "network.http.referer.XOriginPolicy" = 2;
-          "network.http.referer.XOriginTrimmingPolicy" = 2;
-          "network.http.referer.trimmingPolicy" = 1;
+          # "network.http.referer.XOriginPolicy" = 2;
+          # "network.http.referer.XOriginTrimmingPolicy" = 2;
+          # "network.http.referer.trimmingPolicy" = 1;
 
           "privacy.donottrackheader.enabled" = true;
           "privacy.donottrackheader.value" = 1;
