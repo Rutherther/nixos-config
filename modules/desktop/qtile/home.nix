@@ -111,7 +111,7 @@ from string import Template
 import os
 
 setupLocationRef = Template("${rootConfigDirectory}")
-configLocationRef = Template("${currentDirectory}/modules/desktop/qtile/config")
+configLocationRef = Template("${currentDirectory}/config")
 
 setupLocation = setupLocationRef.substitute(os.environ)
 configLocation = configLocationRef.substitute(os.environ)
