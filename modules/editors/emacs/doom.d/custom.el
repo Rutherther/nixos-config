@@ -4,7 +4,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(lsp-vhdl-server 'vhdl-ls)
+ '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'")
  '(package-selected-packages '(tree-sitter))
+ '(request-backend 'url-retrieve)
  '(safe-local-variable-values
    '((rustic-cargo-run-arguments . "--release")
      (rustic-cargo-build-arguments . "--release")
