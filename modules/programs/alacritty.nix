@@ -21,7 +21,7 @@
         font = rec {                          # Font - Laptop has size manually changed at home.nix
           normal.family = "FiraCode Nerd Font";
           bold = { style = "Bold"; };
-          size = lib.mkForce 12;
+          size = 12;
         };
         offset = {                            # Positioning
           x = -1;

@@ -27,26 +27,17 @@
     packages = with pkgs; [
       unstable.distrobox
 
-      # Display
-      #light                              # xorg.xbacklight not supported. Other option is just use xrandr.
-
       # Power Management
-      #auto-cpufreq                       # Power management
-      #tlp                                # Power management
+      acpi
     ];
-  };
-
-  programs = {
-    alacritty.settings.font.size = 11;
   };
 
   services = {                            # Applets
     network-manager-applet.enable = true; # Network
-#   cbatticon = {
-#     enable = true;
-#     criticalLevelPercent = 10;
-#     lowLevelPercent = 20;
-#     iconType = null;
-#   };
+    cbatticon = {
+     enable = true;
+     criticalLevelPercent = 10;
+     lowLevelPercent = 20;
+   };
   };
 }

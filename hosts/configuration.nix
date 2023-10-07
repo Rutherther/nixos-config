@@ -136,7 +136,7 @@
   };
 
   nix = {                                   # Nix Package Manager settings
-    settings ={
+    settings = {
       auto-optimise-store = true;           # Optimise syslinks
       substituters = [
         "https://cache.nixos.org"
