@@ -5,4 +5,6 @@
     dmenu
     clipmenu
   ];
+
+  services.clipmenu.enable = true;
 }
