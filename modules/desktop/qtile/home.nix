@@ -8,12 +8,46 @@ let
     hash = "sha256-YJ7U/G9EOGaf25zqTAMMGK0A6dY0wmtcpesp3d2uzTk=";
   };
 
+  mpris-ctl-src = pkgs.fetchFromGitHub {
+    owner = "Rutherther";
+    repo = "mpris-ctl";
+    rev = "55b489ee7e609e7c126bab0a00c039a7096d24c1";
+    hash = "sha256-wBjhyhRWQ1a3/Ekr3CSETQE0Der/1XLy1FVCpOsHAoA=";
+  };
+
   sequence-detector-pkg = pkgs.rustPlatform.buildRustPackage {
     pname = "sequence-detector";
     version = "0.1";
     src = sequence-detector-src;
     cargoHash = "sha256-7S8TXqtKWR4utBeUe9Q7RrmHgJg5lqkLdmo9b+MTRGg=";
-    hash = "sha256-7S8TXqtKWR4utBeUe9Q7RrmHgJg5lqkLdmo9b+MTRGg=";
+  };
+
+  mpris-ctl-cli = pkgs.rustPlatform.buildRustPackage {
+    pname = "mpris-ctl-cli";
+    version = "0.1";
+    src = mpris-ctl-src + "/cli";
+    nativeBuildInputs = [
+      pkgs.dbus
+      pkgs.pkg-config
+    ];
+    propagatedBuildInputs = [
+      pkgs.dbus
+    ];
+    cargoHash = "sha256-4lwapbgaVFuZQKVlKTaxSwcXPCaqw0cAwjpY6g7Vr1g=";
+  };
+
+  mpris-ctl-daemon = pkgs.rustPlatform.buildRustPackage {
+    pname = "mpris-ctl-daemon";
+    version = "0.1";
+    src = mpris-ctl-src + "/daemon";
+    nativeBuildInputs = [
+      pkgs.pkg-config
+      pkgs.dbus
+    ];
+    propagatedBuildInputs = [
+      pkgs.dbus
+    ];
+    cargoHash = "sha256-DiI7+k1cxAeZ0JsFadk51THwWpJlC+Y5pH785rGQjYM=";
   };
 in {
   # services.udev.extraRules =
@@ -23,11 +57,26 @@ in {
   };
 
   home.packages = with pkgs; [
-    playerctl
+    mpris-ctl-cli
+    mpris-ctl-daemon
     sequence-detector-pkg
   ];
 
-  services.playerctld.enable = true;
+  systemd.user.services = {
+    mpris-ctld = {
+      Unit = {
+        Description = "Daemon for mpris-ctl cli, that will keep track of last playing media";
+      };
+
+      Install = {
+        WantedBy = [ "default.target" ];
+      };
+
+      Service = {
+        ExecStart = "${mpris-ctl-daemon}/bin/mpris-ctld";
+      };
+    };
+  };
 
   programs.autorandr = {
     enable = true;

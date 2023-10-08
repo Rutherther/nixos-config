@@ -4,14 +4,14 @@
         {
             "group_id": "mpris",
             "sequences": [
-                { "keys": ["next"], "action": "playerctl next" },
-                { "keys": ["prev"], "action": "playerctl previous" },
-                { "keys": ["play"], "action": "playerctl play" },
-                { "keys": ["pause"], "action": "playerctl pause" },
+                { "keys": ["next"], "action": "mpris-ctl next" },
+                { "keys": ["prev"], "action": "mpris-ctl prev" },
+                { "keys": ["play"], "action": "mpris-ctl play" },
+                { "keys": ["pause"], "action": "mpris-ctl pause" },
                 { "keys": ["volup"], "action": "amixer set Master 10%+ unmute" },
                 { "keys": ["voldown"], "action": "amixer set Master 10%- unmute" },
-                { "keys": ["next", "next"], "action": "playerctl --player=firefox play-pause" },
-                { "keys": ["next", "prev"], "action": "playerctl --player=spotify play-pause" }
+                { "keys": ["next", "next"], "action": "mpris-ctl --player=firefox toggle" },
+                { "keys": ["next", "prev"], "action": "mpris-ctl --player=spotify toggle" }
             ]
         }
     ]

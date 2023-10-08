@@ -20,8 +20,6 @@
     (import ../modules/editors/home.nix) ++
     (import ../modules/services/home.nix);
 
-  services.mpris-proxy.enable = true;
-
   nixpkgs.config.allowUnfree = true;
 
   xdg = {
