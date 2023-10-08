@@ -5,11 +5,17 @@
     allowedUDPPorts = [ 51820 ];
   };
 
-  networking.nameservers = [
-    "${inputs.semi-secrets.wg.lan.serverIp}"
-    "1.1.1.1"
-    "1.0.0.1"
-  ];
+  networking = {
+    nameservers = [
+      "${inputs.semi-secrets.wg.lan.serverIp}"
+      "1.1.1.1"
+      "1.0.0.1"
+    ];
+
+    # disable auto resolving
+    dhcpcd.extraConfig = "nohook resolv.conf";
+    networkmanager.dns = "none";
+  };
 
   networking.resolvconf.extraOptions = [
     "timeout: 2"
