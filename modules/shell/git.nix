@@ -12,6 +12,9 @@
             email = "rutherther@proton.me";
             name = "Rutherther";
           };
+          init = {
+            defaultBranch = "main";
+          };
         };
       }];
     };
