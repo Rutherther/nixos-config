@@ -77,7 +77,6 @@
       touchpad = {
         naturalScrolling = true;
         tapping = true;
-        tappingDragLock = true;
       };
     };
   };
