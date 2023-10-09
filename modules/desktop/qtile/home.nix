@@ -1,4 +1,4 @@
-{ config, lib, pkgs, user, location, ... }:
+{ config, lib, unstable, pkgs, user, location, ... }:
 
 let
   sequence-detector-src = pkgs.fetchFromGitHub {
@@ -11,8 +11,8 @@ let
   mpris-ctl-src = pkgs.fetchFromGitHub {
     owner = "Rutherther";
     repo = "mpris-ctl";
-    rev = "55b489ee7e609e7c126bab0a00c039a7096d24c1";
-    hash = "sha256-wBjhyhRWQ1a3/Ekr3CSETQE0Der/1XLy1FVCpOsHAoA=";
+    rev = "bbfc1e98d1adcefb46709fa2c3db172ecaab56b8";
+    hash = "sha256-63KlzDMVuWjUeukh33H7bR8CNMPXwTgN82aeiwnehXk=";
   };
 
   sequence-detector-pkg = pkgs.rustPlatform.buildRustPackage {
@@ -22,10 +22,10 @@ let
     cargoHash = "sha256-7S8TXqtKWR4utBeUe9Q7RrmHgJg5lqkLdmo9b+MTRGg=";
   };
 
-  mpris-ctl-cli = pkgs.rustPlatform.buildRustPackage {
-    pname = "mpris-ctl-cli";
+  mpris-ctl = unstable.rustPlatform.buildRustPackage {
+    pname = "mpris-ctl";
     version = "0.1";
-    src = mpris-ctl-src + "/cli";
+    src = mpris-ctl-src;
     nativeBuildInputs = [
       pkgs.dbus
       pkgs.pkg-config
@@ -33,21 +33,7 @@ let
     propagatedBuildInputs = [
       pkgs.dbus
     ];
-    cargoHash = "sha256-4lwapbgaVFuZQKVlKTaxSwcXPCaqw0cAwjpY6g7Vr1g=";
-  };
-
-  mpris-ctl-daemon = pkgs.rustPlatform.buildRustPackage {
-    pname = "mpris-ctl-daemon";
-    version = "0.1";
-    src = mpris-ctl-src + "/daemon";
-    nativeBuildInputs = [
-      pkgs.pkg-config
-      pkgs.dbus
-    ];
-    propagatedBuildInputs = [
-      pkgs.dbus
-    ];
-    cargoHash = "sha256-DiI7+k1cxAeZ0JsFadk51THwWpJlC+Y5pH785rGQjYM=";
+    cargoHash = "sha256-84jVwtfgnnM4OiNleqLW0z9YvSjPcZDylHGF8HtvUvY=";
   };
 in {
   # services.udev.extraRules =
@@ -57,8 +43,7 @@ in {
   };
 
   home.packages = with pkgs; [
-    mpris-ctl-cli
-    mpris-ctl-daemon
+    mpris-ctl
     sequence-detector-pkg
   ];
 
@@ -73,7 +58,7 @@ in {
       };
 
       Service = {
-        ExecStart = "${mpris-ctl-daemon}/bin/mpris-ctld";
+        ExecStart = "${mpris-ctl}/bin/mpris-ctld";
       };
     };
   };
