@@ -1,40 +1,14 @@
-{ config, lib, unstable, pkgs, user, location, ... }:
+{ inputs, lib, unstable, pkgs, user, location, ... }:
 
-let
-  sequence-detector-src = pkgs.fetchFromGitHub {
-    owner = "Rutherther";
-    repo = "sequence-detector";
-    rev = "f9052a0232d8d4377446cb7aa813382977ed25a3";
-    hash = "sha256-YJ7U/G9EOGaf25zqTAMMGK0A6dY0wmtcpesp3d2uzTk=";
+let 
+  unstablePkgs = import inputs.nixpkgs-unstable {
+    system = "x86_64-linux";
   };
-
-  mpris-ctl-src = pkgs.fetchFromGitHub {
-    owner = "Rutherther";
-    repo = "mpris-ctl";
-    rev = "bbfc1e98d1adcefb46709fa2c3db172ecaab56b8";
-    hash = "sha256-63KlzDMVuWjUeukh33H7bR8CNMPXwTgN82aeiwnehXk=";
+  nurRaw = import inputs.nur {
+    nurpkgs = unstablePkgs;
+    pkgs = unstablePkgs;
   };
-
-  sequence-detector-pkg = pkgs.rustPlatform.buildRustPackage {
-    pname = "sequence-detector";
-    version = "0.1";
-    src = sequence-detector-src;
-    cargoHash = "sha256-7S8TXqtKWR4utBeUe9Q7RrmHgJg5lqkLdmo9b+MTRGg=";
-  };
-
-  mpris-ctl = unstable.rustPlatform.buildRustPackage {
-    pname = "mpris-ctl";
-    version = "0.1";
-    src = mpris-ctl-src;
-    nativeBuildInputs = [
-      pkgs.dbus
-      pkgs.pkg-config
-    ];
-    propagatedBuildInputs = [
-      pkgs.dbus
-    ];
-    cargoHash = "sha256-84jVwtfgnnM4OiNleqLW0z9YvSjPcZDylHGF8HtvUvY=";
-  };
+  nur = nurRaw.repos;
 in {
   # services.udev.extraRules =
   #     ''ACTION=="change", SUBSYSTEM=="drm", RUN+="${pkgs.autorandr}/bin/autorandr -c"'';
@@ -43,8 +17,8 @@ in {
   };
 
   home.packages = with pkgs; [
-    mpris-ctl
-    sequence-detector-pkg
+    nur.rutherther.rutherther-mpris-ctl
+    nur.rutherther.rutherther-sequence-detector
   ];
 
   systemd.user.services = {
@@ -58,7 +32,7 @@ in {
       };
 
       Service = {
-        ExecStart = "${mpris-ctl}/bin/mpris-ctld";
+        ExecStart = "${nur.rutherther.rutherther-mpris-ctl}/bin/mpris-ctld";
       };
     };
   };
