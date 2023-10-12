@@ -44,6 +44,13 @@
         enable = true;
         configurationLimit = 5;                 # Limit the amount of configurations
         editor = false;                         # Better security, disallows passing /bin/sh to start as root
+
+        extraEntries = {
+          "Windows.conf" = ''
+            title "Windows 10"
+            efi /EFI/Microsoft/Boot/bootmgfw.efi
+          '';
+        };
       };
       efi.canTouchEfiVariables = true;
       timeout = 1;                              # Grub auto select time
