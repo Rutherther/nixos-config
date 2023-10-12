@@ -67,6 +67,7 @@
   fonts.fonts = with pkgs; [                # Fonts
     ubuntu_font_family
     fira-code
+    roboto
     carlito                                 # NixOS
     vegur                                   # NixOS
     source-code-pro
