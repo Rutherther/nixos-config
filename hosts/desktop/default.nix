@@ -43,6 +43,7 @@
       systemd-boot = {
         enable = true;
         configurationLimit = 5;                 # Limit the amount of configurations
+        editor = false;                         # Better security, disallows passing /bin/sh to start as root
       };
       efi.canTouchEfiVariables = true;
       timeout = 1;                              # Grub auto select time

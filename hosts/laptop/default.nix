@@ -41,6 +41,7 @@
       };
       systemd-boot = {
         enable = true;
+        editor = false;                     # Better security, disallows passing /bin/sh to start as root
         configurationLimit = 5;
       };
       timeout = 1;                          # Grub auto select time
