@@ -513,6 +513,15 @@ groups.append(
             width = 0.95, height = 0.95,
             opacity = 1,
         ),
+        DropDown(
+            'proton',
+            ['firefoxpwa', 'site', 'launch', '01HBD772V37WPQ3B2T7TQJ81PM'],
+            match = Match(wm_class = 'FFPWA-01HBD772V37WPQ3B2T7TQJ81PM'),
+            on_focus_lost_hide = True,
+            x = 0.025, y = 0.025,
+            width = 0.95, height = 0.95,
+            opacity = 1,
+        ),
     ])
 )
 

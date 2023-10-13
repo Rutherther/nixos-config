@@ -11,11 +11,11 @@
 
   inputs =                                                                  # All flake references used to build my NixOS setup. These are dependencies.
     {
-      nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";                     # Default Stable Nix Packages
-      nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";         # Unstable Nix Packages
+      nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+      nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
 
       home-manager = {                                                      # User Package Management
-        url = "github:nix-community/home-manager/release-23.05";
+        url = "github:nix-community/home-manager/master";
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
@@ -34,7 +34,7 @@
       };
     };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, home-manager, nur, nixgl, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
+  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, home-manager, nur, nixgl, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
     let                                                                     # Variables that can be used in the config files.
       user = "ruther";
       location = "$HOME/.setup";
@@ -43,14 +43,14 @@
       nixosConfigurations = (                                               # NixOS configurations
         import ./hosts {                                                    # Imports ./hosts/default.nix
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-unstable home-manager nur user location;   # Also inherit home-manager so it does not need to be defined here.
+          inherit inputs nixpkgs nixpkgs-stable home-manager nur user location;   # Also inherit home-manager so it does not need to be defined here.
         }
       );
 
       homeConfigurations = (                                                # Non-NixOS configurations
         import ./nix {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-unstable home-manager nixgl user location;
+          inherit inputs nixpkgs nixpkgs-stable home-manager nixgl user location;
         }
       );
     };

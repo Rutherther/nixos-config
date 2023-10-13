@@ -64,7 +64,7 @@
 
   security.polkit.enable = true;
 
-  fonts.fonts = with pkgs; [                # Fonts
+  fonts.packages = with pkgs; [                # Fonts
     ubuntu_font_family
     fira-code
     roboto

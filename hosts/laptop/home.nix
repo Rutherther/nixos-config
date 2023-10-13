@@ -11,7 +11,7 @@
 #              └─ home.nix
 #
 
-{ pkgs, lib, config, unstable, ... }:
+{ pkgs, lib, config, ... }:
 
 {
   imports =
@@ -24,11 +24,11 @@
     ];
 
   home = {                                # Specific packages for laptop
-    packages = with pkgs; [
-      unstable.distrobox
+    packages = [
+      pkgs.distrobox
 
       # Power Management
-      acpi
+      pkgs.acpi
     ];
   };
 

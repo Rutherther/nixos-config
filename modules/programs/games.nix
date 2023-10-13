@@ -5,7 +5,7 @@
 # Do not forget to enable Steam play for all title in the settings menu
 #
 
-{ config, pkgs, nur, lib, unstable, ... }:
+{ config, pkgs, nur, lib, ... }:
 
 let                                             # No longer required because of retroarch but let's keep it for testing purposes
   pcsx2 = pkgs.pcsx2.overrideAttrs (old: {      # PCSX2 runs way better on x11. This wrappers makes it use the correct GDK Backend
@@ -19,11 +19,11 @@ in
 {
   environment.systemPackages = [
     pkgs.lunar-client
-    unstable.heroic
-    unstable.lutris
-    unstable.prismlauncher
+    pkgs.heroic
+    pkgs.lutris
+    pkgs.prismlauncher
     pkgs.retroarchFull
-    unstable.steam
+    pkgs.steam
     pcsx2
   ];
 

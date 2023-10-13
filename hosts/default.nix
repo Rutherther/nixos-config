@@ -11,7 +11,7 @@
 #            └─ ./home.nix 
 #
 
-{ lib, inputs, nixpkgs, nixpkgs-unstable, home-manager, nur, user, location, ... }:
+{ lib, inputs, nixpkgs, nixpkgs-stable, home-manager, nur, user, location, ... }:
 
 let
   system = "x86_64-linux";                                  # System architecture
@@ -21,7 +21,7 @@ let
     config.allowUnfree = true;                              # Allow proprietary software
   };
 
-  unstable = import nixpkgs-unstable {
+  stable = import nixpkgs-stable {
     inherit system;
     config.allowUnfree = true;                              # Allow proprietary software
   };
@@ -33,7 +33,7 @@ in
   laptop = lib.nixosSystem {                                # Laptop profile
     inherit system;
     specialArgs = {
-      inherit inputs unstable user location;
+      inherit inputs stable user location;
     };
     modules = [
       nur.nixosModules.nur
@@ -44,7 +44,7 @@ in
       home-manager.nixosModules.home-manager {
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
-          inherit inputs unstable user location;
+          inherit inputs stable user location;
         };
         home-manager.users.${user} = {
           imports = [
@@ -61,7 +61,7 @@ in
   vm = lib.nixosSystem {                                    # VM profile
     inherit system;
     specialArgs = {
-      inherit inputs unstable user location;
+      inherit inputs stable user location;
     };
     modules = [
       nur.nixosModules.nur
@@ -72,7 +72,7 @@ in
       home-manager.nixosModules.home-manager {
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
-          inherit inputs unstable user location;
+          inherit inputs stable user location;
         };
         home-manager.users.${user} = {
           imports = [
@@ -89,7 +89,7 @@ in
   desktop = lib.nixosSystem {                               # Desktop profile 
     inherit system;
     specialArgs = {
-      inherit inputs unstable system user location;
+      inherit inputs stable system user location;
     };                                                      # Pass flake variable
     modules = [                                             # Modules that are used.
       nur.nixosModules.nur
@@ -100,7 +100,7 @@ in
       home-manager.nixosModules.home-manager {              # Home-Manager module that is used.
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
-          inherit inputs unstable user location;
+          inherit inputs stable user location;
         };                                                  # Pass flake variable
         home-manager.users.${user} = {
           imports = [

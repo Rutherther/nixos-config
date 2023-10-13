@@ -11,7 +11,7 @@
 #           └─ default.nix
 #
 
-{ config, lib, nixpkgs, pkgs, unstable, user, location, ... }:
+{ config, lib, nixpkgs, stable, pkgs, user, location, ... }:
 
 { 
   imports =                                   # Home Manager Modules
@@ -101,11 +101,11 @@
       # Desktop
       discord           # Chat
       telegram-desktop  # Chat
-      unstable.cinny-desktop     # Chat
+      cinny-desktop     # Chat
       ffmpeg           # Video Support (dslr)
 
       spotify
-      obsidian        # Text Editor
+      stable.obsidian        # Text Editor
     ];
 
     file.".config/wall".source = ../modules/themes/wall;

@@ -1,14 +1,7 @@
-{ inputs, lib, unstable, pkgs, user, location, ... }:
+{ config, lib, pkgs, user, location, ... }:
 
 let 
-  unstablePkgs = import inputs.nixpkgs-unstable {
-    system = "x86_64-linux";
-  };
-  nurRaw = import inputs.nur {
-    nurpkgs = unstablePkgs;
-    pkgs = unstablePkgs;
-  };
-  nur = nurRaw.repos;
+  nur = config.nur.repos;
 in {
   # services.udev.extraRules =
   #     ''ACTION=="change", SUBSYSTEM=="drm", RUN+="${pkgs.autorandr}/bin/autorandr -c"'';
