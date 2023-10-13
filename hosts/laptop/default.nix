@@ -80,6 +80,14 @@
         tapping = true;
       };
     };
+
+    printing = {
+      enable = true;
+      drivers = [
+        pkgs.splix
+        pkgs.samsung-unified-linux-driver
+      ];
+    };
   };
 
   networking.wireguard.interfaces = {
