@@ -37,6 +37,8 @@
 
   programs.dconf.enable = true;
 
+  programs.command-not-found.enable = false;
+
   time.timeZone = "Europe/Prague";        # Time zone and internationalisation
   i18n = {
     defaultLocale = "en_US.UTF-8";

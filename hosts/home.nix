@@ -11,7 +11,7 @@
 #           └─ default.nix
 #
 
-{ config, lib, nixpkgs, stable, pkgs, user, location, ... }:
+{ config, lib, nix-index-database, nixpkgs, stable, pkgs, user, location, ... }:
 
 { 
   imports =                                   # Home Manager Modules
@@ -120,8 +120,6 @@
     };
     stateVersion = "23.05";
   };
-
-  programs.command-not-found.enable = true;
 
   programs = {
     home-manager.enable = true;

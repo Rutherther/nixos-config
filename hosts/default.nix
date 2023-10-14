@@ -11,7 +11,7 @@
 #            └─ ./home.nix 
 #
 
-{ lib, inputs, nixpkgs, nixpkgs-stable, home-manager, nur, user, location, ... }:
+{ lib, inputs, nixpkgs, nixpkgs-stable, nix-index-database, home-manager, nur, user, location, ... }:
 
 let
   system = "x86_64-linux";                                  # System architecture
@@ -49,6 +49,7 @@ in
         home-manager.users.${user} = {
           imports = [
             nur.hmModules.nur
+            nix-index-database.hmModules.nix-index
             { nixpkgs.overlays = [ nur.overlay ]; }
             (import ./home.nix)
             (import ./laptop/home.nix)
@@ -77,6 +78,7 @@ in
         home-manager.users.${user} = {
           imports = [
             nur.hmModules.nur
+            nix-index-database.hmModules.nix-index
             { nixpkgs.overlays = [ nur.overlay ]; }
             (import ./home.nix)
             (import ./vm/home.nix)
@@ -105,6 +107,7 @@ in
         home-manager.users.${user} = {
           imports = [
             nur.hmModules.nur
+            nix-index-database.hmModules.nix-index
             { nixpkgs.overlays = [ nur.overlay ]; }
             ./home.nix
             ./desktop/home.nix

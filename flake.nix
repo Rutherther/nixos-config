@@ -32,9 +32,14 @@
         url = "github:nix-community/nix-vscode-extensions";
         inputs.nixpkgs.follows = "nixpkgs";
       };
+
+      nix-index-database = {
+        url = "github:nix-community/nix-index-database";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
     };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, home-manager, nur, nixgl, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
+  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, nix-index-database, home-manager, nur, nixgl, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
     let                                                                     # Variables that can be used in the config files.
       user = "ruther";
       location = "$HOME/.setup";
@@ -47,14 +52,14 @@
       nixosConfigurations = (                                               # NixOS configurations
         import ./hosts {                                                    # Imports ./hosts/default.nix
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-stable home-manager nur user location;   # Also inherit home-manager so it does not need to be defined here.
+          inherit inputs nixpkgs nixpkgs-stable nix-index-database home-manager nur user location;
         }
       );
 
       homeConfigurations = (                                                # Non-NixOS configurations
         import ./nix {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-stable home-manager nixgl user location;
+          inherit inputs nixpkgs nixpkgs-stable nix-index-database home-manager nixgl user location;
         }
       );
 
