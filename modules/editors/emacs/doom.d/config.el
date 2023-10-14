@@ -80,6 +80,8 @@
 
 (setq doom-localleader-key ",")
 
+(add-hook 'nix-mode-hook #'lsp)
+
 (map! :leader
       "c d" 'lsp-ui-doc-show
       "c m" #'+make/run)

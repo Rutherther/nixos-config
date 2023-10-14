@@ -38,6 +38,10 @@
     let                                                                     # Variables that can be used in the config files.
       user = "ruther";
       location = "$HOME/.setup";
+
+      pkgs = import nixpkgs {
+        system = "x86_64-linux";
+      };
     in                                                                      # Use above variables in ...
     {
       nixosConfigurations = (                                               # NixOS configurations
@@ -53,5 +57,11 @@
           inherit inputs nixpkgs nixpkgs-stable home-manager nixgl user location;
         }
       );
+
+      devShells.x86_64-linux.default = pkgs.mkShell {
+        packages = [
+          pkgs.nil
+        ];
+      };
     };
 }
