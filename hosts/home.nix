@@ -11,7 +11,7 @@
 #           └─ default.nix
 #
 
-{ config, lib, nix-index-database, nixpkgs, stable, pkgs, user, location, ... }:
+{ config, lib, nix-index-database, nixpkgs, inputs, stable, pkgs, user, location, ... }:
 
 { 
   imports =                                   # Home Manager Modules
@@ -21,6 +21,11 @@
     (import ../modules/services/home.nix);
 
   nixpkgs.config.allowUnfree = true;
+  nix = {
+    registry.nixpkgs.flake = inputs.nixpkgs;
+  };
+  home.sessionVariables.NIX_PATH =
+    "nixpkgs=flake:nixpkgs$\{NIX_PATH:+:$NIX_PATH}";
 
   xdg = {
     userDirs = let dir = s: "${config.home.homeDirectory}/${s}"; in {

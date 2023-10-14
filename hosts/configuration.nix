@@ -145,6 +145,12 @@
   };
 
   nix = {                                   # Nix Package Manager settings
+    registry.nixpkgs.flake = inputs.nixpkgs;
+    nixPath = [
+      "nixpkgs=flake:nixpkgs"
+      "nixpkgs-stable=flake:nixpkgs-stable"
+    ];
+
     settings = {
       auto-optimise-store = true;           # Optimise syslinks
       substituters = [
@@ -161,7 +167,6 @@
       options = "--delete-older-than 2d";
     };
     package = pkgs.nixVersions.unstable;    # Enable nixFlakes on system
-    registry.nixpkgs.flake = inputs.nixpkgs;
     extraOptions = ''
       experimental-features = nix-command flakes
       keep-outputs          = true
