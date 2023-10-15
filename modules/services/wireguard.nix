@@ -1,4 +1,4 @@
-{ config, lib, pkgs, user, ... }:
+{ inputs, config, lib, pkgs, user, location, ... }:
 
 {
   networking.firewall = {
@@ -7,7 +7,7 @@
 
   networking = {
     nameservers = [
-      "${inputs.semi-secrets.wg.lan.serverIp}"
+      inputs.semi-secrets.wg.lan.serverIp
       "1.1.1.1"
       "1.0.0.1"
     ];
@@ -31,10 +31,11 @@
       peers = [
         {
           publicKey = "Mui5wOV21QTer4NK2dUcBOgaW9UFzFzwmxOn/458ByI=";
-          endpoint = "${inputs.semi-secrets.wg.serverEndpoint}";
+          endpoint = inputs.semi-secrets.wg.serverEndpoint;
+
             # The ip is not refreshed, as the kernel cannot perform DNS resolution. Use dynamicEndpointRefreshSeconds,
             # in case the ip is refreshed often. If not, sync after refresh should be alright.
-          allowedIPs = [ "${inputs.semi-secrets.wg.allowedIp}" ];
+          allowedIPs = [ inputs.semi-secrets.wg.allowedIp ];
           persistentKeepalive = 25;
         }
       ];

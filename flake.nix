@@ -14,6 +14,8 @@
       nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
       nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
 
+      semi-secrets.url = "git+file:///home/ruther/.semi-secrets";
+
       home-manager = {                                                      # User Package Management
         url = "github:nix-community/home-manager/master";
         inputs.nixpkgs.follows = "nixpkgs";

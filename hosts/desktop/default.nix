@@ -18,7 +18,7 @@
 #           └─ default.nix
 #
 
-{ pkgs, lib, user, config, ... }:
+{ inputs, pkgs, lib, user, config, location, ... }:
 
 {
   imports =                                               # For now, if applying to other system, swap files
@@ -68,7 +68,6 @@
   environment = {                               # Packages installed system wide
     systemPackages = with pkgs; [               # This is because some options need to be configured.
       wacomtablet
-      xorg.xf86videoamdgpu
     ];
   };
 

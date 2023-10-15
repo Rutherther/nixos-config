@@ -1,4 +1,4 @@
-{ config, lib, pkgs, user, ... }:
+{ inputs, config, lib, pkgs, user, ... }:
 
 {
   networking.firewall = {

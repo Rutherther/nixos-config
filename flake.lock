@@ -165,6 +165,19 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1697059129,
+        "narHash": "sha256-9NJcFF9CEYPvHJ5ckE8kvINvI84SZZ87PvqMbH6pro0=",
+        "path": "/nix/store/xjviahzwa7x51vl51kc3c1k1n1jmhpd5-source",
+        "rev": "5e4c2ada4fcd54b99d56d7bd62f384511a7e2593",
+        "type": "path"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
     "nur": {
       "locked": {
         "lastModified": 1697215604,
@@ -188,7 +201,26 @@
         "nixgl": "nixgl",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
-        "nur": "nur"
+        "nur": "nur",
+        "semi-secrets": "semi-secrets"
+      }
+    },
+    "semi-secrets": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1697366661,
+        "narHash": "sha256-KHjt9B1ErMPrQry85NG70I9cKGrMgkcwbSJOcxSoF+I=",
+        "ref": "refs/heads/main",
+        "rev": "2a6756dc9390401e8c64ee94514719ef3d548d85",
+        "revCount": 1,
+        "type": "git",
+        "url": "file:///home/ruther/.semi-secrets"
+      },
+      "original": {
+        "type": "git",
+        "url": "file:///home/ruther/.semi-secrets"
       }
     },
     "systems": {
