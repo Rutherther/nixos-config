@@ -20,6 +20,12 @@
         enable = true;
         plugins = [ "git" ];
       };
+
+      initExtra = ''
+        function loc {
+          nix-locate --top-level -w /bin/$1
+        }
+      '';
     };
   };
 }
