@@ -113,8 +113,6 @@
       stable.obsidian        # Text Editor
     ];
 
-    file.".config/wall".source = ../modules/themes/wall;
-
     pointerCursor = {                         # This will set cursor system-wide so applications can not choose their own
       gtk.enable = true;
       #name = "Dracula-cursors";
@@ -128,6 +126,11 @@
 
   programs = {
     home-manager.enable = true;
+    nix-index = {
+      enableZshIntegration = false;
+      enableBashIntegration = false;
+      enableFishIntegration = false;
+    };
   };
 
   gtk = {                                     # Theming
