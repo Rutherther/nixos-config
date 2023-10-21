@@ -67,6 +67,19 @@
     brillo.enable = true;
   };
 
+  programs = {
+    xss-lock = let
+    xsecurelock = (pkgs.xsecurelock.overrideAttrs(attrs: {
+          postInstall = attrs.postInstall or "" + ''
+            wrapProgram $out/bin/xsecurelock --set XSECURELOCK_COMPOSITE_OBSCURER 0
+          '';
+        }));
+    in {
+      enable = true;
+      lockerCommand = "${xsecurelock}/bin/xsecurelock";
+    };
+  };
+
   services = {
     tlp.enable = true;                      # TLP and auto-cpufreq for power management
     logind.lidSwitch = "lock";           # lock on lid close
