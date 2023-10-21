@@ -146,6 +146,7 @@
 
   nix = {                                   # Nix Package Manager settings
     registry.nixpkgs.flake = inputs.nixpkgs;
+    registry.nixpkgs-stable.flake = inputs.nixpkgs-stable;
     nixPath = [
       "nixpkgs=flake:nixpkgs"
       "nixpkgs-stable=flake:nixpkgs-stable"

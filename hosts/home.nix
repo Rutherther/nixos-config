@@ -23,6 +23,7 @@
   nixpkgs.config.allowUnfree = true;
   nix = {
     registry.nixpkgs.flake = inputs.nixpkgs;
+    registry.nixpkgs-stable.flake = inputs.nixpkgs-stable;
   };
   home.sessionVariables.NIX_PATH =
     "nixpkgs=flake:nixpkgs$\{NIX_PATH:+:$NIX_PATH}";
