@@ -2,6 +2,7 @@ import re
 import os
 import subprocess
 import psutil
+import libqtile
 from libqtile import layout, bar, qtile
 from libqtile.backend.base import Window
 from libqtile.core.manager import Qtile
@@ -355,6 +356,7 @@ keys.extend([
 
 keys.extend([
     EzKey('M-n', lazy.layout.normalize()),
+    EzKey('M-m', lazy.window.toggle_minimize()),
     EzKey('M-t', lazy.window.disable_floating()),
     EzKey('M-f', lazy.window.toggle_fullscreen()),
     EzKey('M-<Return>', lazy.layout.swap_main()),
@@ -535,15 +537,15 @@ mouse = [
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
 follow_mouse_focus = False
-cursor_warp = True
+cursor_warp = False
 floating_layout = layout.Floating(
     float_rules=[
         *layout.Floating.default_float_rules,
     ]
 )
-auto_fullscreen = True
-focus_on_window_activation = 'urgent'
-reconfigure_screens = False
+auto_fullscreen = False
+focus_on_window_activation = 'never'
+reconfigure_screens = True
 auto_minimize = True
 bring_front_click = False
 
@@ -555,7 +557,8 @@ wmname = 'LG3D'
 # another process with a window as a child, minimize the first
 # winddow. Turn off the minimization after the child process
 # is done.
-@hook.subscribe.client_new
+# @hook.subscribe.client_new
+#   I don't like this much :( hence I commented it out
 def _swallow(window):
     pid = window.window.get_net_wm_pid()
     ppid = psutil.Process(pid).ppid()
@@ -570,7 +573,7 @@ def _swallow(window):
             return
         ppid = psutil.Process(ppid).ppid()
 
-@hook.subscribe.client_killed
+# @hook.subscribe.client_killed
 def _unswallow(window):
     if hasattr(window, 'parent'):
         window.parent.minimized = False
@@ -611,6 +614,14 @@ def exit_fullscreen_on_focus_changed(client: Window):
     for window in windows:
         if window != client and window.fullscreen:
             window.toggle_fullscreen()
+
+
+@hook.subscribe.startup_complete
+def hide_bottom_bar():
+    for screen in qtile.screens:
+        bar = screen.bottom
+        if isinstance(bar, libqtile.bar.Bar):
+            bar.show(False)
 
 # Start scratchpads
 @hook.subscribe.startup_complete
