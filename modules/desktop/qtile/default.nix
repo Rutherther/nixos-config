@@ -1,8 +1,6 @@
 { config, lib, pkgs, nixpkgs, ... }:
 
 {
-  imports = [(import ./python-overlay.nix)];
-
   environment.systemPackages = with pkgs; [
     xkblayout-state
   ];
