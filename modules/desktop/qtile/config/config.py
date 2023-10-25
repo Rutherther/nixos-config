@@ -356,7 +356,7 @@ keys.extend([
 
 keys.extend([
     EzKey('M-n', lazy.layout.normalize()),
-    EzKey('M-m', lazy.window.toggle_minimize()),
+    EzKey('M-S-m', lazy.window.toggle_minimize()),
     EzKey('M-t', lazy.window.disable_floating()),
     EzKey('M-f', lazy.window.toggle_fullscreen()),
     EzKey('M-<Return>', lazy.layout.swap_main()),
@@ -405,7 +405,7 @@ keys.extend([
 
 # bars
 keys.extend([
-    EzKey('M-b', lazy.hide_show_bar('all')),
+    EzKey('M-b', lazy.hide_show_bar('top')),
     EzKey('M-v', lazy.hide_show_bar('bottom')),
 ])
 
