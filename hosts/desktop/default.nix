@@ -25,7 +25,6 @@
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
     [(import ../../modules/desktop/dm/sddm.nix)] ++       # Desktop manager
     [(import ../../modules/desktop/qtile/default.nix)] ++ # Window Manager
-    [(import ../../modules/desktop/gnome/default.nix)] ++ # Window Manager
     (import ../../modules/desktop/virtualisation) ++ # Window Manager
     (import ../../modules/hardware) ++                    # Hardware devices
     [(import ../../modules/programs/fpga/vivado {
