@@ -111,7 +111,7 @@
       ffmpeg           # Video Support (dslr)
 
       spotify
-      stable.obsidian        # Text Editor
+      obsidian        # Text Editor
     ];
 
     pointerCursor = {                         # This will set cursor system-wide so applications can not choose their own
