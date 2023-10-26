@@ -61,3 +61,5 @@
 
 (package! ein)
 (package! ob-ipython)
+
+(package! verilog-ext)

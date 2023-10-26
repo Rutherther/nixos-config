@@ -221,3 +221,23 @@
 )
 
 (add-hook 'verilog-mode-hook 'my-verilog-setup)
+
+(setq verilog-ext-feature-list
+      '(font-lock
+        xref
+        capf
+        hierarchy
+        lsp
+        navigation
+        template
+        formatter
+        compilation
+        imenu
+        which-func
+        hideshow
+        typedefs
+        time-stamp
+        block-end-comments
+        ports))
+(verilog-ext-mode-setup)
+(add-hook 'verilog-mode-hook #'verilog-ext-mode)
