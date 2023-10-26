@@ -108,4 +108,15 @@
       ips = [ "${inputs.semi-secrets.wg.lan.laptopIp}/32" ];
     };
   };
+
+  nix = {
+    settings = {
+      substituters = [
+        "desktop.local"
+      ];
+      trusted-substituters = [
+        "desktop.local:3XEsbBcVpKcx0ViXnZwcagllTUazVnc+Rzx5DKUU1Rs="
+      ];
+    };
+  };
 }

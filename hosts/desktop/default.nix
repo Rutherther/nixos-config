@@ -82,6 +82,11 @@
     };
   };
 
+  services.nix-serve = {
+    enable = true;
+    secretKeyFile = "/var/cache-priv-key.pem";
+  };
+
   # nixpkgs.overlays = [                          # This overlay will pull the latest version of Discord
   #   (self: super: {
   #     discord = super.discord.overrideAttrs (

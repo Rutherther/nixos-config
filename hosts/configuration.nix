@@ -153,6 +153,8 @@
     ];
 
     settings = {
+      connect-timeout = 5;
+
       auto-optimise-store = true;           # Optimise syslinks
       substituters = [
         "https://cache.nixos.org"
