@@ -54,12 +54,27 @@ def go_to_group(qtile: Qtile, group_name: str, switch_monitor: bool = False):
     if group_name == current_group.name:
         return
 
-    if switch_monitor:
-        for screen in qtile.screens:
-            if screen.group.name == group_name:
+    current_screen = qtile.current_screen
+    target_screen = current_screen
+
+    for screen in qtile.screens:
+        if screen.group.name == group_name:
+            target_screen = screen
+            if switch_monitor:
                 qtile.focus_screen(screen.index)
-                found = True
-                break
+            found = True
+            break
+
+    current_bar = current_screen.top
+    target_bar = target_screen.top
+
+    if found and current_bar != target_bar and isinstance(target_bar, libqtile.bar.Bar) and isinstance(current_bar, libqtile.bar.Bar):
+        # found on other monitor, so switch bars
+        target_bar_show = target_bar.is_show()
+        current_bar_show = current_bar.is_show()
+
+        current_bar.show(target_bar_show)
+        target_bar.show(current_bar_show)
 
     qtile.groups_map[group_name].toscreen()
 
@@ -428,7 +443,7 @@ keys.extend([
 
 # Locking
 keys.extend([
-    EzKey('M-S-m', lazy.spawn('loginctl lock-session')),
+    EzKey('M-S-n', lazy.spawn('loginctl lock-session')),
 ])
 
 # Qtile control
