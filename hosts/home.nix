@@ -30,6 +30,7 @@
 
   xdg = {
     userDirs = let dir = s: "${config.home.homeDirectory}/${s}"; in {
+      enable = true;
       documents = dir "doc";
       download = dir "download";
       music = dir "music";
