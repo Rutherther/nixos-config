@@ -85,6 +85,7 @@
   services.nix-serve = {
     enable = true;
     secretKeyFile = "/var/cache-priv-key.pem";
+    openFirewall = true;
   };
 
   # nixpkgs.overlays = [                          # This overlay will pull the latest version of Discord
