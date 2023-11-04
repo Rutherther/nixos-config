@@ -39,6 +39,8 @@
 
   programs.command-not-found.enable = false;
 
+  services.udisks2.enable = true;
+
   time.timeZone = "Europe/Prague";        # Time zone and internationalisation
   i18n = {
     defaultLocale = "en_US.UTF-8";
