@@ -25,6 +25,7 @@
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
     [(import ../../modules/desktop/dm/sddm.nix)] ++       # Desktop manager
     [(import ../../modules/desktop/qtile/default.nix)] ++ # Window Manager
+    [(import ../../modules/programs/games.nix)] ++
     (import ../../modules/desktop/virtualisation) ++ # Window Manager
     (import ../../modules/hardware) ++                    # Hardware devices
     [(import ../../modules/programs/fpga/vivado {
@@ -32,7 +33,7 @@
       vivadoPath = "/data/Linux/fpga/apps/xilinx/Vivado/2023.1/bin/vivado";
     })];
 
-  networking.hostName = "nixos-desktop";
+  networking.hostName = "desktop-clotho";
 
   boot = {                                      # Boot options
     kernelPackages = pkgs.linuxPackages_latest;

@@ -30,7 +30,7 @@
       vivadoPath = "/data/fpga/xilinx/Vivado/2023.1/bin/vivado";
     })];                      # Hardware devices
 
-  networking.hostName = "nixos-laptop";
+  networking.hostName = "laptop-iapetus";
 
   boot = {                                  # Boot options
     kernelPackages = pkgs.linuxPackages_latest;

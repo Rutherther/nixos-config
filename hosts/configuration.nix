@@ -27,7 +27,7 @@
 
   users.users.${user} = {                   # System User
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "kvm" "libvirtd" "plex" ];
+    extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "kvm" "libvirtd" "plex" "podman" ];
     shell = pkgs.zsh;                       # Default shell
   };
   programs.zsh.enable = true; # has to be here to set shell to zsh
