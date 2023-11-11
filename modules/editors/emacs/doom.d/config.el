@@ -89,6 +89,9 @@
 (map! :map cdlatex-mode-map
    :i "TAB" #'cdlatex-tab)
 
+;; Downloaded binaries cannot be used on Nix.
+(setq lsp-enable-suggest-server-download nil)
+
 (use-package! lsp-mode
         :custom
         (lsp-rust-analyzer-server-display-inlay-hints t)
@@ -241,3 +244,4 @@
         ports))
 (verilog-ext-mode-setup)
 (add-hook 'verilog-mode-hook #'verilog-ext-mode)
+
