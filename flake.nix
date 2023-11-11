@@ -14,7 +14,10 @@
       nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
       nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
 
-      semi-secrets.url = "git+ssh://git@github.com/Rutherther/nixos-semi-secrets";
+      semi-secrets = {
+        url = "git+ssh://git@github.com/Rutherther/nixos-semi-secrets";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
 
       home-manager = {                                                      # User Package Management
         url = "github:nix-community/home-manager/master";
