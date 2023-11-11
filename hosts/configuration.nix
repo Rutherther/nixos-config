@@ -33,12 +33,13 @@
   programs.zsh.enable = true; # has to be here to set shell to zsh
     # zsh is configured at home-manager level afterwards
 
-  security.sudo.wheelNeedsPassword = true;
-
-  programs.dconf.enable = true;
+  networking.networkmanager.enable = true;
+  programs.nm-applet.enable = true;
 
   programs.command-not-found.enable = false;
 
+  security.sudo.wheelNeedsPassword = true;
+  programs.dconf.enable = true;
   services.udisks2.enable = true;
 
   time.timeZone = "Europe/Prague";        # Time zone and internationalisation

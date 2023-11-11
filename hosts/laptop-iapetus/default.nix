@@ -61,7 +61,6 @@
     ];
   };
 
-  networking.networkmanager.enable = true;
 
   hardware = {                              # No xbacklight, this is the alterantive
     brillo.enable = true;
