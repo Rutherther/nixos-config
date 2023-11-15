@@ -35,6 +35,12 @@
       options = [ "bind" ];
     };
 
+  fileSystems."/mnt/games" =
+    { device = "/data/Linux/Games";
+      fsType = "none";
+      options = [ "bind" ];
+    };
+
   swapDevices =
     [ { device = "/dev/disk/by-label/swap"; }
     ];
