@@ -1,6 +1,6 @@
-{ stdenv, config, lib, pkgs, vivadoPath, ... }:
+{ stdenv, config, lib, stable, pkgs, vivadoPath, ... }:
 
-pkgs.buildFHSEnv {
+stable.buildFHSEnv {
   name = "vivado-wrapped";
 
   targetPkgs = pkgs: with pkgs; [

@@ -1,8 +1,8 @@
-{ config, lib, pkgs, vivadoPath, ... }:
+{ config, lib, pkgs, vivadoPath, stable, ... }:
 
 let
-  vivadoPkg = pkgs.callPackage ./vivado-pkg.nix { inherit vivadoPath; };
-  fhsPkg = pkgs.callPackage ./fhs.nix { inherit vivadoPath; };
+  vivadoPkg = pkgs.callPackage ./vivado-pkg.nix { inherit vivadoPath stable; };
+  fhsPkg = pkgs.callPackage ./fhs.nix { inherit vivadoPath stable; };
 in {
   home.packages = [
     fhsPkg
