@@ -37,6 +37,11 @@ in
       inherit inputs stable user location;
     };
     modules = [
+      inputs.nixos-hardware.common-cpu-intel
+      inputs.nixos-hardware.common-gpu-intel
+      inputs.nixos-hardware.common-pc-laptop
+      inputs.nixos-hardware.common-pc-laptop-acpi_call
+      inputs.nixos-hardware.common-pc-laptop-ssd
       nur.nixosModules.nur
       { nixpkgs.overlays = [ nur.overlay ]; }
       ./laptop-iapetus

@@ -42,9 +42,14 @@
         url = "github:nix-community/nix-index-database";
         inputs.nixpkgs.follows = "nixpkgs";
       };
+
+      nixos-hardware = {
+        url = "github:NixOS/nixos-hardware/master";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
     };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, nix-index-database, home-manager, nur, nixgl, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
+  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, nix-index-database, home-manager, nur, nixgl, nixos-hardware, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
     let                                                                     # Variables that can be used in the config files.
       user = "ruther";
       location = "$HOME/.setup";
