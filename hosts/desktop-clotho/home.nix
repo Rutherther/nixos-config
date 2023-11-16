@@ -11,14 +11,14 @@
 #               └─ home.nix
 #
 
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, stable, ... }:
 
 {
   imports =
     [
       ../../modules/desktop/qtile/home.nix  # Window Manager
       (import ../../modules/programs/fpga/vivado/home.nix {
-        inherit pkgs lib config;
+        inherit pkgs lib config stable;
         vivadoPath = "/data/Linux/fpga/apps/xilinx/Vivado/2023.1/bin/vivado";
       })
     ];
