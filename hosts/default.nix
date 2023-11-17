@@ -65,6 +65,37 @@ in
     ];
   };
 
+  laptop-phobos = lib.nixosSystem {                                # Laptop profile
+    # Thinkpad T14s
+    inherit system;
+    specialArgs = {
+      inherit inputs stable user location;
+    };
+    modules = [
+      inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14s-amd-gen1
+      nur.nixosModules.nur
+      { nixpkgs.overlays = [ nur.overlay ]; }
+      ./laptop-phobos
+      ./configuration.nix
+
+      home-manager.nixosModules.home-manager {
+        home-manager.useUserPackages = true;
+        home-manager.extraSpecialArgs = {
+          inherit inputs stable user location;
+        };
+        home-manager.users.${user} = {
+          imports = [
+            nur.hmModules.nur
+            nix-index-database.hmModules.nix-index
+            { nixpkgs.overlays = [ nur.overlay ]; }
+            (import ./home.nix)
+            (import ./laptop-phobos/home.nix)
+          ];
+        };
+      }
+    ];
+  };
+
   desktop-clotho = lib.nixosSystem {                               # Desktop profile
     inherit system;
     specialArgs = {

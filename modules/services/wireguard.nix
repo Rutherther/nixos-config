@@ -7,7 +7,7 @@
 
   networking = {
     nameservers = [
-      inputs.semi-secrets.wg.lan.serverIp
+      #inputs.semi-secrets.wg.lan.serverIp
       "1.1.1.1"
       "1.0.0.1"
     ];

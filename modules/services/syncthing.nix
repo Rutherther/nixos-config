@@ -16,26 +16,27 @@
 
       devices = {
         "phone" = { id = inputs.semi-secrets.syncthing.devices.phone; };
-        "nixos-desktop" = { id = inputs.semi-secrets.syncthing.devices.desktop; };
-        "nixos-laptop" = { id = inputs.semi-secrets.syncthing.devices.laptop; };
+        "desktop" = { id = inputs.semi-secrets.syncthing.devices.desktop; };
+        "laptop-old" = { id = inputs.semi-secrets.syncthing.devices.laptop; };
+        "laptop" = { id = inputs.semi-secrets.syncthing.devices.laptopPhobos; };
       };
 
       folders = {
         "uni" = {
           path = "/home/${user}/doc/uni";
-          devices = [ "phone" "nixos-desktop" "nixos-laptop" ];
+          devices = [ "phone" "desktop" "laptop" "laptop-old" ];
         };
         "notes" = {
           path = "/home/${user}/doc/notes/obsidian/Notes";
-          devices = [ "phone" "nixos-desktop" "nixos-laptop" ];
+          devices = [ "phone" "desktop" "laptop" "laptop-old" ];
         };
         "camera" = {
           path = "/home/${user}/doc/camera";
-          devices = [ "phone" "nixos-desktop" "nixos-laptop" ];
+          devices = [ "phone" "desktop" "laptop" "laptop-old" ];
         };
         "study" = {
           path = "/home/${user}/doc/study";
-          devices = [ "phone" "nixos-desktop" "nixos-laptop" ];
+          devices = [ "phone" "desktop" "laptop" "laptop-old" ];
         };
       };
       options = {
