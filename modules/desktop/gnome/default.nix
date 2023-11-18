@@ -26,6 +26,12 @@
       gnome.dconf-editor
       gnome.gnome-tweaks
       gnome.adwaita-icon-theme
+      gnomeExtensions.paperwm
+      gnomeExtensions.fullscreen-avoider
+      gnomeExtensions.vitals
+      gnomeExtensions.openweather
+      gnomeExtensions.clipboard-history
+      gnomeExtensions.forge
     ];
     gnome.excludePackages = (with pkgs; [         # Gnome ignored packages
       gnome-tour

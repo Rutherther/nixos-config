@@ -10,24 +10,25 @@
   dconf.settings = {
     "org/gnome/shell" = {
       favorite-apps = [
-        "org.gnome.Settings.desktop"
         "Alacritty.desktop"
         "firefox.desktop"
         "emacs.desktop"
         "org.gnome.Nautilus.desktop"
-        "smartcode-stremio.desktop"
         "discord.desktop"
         "telegram-desktop.desktop"
-        "steam.desktop"
-        "retroarch.desktop"
-        "com.parsecgaming.parsec.desktop"
-        "org.remmina.Remmina.desktop"
-        "virt-manager.desktop"
         "blueman-manager.desktop"
         "pavucontrol.desktop"
       ];
       disable-user-extensions = false;
       enabled-extensions = [
+        "paperwm@paperwm.github.com"
+        "auto-move-windows@gnome-shell-extensions.gcampax.github.com"
+        "launch-new-instance@gnome-shell-extensions.gcampax.github.com"
+        "native-window-placement@gnome-shell-extensions.gcampax.github.com"
+        "places-menu@gnome-shell-extensions.gcampax.github.com"
+        "drive-menu@gnome-shell-extensions.gcampax.github.com"
+        "Vitals@CoreCoding.com"
+        "clipboard-history@alexsaveau.dev"
       ];
     };
 
@@ -49,154 +50,107 @@
       resize-with-right-button = true;
       mouse-button-modifier = "<Super>";
       button-layout = ":minimize,close";
+      num-workspaces = 9;
+    };
+    "org/gnome/shell/keybindings" = {
+      switch-to-application-1 = ["@as []"];
+      switch-to-application-2 = ["@as []"];
+      switch-to-application-3 = ["@as []"];
+      switch-to-application-4 = ["@as []"];
+      switch-to-application-5 = ["@as []"];
+      switch-to-application-6 = ["@as []"];
+      switch-to-application-7 = ["@as []"];
+      switch-to-application-8 = ["@as []"];
+      switch-to-application-9 = ["@as []"];
     };
     "org/gnome/desktop/wm/keybindings" = {
-      # maximize = ["<Super>Up"];                     # For floating
-      # unmaximize = ["<Super>Down"];
-      maximize = ["@as []"];                          # For tilers
-      unmaximize = ["@as []"];
-      switch-to-workspace-left = ["<Alt>Left"];
-      switch-to-workspace-right = ["<Alt>Right"];
-      switch-to-workspace-1 = ["<Alt>1"];
-      switch-to-workspace-2 = ["<Alt>2"];
-      switch-to-workspace-3 = ["<Alt>3"];
-      switch-to-workspace-4 = ["<Alt>4"];
-      switch-to-workspace-5 = ["<Alt>5"];
-      move-to-workspace-left = ["<Shift><Alt>Left"];
-      move-to-workspace-right = ["<Shift><Alt>Right"];
-      move-to-workspace-1 = ["<Shift><Alt>1"];
-      move-to-workspace-2 = ["<Shift><Alt>2"];
-      move-to-workspace-3 = ["<Shift><Alt>3"];
-      move-to-workspace-4 = ["<Shift><Alt>4"];
-      move-to-workspace-5 = ["<Shift><Alt>5"];
-      move-to-monitor-left = ["<Super><Alt>Left"];
-      move-to-monitor-right = ["<Super><Alt>Right"];
-      close = ["<Super>q" "<Alt>F4"];
-      toggle-fullscreen = ["<Super>f"];
-    };
+      switch-to-workspace-1 = ["<Super>1"];
+      switch-to-workspace-2 = ["<Super>2"];
+      switch-to-workspace-3 = ["<Super>3"];
+      switch-to-workspace-4 = ["<Super>4"];
+      switch-to-workspace-5 = ["<Super>5"];
+      switch-to-workspace-6 = ["<Super>6"];
+      switch-to-workspace-7 = ["<Super>7"];
+      switch-to-workspace-8 = ["<Super>8"];
+      switch-to-workspace-9 = ["<Super>9"];
 
-    "org/gnome/mutter" = {
-      workspaces-only-on-primary = false;
-      center-new-windows = true;
-      edge-tiling = false;                            # Disabled when tiling
-    };
-    "org/gnome/mutter/keybindings" = {
-      #toggle-tiled-left = ["<Super>Left"];           # For floating
-      #toggle-tiled-right = ["<Super>Right"];
-      toggle-tiled-left = ["@as []"];                 # For tilers
-      toggle-tiled-right = ["@as []"];
+      move-to-workspace-left = ["<Super><Shift>a"];
+      move-to-workspace-right = ["<Super><Shift>d"];
+
+      move-to-workspace-1 = ["<Super><Shift>1"];
+      move-to-workspace-2 = ["<Super><Shift>2"];
+      move-to-workspace-3 = ["<Super><Shift>3"];
+      move-to-workspace-4 = ["<Super><Shift>4"];
+      move-to-workspace-5 = ["<Super><Shift>5"];
+      move-to-workspace-6 = ["<Super><Shift>6"];
+      move-to-workspace-7 = ["<Super><Shift>7"];
+      move-to-workspace-8 = ["<Super><Shift>8"];
+      move-to-workspace-9 = ["<Super><Shift>9"];
+
+      close = ["<Super>w" "<Alt>F4"];
+      toggle-fullscreen = ["<Super>f"];
+
+      panel-run-dialog = "<Super>semicolon";
     };
 
     "org/gnome/settings-daemon/plugins/power" = {
       sleep-interactive-ac-type = "nothing";
     };
+
     "org/gnome/settings-daemon/plugins/media-keys" = {
       custom-keybindings = [
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
       ];
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-      binding = "<Super>Return";
+      binding = "<Shift><Super>Return";
       command = "alacritty";
       name = "open-terminal";
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
-      binding = "<Super>t";
-      command = "emacs";
-      name = "open-editor";
-    };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
       binding = "<Super>e";
-      command = "nautilus";
-      name = "open-file-browser";
+      command = "emacs-client";
+      name = "open-emacs";
     };
 
-    "org/gnome/shell/extension/dash-to-panel" = {     # Possibly need to set this manually
-      panel-position = ''{"0":"TOP","1":"Top"}'';
-      panel-sizes = ''{"0":24,"1":24}'';
-      panel-element-positions-monitors-sync = true;
-      appicon-margin = 0;
-      appicon-padding = 4;
-      dot-position = "TOP";
-      dot-style-focused = "SOLID";
-      dot-style-unfocused = "DOTS";
-      animate-appicon-hover = true;
-      animate-appicon-hover-animation-travel = "{'SIMPLE': 0.14999999999999999, 'RIPPLE': 0.40000000000000002, 'PLANK': 0.0}";
-      isolate-monitors = true;
+    "org/gnome/shell/extensions/paperwm" = {
+      restore-workspaces-only-on-primary = false;
+      window-gap = 10;
+      winprops = [ "{\"wm_class\":\"Spotify\",\"scratch_layer\":true}" ];
     };
-    "org/gnome/shell/extensions/just-perfection" = {
-      theme = true;
-      activities-button = false;
-      app-menu = false;
-      clock-menu-position = 1;
-      clock-menu-position-offset = 7;
+
+    "org/gnome/shell/extensions/paperwm/keybindings" = {
+      move-left = ["<Shift><Super>k"];
+      move-right = ["<Shift><Super>j"];
+
+      switch-previous = ["<Super>k"];
+      switch-next = ["<Super>j"];
+
+      move-monitor-left = ["<Shift><Super>a"];
+      move-monitor-below = ["<Shift><Super>s"];
+      move-monitor-right = ["<Shift><Super>d"];
+      move-monitor-above = ["<Shift><Super>w"];
+
+      swap-monitor-left = ["<Control><Super>a"];
+      swap-monitor-below = ["<Control><Super>s"];
+      swap-monitor-right = ["<Control><Super>d"];
+      swap-monitor-above = ["<Control><Super>w"];
+
+      switch-monitor-left = ["<Super>a"];
+      switch-monitor-below = ["<Super>s"];
+      switch-monitor-right = ["<Super>d"];
+      switch-monitor-above = ["<Super>w"];
+
+      new-window = ["<Super>n"];
+
+      paper-toggle-fullscreen = ["<Shift><Super>f"];
+
+      toggle-maximize-width = ["<Super>f"];
+
+      toggle-scratch = ["<Shift><Super>g"];
+      toggle-scratch-layer = ["<Super>g"];
     };
-    "org/gnome/shell/extensions/caffeine" = {
-      enable-fullscreen = true;
-      restore-state = true;
-      show-indicator = true;
-      show-notification = false;
-    };
-    "org/gnome/shell/extensions/blur-my-shell" = {
-      brightness = 0.9;
-    };
-    "org/gnome/shell/extensions/blur-my-shell/panel" = {
-      customize = true;
-      sigma = 0;
-    };
-    "org/gnome/shell/extensions/blur-my-shell/overview" = { # Temporary = D2D Bug
-      customize = true;
-      sigma = 0;
-    };
-    "org/gnome/shell/extensions/horizontal-workspace-indicator" = {
-      widget-position = "left";
-      widget-orientation = "horizontal";
-      icons-style = "circles";
-    };
-    "org/gnome/shell/extensions/bluetooth-quick-connect" = {
-      show-battery-icon-on = true;
-      show-battery-value-on = true;
-    };
-    "org/gnome/shell/extensions/pip-on-top" = {
-      stick = true;
-    };
-    "org/gnome/shell/extensions/forge" = {
-      window-gap-size = 8;
-      dnd-center-layout = "stacked";
-    };
-    "org/gnome/shell/extensions/forge/keybindings" = {      # Set active colors manually
-      focus-border-toggle = true;
-      float-always-on-top-enabled = true;
-      window-focus-up = ["<Super>Up"];
-      window-focus-down = ["<Super>Down"];
-      window-focus-left = ["<Super>Left"];
-      window-focus-right = ["<Super>Right"];
-      # window-swap-up = ["<Shift><Super>Up"];
-      # window-swap-down = ["<Shift><Super>Down"];
-      # window-swap-left = ["<Shift><Super>Left"];
-      # window-swap-right = ["<Shift><Super>Right"];
-      window-move-up = ["<Shift><Super>Up"];
-      window-move-down = ["<Shift><Super>Down"];
-      window-move-left = ["<Shift><Super>Left"];
-      window-move-right = ["<Shift><Super>Right"];
-      window-swap-last-active = ["@as []"];
-      window-toggle-float = ["<Shift><Super>f"];
-    };
-    # "org/gnome/shell/extensions/dash-to-dock" = {   # If dock if preferred
-    #   multi-monitor = true;
-    #   dock-fixed = true;
-    #   dash-max-icon-size = 16;
-    #   custom-theme-shrink = true;
-    #   transparency-mode = "FIXED";
-    #   background-opacity = 0.0;
-    #   show-apps-at-top = true;
-    #   show-trash = true;
-    #   hot-keys = false;
-    #   click-action = "previews";
-    #   scroll-action = "cycle-windows";
-    # };
   };
 
   home.packages = with pkgs; [
