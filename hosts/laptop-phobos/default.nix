@@ -25,6 +25,7 @@
     [(import ../../modules/desktop/qtile/default.nix)] ++ # Window Manager
     [(import ../../modules/desktop/gnome/default.nix)] ++ # Window Manager
     (import ../../modules/hardware) ++
+    [(import ../../modules/programs/games.nix)] ++
     (import ../../modules/desktop/virtualisation);
 
   networking.hostName = "laptop-phobos";
