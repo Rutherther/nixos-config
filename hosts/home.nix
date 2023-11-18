@@ -40,15 +40,50 @@
     };
     mimeApps = {
       enable = true;
-      defaultApplications = {
-        "application/pdf" = "zathura.desktop";
-        "text/html" = "firefox.desktop";
-        "x-scheme-handler/http" = "firefox.desktop";
-        "x-scheme-handler/https" = "firefox.desktop";
-        "x-scheme-handler/chrome" = "firefox.desktop";
-        "x-scheme-handler/about" = "firefox.desktop";
-        "x-scheme-handler/unknown" = "firefox.desktop";
-        "x-scheme-handler/file" = "nemo.desktop";
+      defaultApplications = let
+        imageViewer = "sxiv.desktop";
+        videoViewer = "mpv.desktop";
+        pdfViewer = "org.pwmt.zathura.desktop";
+        textEditor = "emacs-client.desktop";
+        webBrowser = "firefox.desktop";
+        fileBrowser = "nautilus.desktop";
+      in {
+        # see https://www.iana.org/assignments/media-types/media-types.xhtml
+
+        # Pdf
+        "application/pdf" = pdfViewer;
+
+        # Image
+        "image/png" = imageViewer;
+        "image/jpeg" = imageViewer;
+        "image/gif" = imageViewer;
+        "image/tiff" = imageViewer;
+        "image/webp" = imageViewer;
+
+        # Video
+        "application/mp4" = videoViewer;
+        "video/mpeg" = videoViewer;
+        "video/h264" = videoViewer;
+        "video/h265" = videoViewer;
+        "video/h266" = videoViewer;
+
+        # Text Editor
+        "application/x-shellscript" = textEditor;
+        "text/plain" = textEditor;
+        "text/x-python3" = textEditor;
+        "text/javascript" = textEditor;
+        "text/markdown" = textEditor;
+
+        # Web Browser
+        "text/html" = webBrowser;
+        "x-scheme-handler/http" = webBrowser;
+        "x-scheme-handler/https" = webBrowser;
+        "x-scheme-handler/chrome" = webBrowser;
+        "x-scheme-handler/about" = webBrowser;
+        "x-scheme-handler/unknown" = webBrowser;
+
+        # File Browser
+        "x-scheme-handler/file" = fileBrowser;
       };
     };
   };
@@ -67,6 +102,7 @@
       lazygit           # Git tool
 
       # Video/Audio
+      sxiv              # Image Viewer
       feh               # Image Viewer
       mpv               # Media Player
       pavucontrol       # Audio Control
