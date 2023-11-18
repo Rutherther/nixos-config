@@ -107,7 +107,6 @@
       mpv               # Media Player
       pavucontrol       # Audio Control
       vlc               # Media Player
-      blueman           # Bluetooth manager
 
       # Apps
       chromium          # Browser

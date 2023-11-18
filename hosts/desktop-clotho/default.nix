@@ -73,7 +73,6 @@
   };
 
   services = {
-    blueman.enable = true;                      # Bluetooth
     xserver.videoDrivers = [ "amdgpu" ];
   };
 
