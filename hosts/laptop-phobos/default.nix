@@ -53,6 +53,11 @@
     };
   };
 
+  security.pam.services.login.fprintAuth = false;
+  security.pam.services.sddm.fprintAuth = false;
+  security.pam.services.sddm-greeter.fprintAuth = false;
+  services.fprintd.enable = true;
+
   hardware = {                              # No xbacklight, this is the alterantive
     brillo.enable = true;
   };
