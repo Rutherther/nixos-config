@@ -32,6 +32,8 @@
       gnomeExtensions.openweather
       gnomeExtensions.clipboard-history
       gnomeExtensions.forge
+      gnomeExtensions.switcher
+
     ];
     gnome.excludePackages = (with pkgs; [         # Gnome ignored packages
       gnome-tour

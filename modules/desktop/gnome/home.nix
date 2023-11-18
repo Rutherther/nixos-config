@@ -29,6 +29,7 @@
         "drive-menu@gnome-shell-extensions.gcampax.github.com"
         "Vitals@CoreCoding.com"
         "clipboard-history@alexsaveau.dev"
+        "switcher@landau.fi"
       ];
     };
 
@@ -150,6 +151,10 @@
 
       toggle-scratch = ["<Shift><Super>g"];
       toggle-scratch-layer = ["<Super>g"];
+    };
+
+    "org/gnome/shell/extensions/switcher" = {
+      show-switcher = ["<Super>semicolon"];
     };
   };
 
