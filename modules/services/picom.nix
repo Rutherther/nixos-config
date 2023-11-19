@@ -6,7 +6,7 @@
 
 { 
   services.picom = {
-    enable = true;
+    # enable = true;
     package = pkgs.picom;
 
     backend = "glx";                              # Rendering either with glx or xrender. You'll know if you need to switch this.
