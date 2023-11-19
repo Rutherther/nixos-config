@@ -45,11 +45,15 @@
       timeout = 1;                          # Grub auto select time
     };
 
+    initrd.systemd.enable = true;
     initrd.luks.devices = {
       "crypted-linux-root" = {
         device = "/dev/disk/by-label/crypted-linux-root";
-        preLVM = true;
-        # allowDiscards = true;
+        allowDiscards = true;
+
+        keyFileSize = 256;
+        keyFile = "/dev/disk/by-id/usb-VendorCo_ProductCode_92073160DC061126104-0:0";
+        keyFileTimeout = 5;
       };
     };
   };
