@@ -4,7 +4,33 @@
 
 { config, lib, pkgs, ... }:
 
-{
+let
+  paperwm = pkgs.stdenv.mkDerivation (finalAttrs: rec {
+    pname = "gnome-shell-extension-paperwm";
+    version = "44.15.1";
+
+    src = pkgs.fetchFromGitHub {
+      owner = "paperwm";
+      repo = "PaperWM";
+      rev = "v${version}";
+      hash = "sha256-89tW/3TLx7gvjnQfpfH8fkaxx7duYXRiCi5bkBRm9UU=";
+    };
+
+    dontConfigure = true;
+    dontBuild = true;
+
+    installPhase = ''
+      runHook preInstall
+
+      mkdir -p "$out/share/gnome-shell/extensions/paperwm@paperwm.github.com"
+      cp -r . "$out/share/gnome-shell/extensions/paperwm@paperwm.github.com"
+
+      runHook postInstall
+    '';
+
+    passthru.extensionUuid = "paperwm@paperwm.github.com";
+  });
+in {
   programs = {
     zsh.enable = true;
     dconf.enable = true;
@@ -32,16 +58,9 @@
       gnomeExtensions.clipboard-history
       gnomeExtensions.forge
       gnomeExtensions.switcher
+      gnomeExtensions.disable-workspace-switch-animation-for-gnome-40
 
-      (gnomeExtensions.paperwm.overrideAttrs (rec {
-        version = "44.15.1";
-        src = pkgs.fetchFromGitHub {
-          owner = "paperwm";
-          repo = "PaperWM";
-          rev = "v${version}";
-          hash = "sha256-89tW/3TLx7gvjnQfpfH8fkaxx7duYXRiCi5bkBRm9UU=";
-        };
-      }))
+      # paperwm
     ];
     gnome.excludePackages = (with pkgs; [         # Gnome ignored packages
       gnome-tour

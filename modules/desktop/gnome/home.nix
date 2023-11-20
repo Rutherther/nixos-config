@@ -30,6 +30,7 @@
         "Vitals@CoreCoding.com"
         "clipboard-history@alexsaveau.dev"
         "switcher@landau.fi"
+        "instantworkspaceswitcher@amalantony.net"
       ];
     };
 
