@@ -33,12 +33,18 @@
   boot = {                                  # Boot options
     kernelPackages = pkgs.linuxPackages_latest;
 
+    # Secure boot
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/etc/secureboot";
+    };
+
     loader = {                              # EFI Boot
       efi = {
         canTouchEfiVariables = true;
       };
       systemd-boot = {
-        enable = true;
+        enable = lib.mkForce false; # lanzaboote is used instead
         editor = false;                     # Better security, disallows passing /bin/sh to start as root
         configurationLimit = 5;
       };

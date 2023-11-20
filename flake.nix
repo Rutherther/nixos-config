@@ -46,26 +46,32 @@
       nixos-hardware = {
         url = "github:NixOS/nixos-hardware/master";
       };
+
+      lanzaboote = {
+        url = "github:nix-community/lanzaboote/v0.3.0";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+
     };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, nix-index-database, home-manager, nur, nixgl, nixos-hardware, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
-    let                                                                     # Variables that can be used in the config files.
+  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, nix-index-database, home-manager, nur, nixgl, nixos-hardware, lanzaboote, ... }:
+    let
       user = "ruther";
       location = "$HOME/.setup";
 
       pkgs = import nixpkgs {
         system = "x86_64-linux";
       };
-    in                                                                      # Use above variables in ...
+    in
     {
-      nixosConfigurations = (                                               # NixOS configurations
-        import ./hosts {                                                    # Imports ./hosts/default.nix
+      nixosConfigurations = (
+        import ./hosts {
           inherit (nixpkgs) lib;
           inherit inputs nixpkgs nixpkgs-stable nix-index-database home-manager nur user location;
         }
       );
 
-      homeConfigurations = (                                                # Non-NixOS configurations
+      homeConfigurations = (
         import ./nix {
           inherit (nixpkgs) lib;
           inherit inputs nixpkgs nixpkgs-stable nix-index-database home-manager nixgl user location;

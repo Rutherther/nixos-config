@@ -72,6 +72,7 @@ in
       inherit inputs stable user location;
     };
     modules = [
+      inputs.lanzaboote.nixosModules.lanzaboote
       inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14s-amd-gen1
       nur.nixosModules.nur
       { nixpkgs.overlays = [ nur.overlay ]; }
