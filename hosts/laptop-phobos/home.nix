@@ -26,6 +26,8 @@
 
       # Power Management
       pkgs.acpi
+
+      pkgs.easyeffects
     ];
   };
 
@@ -35,6 +37,10 @@
      enable = true;
      criticalLevelPercent = 10;
      lowLevelPercent = 20;
-   };
+    };
+
+    easyeffects = {
+      enable = true;
+    };
   };
 }
