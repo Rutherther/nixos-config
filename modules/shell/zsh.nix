@@ -26,7 +26,7 @@
           nix-locate --top-level -w /bin/$1
         }
 
-        source /etc/set-environment
+        # source /etc/set-environment
       '';
     };
   };
