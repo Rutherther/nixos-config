@@ -84,6 +84,9 @@
 
         # File Browser
         "x-scheme-handler/file" = fileBrowser;
+
+        # Chat
+        "x-scheme-handler/tg" = "org.telegram.desktop.desktop";
       };
     };
   };
