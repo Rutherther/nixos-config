@@ -46,8 +46,8 @@
   i18n = {
     defaultLocale = "en_US.UTF-8";
     extraLocaleSettings = {                 # Extra locale settings that need to be overwritten
-      LC_TIME = "cs_CZ.UTF-8";
-      LC_MONETARY = "cs_CZ.UTF-8";
+      # LC_TIME = "cs_CZ.UTF-8";
+      # LC_MONETARY = "cs_CZ.UTF-8";
     };
   };
 
