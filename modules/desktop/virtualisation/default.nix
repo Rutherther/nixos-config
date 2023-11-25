@@ -13,4 +13,5 @@
 
 [
   ./podman.nix
+  ./qemu.nix
 ]
