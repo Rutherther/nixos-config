@@ -30,6 +30,7 @@
         "Vitals@CoreCoding.com"
         "clipboard-history@alexsaveau.dev"
         "switcher@landau.fi"
+        "fullscreen-avoider@noobsai.github.com"
         "instantworkspaceswitcher@amalantony.net"
       ];
     };

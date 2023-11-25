@@ -58,7 +58,14 @@ in {
       gnomeExtensions.clipboard-history
       gnomeExtensions.forge
       gnomeExtensions.switcher
-      gnomeExtensions.disable-workspace-switch-animation-for-gnome-40
+      (gnomeExtensions.disable-workspace-switch-animation-for-gnome-40.overrideAttrs {
+        src = pkgs.fetchFromGitHub {
+          owner = "tmke8";
+          repo = "gnome-shell-extension-instant-workspace-switcher";
+          rev = "patch-1";
+          hash = "sha256-Ual7kAOeGPe3DF5XHf5eziscYeMLUnDktEGU41Yl4E4=";
+        } + "/instantworkspaceswitcher@amalantony.net";
+      })
 
       # paperwm
     ];
