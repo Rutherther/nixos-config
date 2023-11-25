@@ -90,7 +90,7 @@
   services = {
     # tlp.enable = true;                      # TLP and auto-cpufreq for power management
     # auto-cpufreq.enable = true;
-    logind.lidSwitch = "lock";           # lock on lid close
+    logind.lidSwitch = "suspend";           # suspend on lid close
 
     xserver.libinput = {
       enable = true;
