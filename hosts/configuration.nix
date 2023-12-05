@@ -25,6 +25,7 @@
 
   hardware.pulseaudio.enable = false;
 
+  users.groups.plugdev.members = [ "${user}" ];
   users.users.${user} = {                   # System User
     isNormalUser = true;
     extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "kvm" "libvirtd" "plex" "podman" ];
