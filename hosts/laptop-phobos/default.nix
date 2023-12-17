@@ -88,29 +88,33 @@
   };
 
   services = {
-    # tlp.enable = true;                      # TLP and auto-cpufreq for power management
-    # auto-cpufreq.enable = true;
     logind.lidSwitch = "suspend";           # suspend on lid close
 
-    udev.extraRules = ''
-      # Trezor: The Original Hardware Wallet
-      # https://trezor.io/
-      #
-      # Put this file into /etc/udev/rules.d
-      #
-      # If you are creating a distribution package,
-      # put this into /usr/lib/udev/rules.d or /lib/udev/rules.d
-      # depending on your distribution
+    udev = {
+      packages = [
+        inputs.nix-fpga-tools.packages.x86_64-linux.ise-udev-rules
+        inputs.nix-fpga-tools.packages.x86_64-linux.vivado-udev-rules
+      ];
+      extraRules = ''
+        # Trezor: The Original Hardware Wallet
+        # https://trezor.io/
+        #
+        # Put this file into /etc/udev/rules.d
+        #
+        # If you are creating a distribution package,
+        # put this into /usr/lib/udev/rules.d or /lib/udev/rules.d
+        # depending on your distribution
 
-      # Trezor
-      SUBSYSTEM=="usb", ATTR{idVendor}=="534c", ATTR{idProduct}=="0001", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl", SYMLINK+="trezor%n"
-      KERNEL=="hidraw*", ATTRS{idVendor}=="534c", ATTRS{idProduct}=="0001", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl"
+        # Trezor
+        SUBSYSTEM=="usb", ATTR{idVendor}=="534c", ATTR{idProduct}=="0001", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl", SYMLINK+="trezor%n"
+        KERNEL=="hidraw*", ATTRS{idVendor}=="534c", ATTRS{idProduct}=="0001", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl"
 
-      # Trezor v2
-      SUBSYSTEM=="usb", ATTR{idVendor}=="1209", ATTR{idProduct}=="53c0", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl", SYMLINK+="trezor%n"
-      SUBSYSTEM=="usb", ATTR{idVendor}=="1209", ATTR{idProduct}=="53c1", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl", SYMLINK+="trezor%n"
-      KERNEL=="hidraw*", ATTRS{idVendor}=="1209", ATTRS{idProduct}=="53c1", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl"
-    '';
+        # Trezor v2
+        SUBSYSTEM=="usb", ATTR{idVendor}=="1209", ATTR{idProduct}=="53c0", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl", SYMLINK+="trezor%n"
+        SUBSYSTEM=="usb", ATTR{idVendor}=="1209", ATTR{idProduct}=="53c1", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl", SYMLINK+="trezor%n"
+        KERNEL=="hidraw*", ATTRS{idVendor}=="1209", ATTRS{idProduct}=="53c1", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl"
+      '';
+    };
 
     xserver.libinput = {
       enable = true;

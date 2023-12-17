@@ -1,9 +1,8 @@
-{ config, lib, pkgs, vivadoPath, ... }:
+{ inputs, system, config, lib, pkgs, vivadoPath, ... }:
 
-let
-  vivadoPkg = pkgs.callPackage ./vivado-pkg.nix {  };
-in {
+{
   services.udev.packages = [
-    vivadoPkg
+    inputs.nix-fpga-tools.packages.x86_64-linux.ise-udev-rules
+    inputs.nix-fpga-tools.packages.x86_64-linux.vivado-udev-rules
   ];
 }

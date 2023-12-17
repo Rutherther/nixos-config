@@ -52,6 +52,10 @@
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
+      nix-fpga-tools = {
+        url = "github:Rutherther/nix-fpga";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
     };
 
   outputs = inputs @ { self, nixpkgs, nixpkgs-stable, nix-index-database, home-manager, nur, nixgl, nixos-hardware, lanzaboote, ... }:
