@@ -63,3 +63,5 @@
 (package! ob-ipython)
 
 (package! verilog-ext)
+
+(package! matlab-mode)

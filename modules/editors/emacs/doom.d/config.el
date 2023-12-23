@@ -86,6 +86,10 @@
       "c d" 'lsp-ui-doc-show
       "c m" #'+make/run)
 
+(map! :leader
+      "!"
+      #'+popup/other)
+
 (map! :map cdlatex-mode-map
    :i "TAB" #'cdlatex-tab)
 
@@ -193,18 +197,6 @@
   (setq lsp-ui-doc-max-height 30))
 (add-hook 'lsp-mode-hook 'my-lsp-ui-setup)
 
-(use-package org-roam
-  :ensure t
-  :custom
-  (org-roam-directory "~/doc/notes/org-roam")
-  (org-roam-dailies-directory "journals/")
-  (org-roam-capture-templates
-   '(("d" "default" plain
-      "%?" :target
-      (file+head "pages/${slug}.org" "#+title: ${title}\n")
-      :unnarrowed t)))
-  :config (org-roam-db-autosync-enable))
-
 (defun my-verilog-setup ()
   (setq verilog-indent-lists nil)
   (setq verilog-indent-level 2)
@@ -245,3 +237,17 @@
 (verilog-ext-mode-setup)
 (add-hook 'verilog-mode-hook #'verilog-ext-mode)
 
+(use-package org-roam
+  :ensure t
+  :custom
+  (org-roam-directory "~/doc/notes/org-roam")
+  (org-roam-dailies-directory "journals/")
+  (org-roam-capture-templates
+   '(("d" "default" plain
+      "%?" :target
+      (file+head "pages/${slug}.org" "#+title: ${title}\n")
+      :unnarrowed t)))
+  :config (org-roam-db-autosync-enable))
+
+(add-to-list 'auto-mode-alist '("\\.m$" . matlab-mode))
+(setq matlab-shell-command-switches (list "-nodesktop"))

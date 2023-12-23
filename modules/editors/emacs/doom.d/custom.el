@@ -5,7 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(lsp-vhdl-server 'vhdl-ls)
  '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'")
- '(package-selected-packages '(tree-sitter))
+ '(package-selected-packages '(matlab-mode tree-sitter))
  '(request-backend 'url-retrieve)
  '(safe-local-variable-values
    '((rustic-cargo-run-arguments . "--release")
