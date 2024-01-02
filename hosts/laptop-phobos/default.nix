@@ -91,6 +91,7 @@ in {
     [(import ../../modules/desktop/qtile/default.nix)] ++ # Window Manager
     [(import ../../modules/desktop/gnome/default.nix)] ++ # Window Manager
     (import ../../modules/hardware) ++
+    [(import ../../modules/hardware/rocm)] ++
     [(import ../../modules/programs/games.nix)] ++
     (import ../../modules/desktop/virtualisation);
 
