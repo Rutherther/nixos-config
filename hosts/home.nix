@@ -151,6 +151,8 @@
 
       spotify
       # obsidian        # Text Editor
+
+      comma
     ];
 
     pointerCursor = {                         # This will set cursor system-wide so applications can not choose their own
