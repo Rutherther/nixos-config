@@ -136,6 +136,7 @@
   (setq vhdl-clock-name "clk_i")
   (setq vhdl-reset-kind 'sync)
   (setq vhdl-reset-name "rst_in")
+  (setq vhdl-basic-offset 2)
 )
   ;;(setq lsp-vhdl--params '(server-path "/home/ruther/Documents/git_cloned/rust_hdl/target/debug/vhdl_ls" server-args nil))
   ;;(setq lsp-vhdl-server-path "/home/ruther/Documents/git_cloned/rust_hdl/target/debug/vhdl_ls"))
