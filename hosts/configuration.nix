@@ -111,6 +111,7 @@
       nano
       pciutils
       ripgrep
+      bat
       socat
       usbutils
       wget

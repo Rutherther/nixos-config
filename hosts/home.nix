@@ -153,6 +153,8 @@
       # obsidian        # Text Editor
 
       comma
+      bat
+      rg
     ];
 
     pointerCursor = {                         # This will set cursor system-wide so applications can not choose their own
