@@ -252,3 +252,8 @@
 
 (add-to-list 'auto-mode-alist '("\\.m$" . matlab-mode))
 (setq matlab-shell-command-switches (list "-nodesktop"))
+
+;; topsy doesn't work well for some modes such as vhdl-mode :(
+;; (add-hook 'prog-mode-hook #'topsy-mode)
+
+(setq company-idle-delay nil)
