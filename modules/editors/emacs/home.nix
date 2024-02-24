@@ -61,6 +61,8 @@ in {
     fd
     ripgrep
 
+    delta
+
     ## Optional dependencies
     fd
     imagemagick

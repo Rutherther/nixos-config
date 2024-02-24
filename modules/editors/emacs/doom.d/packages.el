@@ -50,7 +50,6 @@
 ;(unpin! t)
 
 (package! arm-mode :recipe (:host github :repo "charje/arm-mode"))
-;; (package! dumb-jump)
 (package! imenu-list)
 ;(package! combobulate)
 ;
@@ -66,3 +65,9 @@
 (package! ob-ipython)
 
 (package! matlab-mode)
+
+;; git
+(package! magit-delta)
+
+;; navigation
+(package! dumb-jump)

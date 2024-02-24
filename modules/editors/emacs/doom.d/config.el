@@ -257,3 +257,8 @@
 ;; (add-hook 'prog-mode-hook #'topsy-mode)
 
 (setq company-idle-delay nil)
+
+(add-hook 'magit-mode-hook (lambda () (magit-delta-mode +1)))
+(add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+
+(setq avy-all-windows t)
