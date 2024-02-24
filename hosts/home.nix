@@ -154,7 +154,7 @@
 
       comma
       bat
-      rg
+      ripgrep
     ];
 
     pointerCursor = {                         # This will set cursor system-wide so applications can not choose their own
