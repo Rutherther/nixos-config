@@ -30,7 +30,7 @@
 
       peers = [
         {
-          publicKey = "Mui5wOV21QTer4NK2dUcBOgaW9UFzFzwmxOn/458ByI=";
+          publicKey = "ZOVjmgUak67kLhNVgZwyb0bro3Yi4vCJbGArv+35IWQ=";
           endpoint = inputs.semi-secrets.wg.serverEndpoint;
 
             # The ip is not refreshed, as the kernel cannot perform DNS resolution. Use dynamicEndpointRefreshSeconds,

@@ -131,17 +131,18 @@
     };
   };
 
-  environment.etc = {
-    "wireplumber/bluetooth.lua.d/51-bluez-config.lua".text = ''
-      bluez_monitor.properties = {
-        ["bluez5.msbc-support"] = true;
-        ["bluez5.sbc-xq-support"] = true;
-        ["bluez5.enable-faststream"] = true;
-        ["bluez5.headset-roles"] = "[ hsp_hs hsp_ag ]";
-        ["bluez5.hfphsp-backend"] = "hsphfpd";
-      }
-    '';
-  };
+  # services.pipewire.wireplumber.configPackages =
+  # environment.etc = {
+  #   "wireplumber/bluetooth.lua.d/51-bluez-config.lua".text = ''
+  #     bluez_monitor.properties = {
+  #       ["bluez5.msbc-support"] = true;
+  #       ["bluez5.sbc-xq-support"] = true;
+  #       ["bluez5.enable-faststream"] = true;
+  #       ["bluez5.headset-roles"] = "[ hsp_hs hsp_ag ]";
+  #       ["bluez5.hfphsp-backend"] = "hsphfpd";
+  #     }
+  #   '';
+  # };
 
   systemd.network = {
     wait-online = {
@@ -182,6 +183,8 @@
     '';
   };
   nixpkgs.config.allowUnfree = true;        # Allow proprietary software.
+
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   system = {                                # NixOS settings
     stateVersion = "23.05";

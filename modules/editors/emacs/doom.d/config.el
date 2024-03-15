@@ -114,8 +114,6 @@
   (lsp-ui-sideline-show-hover t)
   (lsp-ui-doc-enable nil))
 
-(after! centaur-tabs (centaur-tabs-group-by-projectile-project))
-
 ;; imenu
 
 (setq imenu-list-focus-after-activation t)
@@ -262,3 +260,5 @@
 (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
 
 (setq avy-all-windows t)
+
+(remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)

@@ -46,7 +46,7 @@
         pdfViewer = "org.pwmt.zathura.desktop";
         textEditor = "emacs-client.desktop";
         webBrowser = "firefox.desktop";
-        fileBrowser = "nautilus.desktop";
+        fileBrowser = "emacs-client.desktop"; # "nautilus.desktop";
       in {
         # see https://www.iana.org/assignments/media-types/media-types.xhtml
 
@@ -146,6 +146,7 @@
       # Desktop
       discord           # Chat
       telegram-desktop  # Chat
+      element-desktop  # Chat
       cinny-desktop     # Chat
       ffmpeg           # Video Support (dslr)
 
