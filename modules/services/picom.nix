@@ -6,7 +6,7 @@
 
 { 
   services.picom = {
-    # enable = true;
+    enable = true;
     package = pkgs.picom;
 
     backend = "glx";                              # Rendering either with glx or xrender. You'll know if you need to switch this.
@@ -24,10 +24,10 @@
     #  "100:name = 'Picture in picture'"
     #  "100:name = 'Picture-in-Picture'"
     #  "85:class_i ?= 'rofi'"
-      "90:class_i *= 'discord'"
-      "90:class_i *= 'telegram-desktop'"
-      "90:class_i *= 'emacs'"
-      "90:class_i *= 'Alacritty'"
+      # "90:class_i *= 'discord'"
+      # "90:class_i *= 'telegram-desktop'"
+      # "90:class_i *= 'emacs'"
+      # "90:class_i *= 'Alacritty'"
     #  "100:fullscreen"
     ];                                            # Find with $ xprop | grep "WM_CLASS"
 

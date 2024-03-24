@@ -5,6 +5,6 @@ firefox &
 
 # Comms
 discord &
-telegram-desktop &
+element-desktop &
 
 # aw-qt &

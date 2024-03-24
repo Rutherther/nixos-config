@@ -19,6 +19,9 @@ from mpris2widget import Mpris2
 from bluetooth import Bluetooth
 import xmonadcustom
 from nixenvironment import setupLocation, configLocation, sequenceDetectorExec
+import time
+
+import screeninfo
 
 colors = {
     'primary': '51afef',
@@ -81,12 +84,28 @@ def go_to_group(qtile: Qtile, group_name: str, switch_monitor: bool = False):
     for window in current_group.windows:
         if window.fullscreen:
             window.toggle_fullscreen()
+            time.sleep(0.1)
+            window.toggle_fullscreen()
 
     if not switch_monitor or not found:
         window: Window
         for window in qtile.groups_map[group_name].windows:
             if window.fullscreen:
                 window.toggle_fullscreen()
+                time.sleep(0.1)
+                window.toggle_fullscreen()
+
+@lazy.function
+def warp_cursor_to_focused_window(qtile: Qtile):
+    logger.warning("warping")
+    current_window = qtile.current_window
+    win_size = current_window.get_size()
+    win_pos = current_window.get_position()
+
+    x = win_pos[0] + win_size[0] // 2
+    y = win_pos[1] + win_size[1] // 2
+
+    qtile.core.warp_pointer(x, y)
 
 # expands list of keys with the rest of regular keys,
 # mainly usable for KeyChords, where you want any other key
@@ -345,14 +364,33 @@ def create_bottom_bar():
         ),
     ], 30)
 
-def init_screen(top_bar, wallpaper):
-    return Screen(top=top_bar, bottom=create_bottom_bar(), wallpaper=wallpaper, width=1920, height=1080)
+def init_screens():
 
-screens = [
-    init_screen(create_top_bar(), f'{setupLocation}/wall.png'),
-    init_screen(create_top_bar(systray = True), f'{setupLocation}/wall.png'),
-    init_screen(create_top_bar(), f'{setupLocation}/wall.png'),
-]
+    wallpaper = f'{setupLocation}/wall.png'
+
+    screens_info = screeninfo.get_monitors()
+    screens_count = len(screens_info)
+    screens = [None] * screens_count
+
+    logger.warning(f'setting up {screens_count} screens')
+
+    for i in range(0, screens_count):
+        screen_info = screens_info[i]
+        systray = False
+        if screens_count <= 2 and i == 0:
+            systray = True
+            print(f'Putting systray on {i}')
+        elif i == 1:
+            systray  = True
+            print(f'Putting systray on {i}')
+
+        top_bar = create_top_bar(systray = systray)
+
+        screens[i] = Screen(top=top_bar, bottom=create_bottom_bar(), wallpaper=f'{setupLocation}/wall.png', width=screen_info.width, height=screen_info.height)
+
+    return screens
+
+screens = init_screens()
 
 # Keys
 keys = []
@@ -374,6 +412,7 @@ keys.extend([
     EzKey('M-S-m', lazy.window.toggle_minimize()),
     EzKey('M-t', lazy.window.disable_floating()),
     EzKey('M-f', lazy.window.toggle_fullscreen()),
+    EzKey('M-S-f', lazy.to_layout_index(1)),
     EzKey('M-<Return>', lazy.layout.swap_main()),
     EzKey('M-<Space>', lazy.next_layout()),
     EzKey('M-S-<Space>', lazy.to_layout_index(0), desc = 'Default layout'),
@@ -393,8 +432,8 @@ keys.extend([
     # social navigation
     EzKeyChord('M-a', expand_with_rest_keys([
        EzKey('b', focus_window_by_class('discord')),
-       EzKey('n', focus_window_by_class('Cinny')),
-       EzKey('m', focus_window_by_class('Cinny')),
+       EzKey('n', focus_window_by_class('element')),
+       EzKey('m', focus_window_by_class('element')),
 
        # notifications
        EzKey('l', lazy.spawn(f'{setupLocation}/scripts/notifications/clear-popups.sh')),
@@ -454,12 +493,18 @@ keys.extend([
 ])
 
 # Monitor navigation
-monitor_navigation_keys = ['w', 'e', 'r']
+keys.extend([
+    EzKey('M-C-w', warp_cursor_to_focused_window()),
+])
+if len(screens) >= 4:
+    monitor_navigation_keys = ['q', 'w', 'e', 'r']
+else:
+    monitor_navigation_keys = ['w', 'e', 'r']
+
 for i, key in enumerate(monitor_navigation_keys):
-    monitor_index_map = [ 2, 0, 1 ]
     keys.extend([
-        EzKey(f'M-{key}', lazy.to_screen(monitor_index_map[i]), desc = f'Move focus to screen {i}'),
-        EzKey(f'M-S-{key}', lazy.window.toscreen(monitor_index_map[i]), desc = f'Move focus to screen {i}'),
+        EzKey(f'M-{key}', lazy.to_screen(i), desc = f'Move focus to screen {i}'),
+        EzKey(f'M-S-{key}', lazy.window.toscreen(i), desc = f'Move window to screen {i}'),
     ])
 
 if qtile.core.name == 'x11':
@@ -507,6 +552,12 @@ groups.append(
         DropDown(
             'spotify',
             ['spotify'],
+            on_focus_lost_hide = True,
+            **scratch_pad_middle
+        ),
+        DropDown(
+            'ipcam',
+            ['~/doc/utils/ip-cam.sh'],
             on_focus_lost_hide = True,
             **scratch_pad_middle
         ),
@@ -611,15 +662,25 @@ def startup_applications(client: Window):
     if client.match(Match(wm_class = 'firefox')) and firefoxInstance <= 1:
         client.togroup(groups[firefoxInstance].name)
         firefoxInstance += 1
-    elif client.match(Match(wm_class = 'discord')) or client.match(Match(wm_class = 'telegram-desktop')) or client.match(Match(wm_class = 'cinny')):
+    elif client.match(Match(wm_class = 'discord')) or client.match(Match(wm_class = 'telegram-desktop')) or client.match(Match(wm_class = 'element')):
         client.togroup(groups[8].name)
 
 @hook.subscribe.screen_change
 @lazy.function
 def set_screens(qtile, event):
-    if not os.path.exists(os.path.expanduser('~/NO-AUTORANDR')):
-        subprocess.run(["autorandr", "--change"])
-        qtile.cmd_restart()
+    logger.warning("screen change")
+    logger.warning(event)
+    # if not os.path.exists(os.path.expanduser('~/NO-AUTORANDR')):
+        # subprocess.run(["autorandr", "--change"])
+        # qtile.cmd_restart()
+
+@hook.subscribe.screens_reconfigured
+@lazy.function
+def screen_reconf(qtile):
+    logger.warning("screens reconfigured")
+    l = len(screens)
+    l2 = len(qtile.screens)
+    logger.warnings(f"Reconfigured screens, length of our screens: {l}, of qtile's screens: {l2}")
 
 # Turn off fullscreen on unfocus
 @hook.subscribe.client_focus
@@ -653,4 +714,3 @@ def scratchpad_startup():
             return hide_dropdown
 
         hook.subscribe.client_managed(wrapper(dropdown_name))
-
