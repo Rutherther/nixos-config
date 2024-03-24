@@ -262,3 +262,5 @@
 (setq avy-all-windows t)
 
 (remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
+
+(add-hook 'write-file-hooks 'delete-trailing-whitespace)
