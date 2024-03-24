@@ -13,6 +13,7 @@ in
   systemd.user.services.dunst = lib.mkIf config.services.dunst.enable {
     Unit = {
       PartOf = lib.mkForce [ "qtile-services.target" ];
+      After = lib.mkForce [];
     };
     Install = {
       WantedBy = lib.mkForce [ "qtile-services.target" ];

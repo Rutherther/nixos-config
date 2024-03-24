@@ -178,19 +178,20 @@
 
   gtk = {                                     # Theming
     enable = true;
-    # theme = {
-    #   name = "Graphite-orange-Dark";
-    #   package = pkgs.graphite-gtk-theme.override {
-    #     themeVariants = ["orange"];
-    #     colorVariants = ["dark"];
-    #   };
-    # };
+    theme = {
+      name = "Graphite-orange-Dark";
+      package = pkgs.graphite-gtk-theme.override {
+        themeVariants = ["orange"];
+        colorVariants = ["dark"];
+      };
+    };
     iconTheme = {
       name = "Tela-circle-dark";
       package = pkgs.tela-circle-icon-theme;
     };
     font = {
       name = "FiraCode Nerd Font Mono Medium";
+      size = 10;
     };                                        # Cursor is declared under home.pointerCursor
   };
 

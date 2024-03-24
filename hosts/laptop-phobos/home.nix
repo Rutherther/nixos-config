@@ -31,6 +31,22 @@
     ];
   };
 
+  systemd.user.services.cbatticon = lib.mkIf config.services.cbatticon.enable {
+    Unit = {
+      After = lib.mkForce [];
+      PartOf = lib.mkForce [ "qtile-services.target" ];
+    };
+    Install.WantedBy = lib.mkForce [ "qtile-services.target" ];
+  };
+
+  systemd.user.services.network-manager-applet = lib.mkIf config.services.network-manager-applet.enable {
+    Unit = {
+      After = lib.mkForce [];
+      PartOf = lib.mkForce [ "qtile-services.target" ];
+    };
+    Install.WantedBy = lib.mkForce [ "qtile-services.target" ];
+  };
+
   services = {                            # Applets
     network-manager-applet.enable = true; # Network
     cbatticon = {

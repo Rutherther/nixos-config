@@ -36,12 +36,6 @@
 
   networking.networkmanager.enable = true;
 
-  programs.nm-applet.enable = true;
-  systemd.user.services.nm-applet = lib.mkIf config.programs.nm-applet.enable {
-    wantedBy = lib.mkForce [ "qtile-services.target" ];
-    partOf = lib.mkForce [ "qtile-services.target" ];
-  };
-
   programs.command-not-found.enable = false;
 
   security.sudo.wheelNeedsPassword = true;
