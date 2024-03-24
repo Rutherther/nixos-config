@@ -180,17 +180,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1711202257,
-        "narHash": "sha256-H1asucgjIVvxfjLcUyY0kKr359BfzGRTjO+EKNk4bJI=",
-        "ref": "refs/heads/main",
-        "rev": "9c69358f0f86b89e5cb4e5132b221538d738baae",
-        "revCount": 18,
-        "type": "git",
-        "url": "file:///home/ruther/doc/projects/mine/nix/nix-fpga"
+        "lastModified": 1711202470,
+        "narHash": "sha256-N90nDyA6fzxHmew1+lrIZMFXuUarO1YM/GmLHmk7QrM=",
+        "owner": "Rutherther",
+        "repo": "nix-fpga",
+        "rev": "f618f1a0e7c1ac5e3ff8b6b99ecc006cdcaef8bc",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:///home/ruther/doc/projects/mine/nix/nix-fpga"
+        "owner": "Rutherther",
+        "repo": "nix-fpga",
+        "type": "github"
       }
     },
     "nix-index-database": {
