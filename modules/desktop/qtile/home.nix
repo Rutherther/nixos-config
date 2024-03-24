@@ -32,11 +32,6 @@ in {
 
   programs.autorandr = {
     enable = true;
-    hooks = {
-      postswitch = {
-        # "reload-qtile" = "${pkgs.qtile}/bin/qtile cmd-obj -o cmd -f reload_config";
-      };
-    };
     profiles = {
       "home-docked" = {
         fingerprint = {
@@ -47,30 +42,19 @@ in {
         config = {
           DP-9 = {
             enable = true;
-            crtc = 0;
-            primary = false;
             position = "0x0";
             mode = "1920x1080";
-            gamma = "1.0:0.909:0.833";
-            rate = "60.00";
           };
           DP-7 = {
             enable = true;
-            crtc = 0;
             primary = true;
             position = "1920x0";
             mode = "1920x1080";
-            gamma = "1.0:0.909:0.833";
-            rate = "60.00";
           };
           DP-8 = {
             enable = true;
-            crtc = 0;
-            primary = false;
             position = "3840x0";
             mode = "1920x1080";
-            gamma = "1.0:0.909:0.833";
-            rate = "60.00";
           };
           eDP-1 = {
             enable = false;
@@ -88,39 +72,24 @@ in {
         config = {
           DP-9 = {
             enable = true;
-            crtc = 0;
-            primary = false;
             position = "0x0";
             mode = "1920x1080";
-            gamma = "1.0:0.909:0.833";
-            rate = "60.00";
           };
           DP-7 = {
-            enable = false;
-            crtc = 0;
-            primary = true;
+            enable = true;
             position = "1920x0";
             mode = "1920x1080";
-            gamma = "1.0:0.909:0.833";
-            rate = "60.00";
           };
           DP-8 = {
-            enable = false;
-            crtc = 0;
-            primary = false;
+            enable = true;
             position = "3840x0";
             mode = "1920x1080";
-            gamma = "1.0:0.909:0.833";
-            rate = "60.00";
           };
           eDP-1 = {
             enable = true;
-            crtc = 0;
             primary = true;
             position = "1920x1080";
             mode = "1920x1200";
-            gamma = "1.0:0.909:0.833";
-            rate = "60.00";
           };
         };
       };
@@ -131,12 +100,12 @@ in {
         config = {
           eDP-1 = {
             enable = true;
-            crtc = 0;
+            # crtc = 0;
             primary = true;
             position = "0x0";
             mode = "1920x1200";
-            gamma = "1.0:0.909:0.833";
-            rate = "60.00";
+            # gamma = "1.0:0.909:0.833";
+            # rate = "60.00";
           };
         };
       };

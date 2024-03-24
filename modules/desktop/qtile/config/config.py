@@ -51,10 +51,39 @@ def focus_window_by_class(qtile: Qtile, wmclass: str):
     group.focus(window)
 
 @lazy.function
+def warp_cursor_to_focused_window(qtile: Qtile):
+    current_window = qtile.current_window
+    win_size = current_window.get_size()
+    win_pos = current_window.get_position()
+
+    x = win_pos[0] + win_size[0] // 2
+    y = win_pos[1] + win_size[1] // 2
+
+    qtile.core.warp_pointer(x, y)
+
+@lazy.function
+def go_to_screen(qtile: Qtile, index: int):
+    current_screen = qtile.current_screen
+    screen = qtile.screens[index]
+
+    logger.warning(screen)
+    logger.warning(current_screen)
+    if current_screen == screen:
+        x = screen.x + screen.width // 2
+        y = screen.y + screen.height // 2
+        qtile.core.warp_pointer(x, y)
+    else:
+        qtile.to_screen(index)
+
+    qtile.current_window.focus()
+
+
+@lazy.function
 def go_to_group(qtile: Qtile, group_name: str, switch_monitor: bool = False):
     found = False
     current_group = qtile.current_group
     if group_name == current_group.name:
+        warp_cursor_to_focused_window()
         return
 
     current_screen = qtile.current_screen
@@ -84,7 +113,7 @@ def go_to_group(qtile: Qtile, group_name: str, switch_monitor: bool = False):
     for window in current_group.windows:
         if window.fullscreen:
             window.toggle_fullscreen()
-            time.sleep(0.1)
+            # time.sleep(0.1)
             window.toggle_fullscreen()
 
     if not switch_monitor or not found:
@@ -92,20 +121,8 @@ def go_to_group(qtile: Qtile, group_name: str, switch_monitor: bool = False):
         for window in qtile.groups_map[group_name].windows:
             if window.fullscreen:
                 window.toggle_fullscreen()
-                time.sleep(0.1)
+                # time.sleep(0.1)
                 window.toggle_fullscreen()
-
-@lazy.function
-def warp_cursor_to_focused_window(qtile: Qtile):
-    logger.warning("warping")
-    current_window = qtile.current_window
-    win_size = current_window.get_size()
-    win_pos = current_window.get_position()
-
-    x = win_pos[0] + win_size[0] // 2
-    y = win_pos[1] + win_size[1] // 2
-
-    qtile.core.warp_pointer(x, y)
 
 # expands list of keys with the rest of regular keys,
 # mainly usable for KeyChords, where you want any other key
@@ -159,13 +176,13 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
-powerline = {
-    'decorations': [
-        PowerLineDecoration(path = 'forward_slash')
-    ]
-}
-
 def create_top_bar(systray = False):
+    powerline = {
+        'decorations': [
+            PowerLineDecoration(path = 'forward_slash')
+        ]
+    }
+
     widgets = [
         widget.Sep(padding = 5, size_percent = 0, background = colors['background_secondary']),
         widget.CurrentScreen(
@@ -239,13 +256,13 @@ def create_top_bar(systray = False):
                 ),
             ]
         ),
-        widget.Net(
-            interface = 'enp24s0',
-            prefix='M',
-            format = '{down:6.2f} {down_suffix:<2}↓↑{up:6.2f} {up_suffix:<2}',
-            background = colors['background_secondary'],
-            **powerline,
-        ),
+        # widget.Net(
+        #     interface = 'enp24s0',
+        #     prefix='M',
+        #     format = '{down:6.2f} {down_suffix:<2}↓↑{up:6.2f} {up_suffix:<2}',
+        #     background = colors['background_secondary'],
+        #     **powerline,
+        # ),
         widget.Memory(
             format = '{MemFree: .0f}{mm}',
             fmt = '{} free',
@@ -307,6 +324,12 @@ def create_top_bar(systray = False):
     return bar.Bar(widgets, 30)
 
 def create_bottom_bar():
+    powerline = {
+        'decorations': [
+            PowerLineDecoration(path = 'forward_slash')
+        ]
+    }
+
     return bar.Bar([
         TaskList(
             parse_text = lambda text : re.split(' [–—-] ', text)[-1],
@@ -318,8 +341,9 @@ def create_bottom_bar():
         ),
         widget.Spacer(),
         Mpris2(
-            display_metadata = ['xesam:title'],
+            format = '{xesam:title}',
             playerfilter = '.*Firefox.*',
+            scroll = False,
             paused_text = '', #'   {track}',
             playing_text = '    {track}',
             padding = 10,
@@ -335,8 +359,9 @@ def create_bottom_bar():
             ],
         ),
         Mpris2(
-            display_metadata = ['xesam:title', 'xesam:artist'],
+            format = '{xesam:title} - {xesam:artist}',
             objname = 'org.mpris.MediaPlayer2.spotify',
+            scroll = False,
             paused_text = '', #'   {track}',
             playing_text = '  {track}', # '   {track}',
             padding = 10,
@@ -365,7 +390,6 @@ def create_bottom_bar():
     ], 30)
 
 def init_screens():
-
     wallpaper = f'{setupLocation}/wall.png'
 
     screens_info = screeninfo.get_monitors()
@@ -489,13 +513,10 @@ keys.extend([
 keys.extend([
     EzKey('M-S-c', lazy.window.kill()),
     EzKey('M-C-r', lazy.reload_config()),
+    EzKey('M-C-S-r', lazy.restart()),
     EzKey('M-C-q', lazy.shutdown()),
 ])
 
-# Monitor navigation
-keys.extend([
-    EzKey('M-C-w', warp_cursor_to_focused_window()),
-])
 if len(screens) >= 4:
     monitor_navigation_keys = ['q', 'w', 'e', 'r']
 else:
@@ -503,7 +524,7 @@ else:
 
 for i, key in enumerate(monitor_navigation_keys):
     keys.extend([
-        EzKey(f'M-{key}', lazy.to_screen(i), desc = f'Move focus to screen {i}'),
+        EzKey(f'M-{key}', go_to_screen(i), desc = f'Move focus to screen {i}'),
         EzKey(f'M-S-{key}', lazy.window.toscreen(i), desc = f'Move window to screen {i}'),
     ])
 
@@ -557,7 +578,7 @@ groups.append(
         ),
         DropDown(
             'ipcam',
-            ['~/doc/utils/ip-cam.sh'],
+            ['/home/ruther/doc/utils/ip-cam.sh'],
             on_focus_lost_hide = True,
             **scratch_pad_middle
         ),
@@ -581,15 +602,15 @@ groups.append(
             width = 0.95, height = 0.95,
             opacity = 1,
         ),
-        DropDown(
-            'proton',
-            ['firefoxpwa', 'site', 'launch', '01HBD772V37WPQ3B2T7TQJ81PM'],
-            match = Match(wm_class = 'FFPWA-01HBD772V37WPQ3B2T7TQJ81PM'),
-            on_focus_lost_hide = True,
-            x = 0.025, y = 0.025,
-            width = 0.95, height = 0.95,
-            opacity = 1,
-        ),
+        # DropDown(
+        #     'proton',
+        #     ['firefoxpwa', 'site', 'launch', '01HBD772V37WPQ3B2T7TQJ81PM'],
+        #     match = Match(wm_class = 'FFPWA-01HBD772V37WPQ3B2T7TQJ81PM'),
+        #     on_focus_lost_hide = True,
+        #     x = 0.025, y = 0.025,
+        #     width = 0.95, height = 0.95,
+        #     opacity = 1,
+        # ),
     ])
 )
 
@@ -617,6 +638,75 @@ bring_front_click = False
 
 wl_input_rules = {}
 wmname = 'LG3D'
+
+from threading import Timer
+
+def debounce(wait):
+    """ Decorator that will postpone a functions
+        execution until after wait seconds
+        have elapsed since the last time it was invoked. """
+    def decorator(fn):
+        def debounced(*args, **kwargs):
+            def call_it():
+                fn(*args, **kwargs)
+            try:
+                debounced.t.cancel()
+            except(AttributeError):
+                pass
+            debounced.t = Timer(wait, call_it)
+            debounced.t.start()
+        return debounced
+    return decorator
+
+
+# Monitors changing connected displays and the lid.
+# Calls autorandr to change the outputs, and QTile
+# restart
+async def _observe_monitors():
+    from pydbus import SystemBus
+    from gi.repository import GLib
+    from libqtile.utils import add_signal_receiver
+    from dbus_next.message import Message
+    import pyudev
+
+    @debounce(0.2)
+    def call_autorandr():
+        subprocess.call(['autorandr', '--change', '--default', 'horizontal'])
+        time.sleep(0.3)
+        subprocess.call(['qtile', 'cmd-obj', '-o', 'cmd', '-f', 'restart'])
+
+    def on_upower_event(message: Message):
+        args = message.body
+        properties = args[1]
+        logger.info(message.body)
+        if 'LidIsClosed' in properties:
+            call_autorandr()
+
+    def on_drm_event(action=None, device=None):
+        if action == "change":
+            call_autorandr()
+
+    context = pyudev.Context()
+    monitor = pyudev.Monitor.from_netlink(context)
+    monitor.filter_by(subsystem = 'drm')
+    monitor.enable_receiving()
+
+    # bus = SystemBus()
+    # upower = bus.get('org.freedesktop.UPower', '/org/freedesktop/UPower')
+    # upower.PropertiesChanged.connect(on_upower_event)
+
+    logger.warning("Adding signal receiver")
+    subscribe = await add_signal_receiver(
+        on_upower_event,
+        session_bus = False,
+        signal_name = "PropertiesChanged",
+        path = '/org/freedesktop/UPower',
+        dbus_interface = 'org.freedesktop.DBus.Properties',
+    )
+    logger.warning(f"Add signal receiver: {subscribe}")
+
+    observer = pyudev.MonitorObserver(monitor, on_drm_event)
+    observer.start()
 
 # Swallow windows,
 # when a process with window spawns
@@ -651,6 +741,11 @@ def _unswallow(window):
 def autostart():
     subprocess.call([f'{configLocation}/autostart.sh'])
 
+
+@hook.subscribe.startup
+async def observer_start():
+    await _observe_monitors()
+
 firefoxInstance = 0
 @hook.subscribe.client_new
 def startup_applications(client: Window):
@@ -664,23 +759,6 @@ def startup_applications(client: Window):
         firefoxInstance += 1
     elif client.match(Match(wm_class = 'discord')) or client.match(Match(wm_class = 'telegram-desktop')) or client.match(Match(wm_class = 'element')):
         client.togroup(groups[8].name)
-
-@hook.subscribe.screen_change
-@lazy.function
-def set_screens(qtile, event):
-    logger.warning("screen change")
-    logger.warning(event)
-    # if not os.path.exists(os.path.expanduser('~/NO-AUTORANDR')):
-        # subprocess.run(["autorandr", "--change"])
-        # qtile.cmd_restart()
-
-@hook.subscribe.screens_reconfigured
-@lazy.function
-def screen_reconf(qtile):
-    logger.warning("screens reconfigured")
-    l = len(screens)
-    l2 = len(qtile.screens)
-    logger.warnings(f"Reconfigured screens, length of our screens: {l}, of qtile's screens: {l2}")
 
 # Turn off fullscreen on unfocus
 @hook.subscribe.client_focus

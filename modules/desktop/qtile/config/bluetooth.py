@@ -137,7 +137,6 @@ class Bluetooth(base._TextBox):
     def _device_signal_received(
         self, interface_name, changed_properties, _invalidated_properties
     ):
-        logger.warning(f"{changed_properties.keys()}")
         connected = changed_properties.get("Connected", None)
         if connected is not None:
             self.connected = connected.value
@@ -171,7 +170,6 @@ class Bluetooth(base._TextBox):
             self.battery = await battery_iface.get_percentage()
             bus.disconnect()
             self.update_text()
-            logger.warning(f"Updating text with battery")
         except Exception as e:
             logger.warning(e)
             bus.disconnect()
