@@ -126,7 +126,7 @@ in {
 
         keyFileSize = 256;
         keyFile = "/dev/disk/by-id/usb-VendorCo_ProductCode_92073160DC061126104-0:0";
-        keyFileTimeout = 5;
+        keyFileTimeout = 10;
       };
     };
   };
@@ -134,7 +134,7 @@ in {
   security.pam.services.login.fprintAuth = false;
   security.pam.services.sddm.fprintAuth = false;
   security.pam.services.sddm-greeter.fprintAuth = false;
-  services.fprintd.enable = true;
+  # services.fprintd.enable = true;
 
   hardware = {                              # No xbacklight, this is the alterantive
     brillo.enable = true;
