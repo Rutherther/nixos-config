@@ -49,6 +49,7 @@ in
 
       home-manager.nixosModules.home-manager {
         home-manager.useUserPackages = true;
+        home-manager.useGlobalPkgs = true;
         home-manager.extraSpecialArgs = {
           inherit inputs stable user location;
         };
@@ -81,6 +82,7 @@ in
 
       home-manager.nixosModules.home-manager {
         home-manager.useUserPackages = true;
+        home-manager.useGlobalPkgs = true;
         home-manager.extraSpecialArgs = {
           inherit inputs stable user location;
         };
@@ -110,6 +112,7 @@ in
 
       home-manager.nixosModules.home-manager {              # Home-Manager module that is used.
         home-manager.useUserPackages = true;
+        home-manager.useGlobalPkgs = true;
         home-manager.extraSpecialArgs = {
           inherit inputs stable user location;
         };                                                  # Pass flake variable
@@ -139,6 +142,7 @@ in
 
       home-manager.nixosModules.home-manager {
         home-manager.useUserPackages = true;
+        home-manager.useGlobalPkgs = true;
         home-manager.extraSpecialArgs = {
           inherit inputs stable user location;
         };
