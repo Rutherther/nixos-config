@@ -71,6 +71,7 @@
   security.polkit.enable = true;
 
   fonts.packages = with pkgs; [                # Fonts
+    inter
     ubuntu_font_family
     fira-code
     roboto
@@ -160,6 +161,8 @@
 
     settings = {
       connect-timeout = 5;
+
+      flake-registry = builtins.toFile "global-registry.json" ''{"flakes":[],"version":2}'';
 
       auto-optimise-store = true;           # Optimise syslinks
       substituters = [
