@@ -630,7 +630,7 @@ floating_layout = layout.Floating(
         *layout.Floating.default_float_rules,
     ]
 )
-auto_fullscreen = False
+auto_fullscreen = True
 focus_on_window_activation = 'never'
 reconfigure_screens = True
 auto_minimize = True

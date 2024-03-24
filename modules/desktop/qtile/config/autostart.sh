@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+systemctl start --user qtile-services.target
+
 # Browser
 firefox &
 

@@ -18,15 +18,23 @@ in {
     mpris-ctld = {
       Unit = {
         Description = "Daemon for mpris-ctl cli, that will keep track of last playing media";
+        PartOf = [ "qtile-services.target" ];
       };
 
       Install = {
-        WantedBy = [ "default.target" ];
+        WantedBy = [ "qtile-services.target" ];
       };
 
       Service = {
         ExecStart = "${nur.rutherther.rutherther-mpris-ctl}/bin/mpris-ctld";
       };
+    };
+  };
+
+  systemd.user.targets.qtile-services = {
+    Unit = {
+      Description = "A target that is enabled when starting Qtile";
+      Requires = [ "graphical-session.target" ];
     };
   };
 

@@ -8,7 +8,17 @@ let
   colors = import ../themes/colors.nix;                 # Import colors theme
 in
 {
-  home.packages = [ pkgs.libnotify ];                   # Dependency
+  home.packages = lib.mkIf config.services.dunst.enable [ pkgs.libnotify ];                   # Dependency
+
+  systemd.user.services.dunst = lib.mkIf config.services.dunst.enable {
+    Unit = {
+      PartOf = lib.mkForce [ "qtile-services.target" ];
+    };
+    Install = {
+      WantedBy = lib.mkForce [ "qtile-services.target" ];
+    };
+  };
+
   services.dunst = {
     enable = true;
     iconTheme = {                                       # Icons

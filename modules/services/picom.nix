@@ -4,7 +4,16 @@
 
 { config, lib, pkgs, ... }:
 
-{ 
+{
+  systemd.user.services.picom = lib.mkIf config.services.picom.enable {
+    Unit = {
+      PartOf = lib.mkForce [ "qtile-services.target" ];
+    };
+    Install = {
+      WantedBy = lib.mkForce [ "qtile-services.target" ];
+    };
+  };
+
   services.picom = {
     enable = true;
     package = pkgs.picom;

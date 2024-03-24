@@ -4,6 +4,15 @@
 { config, lib, pkgs, ...}:
 
 {
+  systemd.user.services.redshift = lib.mkIf config.services.redshift.enable {
+    Unit = {
+      PartOf = lib.mkForce [ "qtile-services.target" ];
+    };
+    Install = {
+      WantedBy = lib.mkForce [ "qtile-services.target" ];
+    };
+  };
+
   services = {
     redshift = {
       enable = true;
