@@ -9,12 +9,12 @@ let
   }) { inherit pkgs; };
 in {
   nixpkgs.overlays = [
-    my-nur.overlays.firefoxpwa
-    my-nur.overlays.firefox-native-messaging
+    # my-nur.overlays.firefoxpwa
+    # my-nur.overlays.firefox-native-messaging
   ];
 
   home.packages = [
-    pkgs.firefoxpwa
+    # pkgs.firefoxpwa
   ];
 
   programs.firefox = {
