@@ -8,6 +8,10 @@ in {
   services.autorandr = {
     enable = true;
   };
+  systemd.user.services.autorandr = lib.mkIf config.services.autorandr.enable {
+    Unit.PartOf = lib.mkForce [ "qtile-services.target" ];
+    Install.WantedBy = lib.mkForce [ "qtile-services.target" ];
+  };
 
   home.packages = with pkgs; [
     nur.rutherther.rutherther-mpris-ctl
