@@ -13,14 +13,14 @@
 
 { config, lib, nix-index-database, nixpkgs, inputs, stable, pkgs, user, location, ... }:
 
-{ 
+{
   imports =                                   # Home Manager Modules
     (import ../modules/programs/home.nix) ++
     (import ../modules/shell/home.nix) ++
     (import ../modules/editors/home.nix) ++
     (import ../modules/services/home.nix);
 
-  nixpkgs.config.allowUnfree = true;
+  # nixpkgs.config.allowUnfree = true;
   nix = {
     registry.nixpkgs.flake = inputs.nixpkgs;
     registry.nixpkgs-stable.flake = inputs.nixpkgs-stable;
@@ -160,10 +160,8 @@
 
     pointerCursor = {                         # This will set cursor system-wide so applications can not choose their own
       gtk.enable = true;
-      #name = "Dracula-cursors";
-      name = "Catppuccin-Mocha-Dark-Cursors";
-      #package = pkgs.dracula-theme;
-      package = pkgs.catppuccin-cursors.mochaDark;
+      name = "Catppuccin-Frappe-Lavender-Cursors";
+      package = pkgs.catppuccin-cursors.frappeLavender;
       size = 16;
     };
     stateVersion = "23.05";
@@ -181,16 +179,15 @@
   gtk = {                                     # Theming
     enable = true;
     theme = {
-      name = "Catppuccin-Mocha-Compact-Blue-Dark";
-      package = pkgs.catppuccin-gtk.override {
-        accents = ["blue"];
-        size = "compact";
-        variant = "mocha";
+      name = "Graphite-orange-Dark";
+      package = pkgs.graphite-gtk-theme.override {
+        themeVariants = ["orange"];
+        colorVariants = ["dark"];
       };
     };
     iconTheme = {
-      name = "Papirus-Dark";
-      package = pkgs.papirus-icon-theme;
+      name = "Tela-circle-dark";
+      package = pkgs.tela-circle-icon-theme;
     };
     font = {
       name = "FiraCode Nerd Font Mono Medium";
