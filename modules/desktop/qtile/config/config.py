@@ -1,6 +1,3 @@
-import re
-import os
-import subprocess
 import psutil
 import libqtile
 from libqtile import layout, bar, qtile
@@ -14,140 +11,13 @@ from libqtile.log_utils import logger
 from libqtile.backend.wayland import InputConfig
 import qtile_extras.widget as widget
 from qtile_extras.widget.decorations import BorderDecoration, PowerLineDecoration, RectDecoration
-from tasklist import TaskList
-from mpris2widget import Mpris2
-from bluetooth import Bluetooth
 import xmonadcustom
 from nixenvironment import setupLocation, configLocation, sequenceDetectorExec
+import functions
+import utils
+from screens import init_screens, observe_monitors, init_navigation_keys
+from styling import colors
 import time
-
-import screeninfo
-
-colors = {
-    'primary': '51afef',
-    'active': '8babf0',
-    'inactive': '555e60',
-    'secondary': '55eddc',
-    'background_primary': '222223',
-    'background_secondary': '444444',
-    'urgent': 'c45500',
-    'white': 'd5d5d5',
-    'grey': '737373',
-    'black': '121212',
-}
-
-# #####################################
-# Utility functions
-@lazy.function
-def focus_window_by_class(qtile: Qtile, wmclass: str):
-    match = Match(wm_class=wmclass)
-    windows = [w for w in qtile.windows_map.values() if isinstance(w, Window) and match.compare(w)]
-    if len(windows) == 0:
-        return
-
-    window = windows[0]
-    group = window.group
-    group.toscreen()
-    group.focus(window)
-
-@lazy.function
-def warp_cursor_to_focused_window(qtile: Qtile):
-    current_window = qtile.current_window
-    win_size = current_window.get_size()
-    win_pos = current_window.get_position()
-
-    x = win_pos[0] + win_size[0] // 2
-    y = win_pos[1] + win_size[1] // 2
-
-    qtile.core.warp_pointer(x, y)
-
-@lazy.function
-def go_to_screen(qtile: Qtile, index: int):
-    current_screen = qtile.current_screen
-    screen = qtile.screens[index]
-
-    logger.warning(screen)
-    logger.warning(current_screen)
-    if current_screen == screen:
-        x = screen.x + screen.width // 2
-        y = screen.y + screen.height // 2
-        qtile.core.warp_pointer(x, y)
-    else:
-        qtile.to_screen(index)
-
-    qtile.current_window.focus()
-
-
-@lazy.function
-def go_to_group(qtile: Qtile, group_name: str, switch_monitor: bool = False):
-    found = False
-    current_group = qtile.current_group
-    if group_name == current_group.name:
-        warp_cursor_to_focused_window()
-        return
-
-    current_screen = qtile.current_screen
-    target_screen = current_screen
-
-    for screen in qtile.screens:
-        if screen.group.name == group_name:
-            target_screen = screen
-            if switch_monitor:
-                qtile.focus_screen(screen.index)
-            found = True
-            break
-
-    current_bar = current_screen.top
-    target_bar = target_screen.top
-
-    if found and current_bar != target_bar and isinstance(target_bar, libqtile.bar.Bar) and isinstance(current_bar, libqtile.bar.Bar):
-        # found on other monitor, so switch bars
-        target_bar_show = target_bar.is_show()
-        current_bar_show = current_bar.is_show()
-
-        current_bar.show(target_bar_show)
-        target_bar.show(current_bar_show)
-
-    qtile.groups_map[group_name].toscreen()
-
-    for window in current_group.windows:
-        if window.fullscreen:
-            window.toggle_fullscreen()
-            # time.sleep(0.1)
-            window.toggle_fullscreen()
-
-    if not switch_monitor or not found:
-        window: Window
-        for window in qtile.groups_map[group_name].windows:
-            if window.fullscreen:
-                window.toggle_fullscreen()
-                # time.sleep(0.1)
-                window.toggle_fullscreen()
-
-# expands list of keys with the rest of regular keys,
-# mainly usable for KeyChords, where you want any other key
-# to exit the key chord instead.
-def expand_with_rest_keys(keys: list[EzKey], global_prefix: str) -> list[EzKey]:
-    all_keys = ['<semicolon>', '<return>', '<space>'] + [chr(c) for c in range(ord('a'), ord('z') + 1)]
-    prefixes = ['', 'M-', 'M-S-', 'M-C-', 'C-', 'S-']
-
-    for prefix in prefixes:
-        for potentially_add_key in all_keys:
-            potentially_add_key = prefix + potentially_add_key
-            if potentially_add_key == global_prefix:
-                continue
-
-            found = False
-            for existing_key in keys:
-                if existing_key.key.lower() == potentially_add_key:
-                    found = True
-                    break
-
-            if not found:
-                keys.append(EzKey(potentially_add_key, lazy.spawn(f'notify-send "Not registered key {global_prefix} {potentially_add_key}"')))
-
-    return keys
-
 
 # #####################################
 # Environment
@@ -175,244 +45,6 @@ widget_defaults = dict(
     foreground = colors['white'],
 )
 extension_defaults = widget_defaults.copy()
-
-def create_top_bar(systray = False):
-    powerline = {
-        'decorations': [
-            PowerLineDecoration(path = 'forward_slash')
-        ]
-    }
-
-    widgets = [
-        widget.Sep(padding = 5, size_percent = 0, background = colors['background_secondary']),
-        widget.CurrentScreen(
-            active_text = 'I',
-            active_color = colors['active'],
-            padding = 3,
-            fontsize = 16,
-            background = colors['background_secondary'],
-        ),
-        widget.GroupBox(
-            markup = False,
-            highlight_method = 'line',
-            rounded = False,
-            margin_x = 2,
-            disable_drag = True,
-            use_mouse_wheel = True,
-            active = colors['white'],
-            inactive = colors['grey'],
-            urgent_alert_method = 'line',
-            urgent_border = colors['urgent'],
-            this_current_screen_border = colors['active'],
-            this_screen_border = colors['secondary'],
-            other_screen_border = colors['inactive'],
-            other_current_screen_border = '6989c0',
-            background = colors['background_secondary'],
-        ),
-        widget.CurrentScreen(
-            active_text = 'I',
-            active_color = colors['active'],
-            padding = 3,
-            fontsize = 16,
-            background = colors['background_secondary'],
-            decorations = [
-                PowerLineDecoration(path = 'forward_slash'),
-            ],
-        ),
-        widget.Sep(
-            linewidth=2,
-            size_percent=0,
-            padding=5,
-        ),
-        widget.Prompt(),
-        widget.WindowName(
-            foreground = colors['primary'],
-            width = bar.CALCULATED,
-            padding = 10,
-            empty_group_string = 'Desktop',
-            max_chars = 160,
-            decorations = [
-                RectDecoration(
-                    colour = colors['black'],
-                    radius = 0,
-                    padding_y = 4,
-                    padding_x = 0,
-                    filled = True,
-                    clip = True,
-                ),
-            ],
-        ),
-        widget.Spacer(),
-        widget.Chord(
-            padding = 15,
-            decorations = [
-                RectDecoration(
-                    colour = colors['black'],
-                    radius = 0,
-                    padding_y = 4,
-                    padding_x = 6,
-                    filled = True,
-                    clip = True,
-                ),
-            ]
-        ),
-        # widget.Net(
-        #     interface = 'enp24s0',
-        #     prefix='M',
-        #     format = '{down:6.2f} {down_suffix:<2}↓↑{up:6.2f} {up_suffix:<2}',
-        #     background = colors['background_secondary'],
-        #     **powerline,
-        # ),
-        widget.Memory(
-            format = '{MemFree: .0f}{mm}',
-            fmt = '{} free',
-            **powerline,
-        ),
-        widget.CPU(
-            format = '{load_percent} %',
-            fmt = '   {}',
-            background = colors['background_secondary'],
-            **powerline,
-        ),
-        widget.DF(
-            update_interval = 60,
-            partition = '/',
-            #format = '[{p}] {uf}{m} ({r:.0f}%)',
-            format = '{uf}{m} free',
-            fmt = '   {}',
-            visible_on_warn = False,
-            **powerline,
-        ),
-        widget.GenPollText(
-            func = lambda: subprocess.check_output(['xkblayout-state', 'print', '%s']).decode('utf-8').upper(),
-            fmt = '⌨ {}',
-            update_interval = 0.5,
-            **powerline,
-        ),
-        widget.Clock(
-            timezone='Europe/Prague',
-            foreground = colors['primary'],
-            format='%A, %B %d - %H:%M:%S',
-            background = colors['background_secondary'],
-            **powerline
-        ),
-        widget.Volume(
-            fmt = '🕫  {}',
-        ),
-        widget.Sep(
-            foreground = colors['background_secondary'],
-            size_percent = 70,
-            linewidth = 3,
-        ),
-        Bluetooth(
-            hci = '/dev_88_C9_E8_49_93_16',
-            format_connected = '  {battery} %',
-            format_disconnected = '  Disconnected',
-            format_unpowered = ''
-        ),
-    ]
-
-    if systray:
-        widgets.append(widget.Sep(
-            foreground = colors['background_secondary'],
-            size_percent = 70,
-            linewidth = 2,
-        ))
-        widgets.append(widget.Systray())
-        widgets.append(widget.Sep(padding = 5, size_percent = 0))
-
-    return bar.Bar(widgets, 30)
-
-def create_bottom_bar():
-    powerline = {
-        'decorations': [
-            PowerLineDecoration(path = 'forward_slash')
-        ]
-    }
-
-    return bar.Bar([
-        TaskList(
-            parse_text = lambda text : re.split(' [–—-] ', text)[-1],
-            highlight_method = 'line',
-            txt_floating = '🗗 ',
-            txt_maximized = '🗖 ',
-            txt_minimized = '🗕 ',
-            borderwidth = 3,
-        ),
-        widget.Spacer(),
-        Mpris2(
-            format = '{xesam:title}',
-            playerfilter = '.*Firefox.*',
-            scroll = False,
-            paused_text = '', #'   {track}',
-            playing_text = '    {track}',
-            padding = 10,
-            decorations = [
-                RectDecoration(
-                    colour = colors['black'],
-                    radius = 0,
-                    padding_y = 4,
-                    padding_x = 5,
-                    filled = True,
-                    clip = True,
-                ),
-            ],
-        ),
-        Mpris2(
-            format = '{xesam:title} - {xesam:artist}',
-            objname = 'org.mpris.MediaPlayer2.spotify',
-            scroll = False,
-            paused_text = '', #'   {track}',
-            playing_text = '  {track}', # '   {track}',
-            padding = 10,
-            decorations = [
-                RectDecoration(
-                    colour = colors['black'],
-                    radius = 0,
-                    padding_y = 4,
-                    padding_x = 5,
-                    filled = True,
-                    clip = True,
-                ),
-            ],
-        ),
-        widget.Sep(
-            size_percent = 0,
-            padding = 5,
-            **powerline,
-        ),
-        widget.Wttr(
-            location = {'Odolena_Voda': ''},
-            format = '%t %c',
-            background = colors['background_secondary'],
-            **powerline,
-        ),
-    ], 30)
-
-def init_screens():
-    wallpaper = f'{setupLocation}/wall.png'
-
-    screens_info = screeninfo.get_monitors()
-    screens_count = len(screens_info)
-    screens = [None] * screens_count
-
-    logger.warning(f'setting up {screens_count} screens')
-
-    for i in range(0, screens_count):
-        screen_info = screens_info[i]
-        systray = False
-        if screens_count <= 2 and i == 0:
-            systray = True
-            print(f'Putting systray on {i}')
-        elif i == 1:
-            systray  = True
-            print(f'Putting systray on {i}')
-
-        top_bar = create_top_bar(systray = systray)
-
-        screens[i] = Screen(top=top_bar, bottom=create_bottom_bar(), wallpaper=f'{setupLocation}/wall.png', width=screen_info.width, height=screen_info.height)
-
-    return screens
 
 screens = init_screens()
 
@@ -454,10 +86,10 @@ keys.extend([
 
 keys.extend([
     # social navigation
-    EzKeyChord('M-a', expand_with_rest_keys([
-       EzKey('b', focus_window_by_class('discord')),
-       EzKey('n', focus_window_by_class('element')),
-       EzKey('m', focus_window_by_class('element')),
+    EzKeyChord('M-a', utils.expand_with_other_keys([
+       EzKey('b', functions.focus_window_by_class('discord')),
+       EzKey('n', functions.focus_window_by_class('element')),
+       EzKey('m', functions.focus_window_by_class('element')),
 
        # notifications
        EzKey('l', lazy.spawn(f'{setupLocation}/scripts/notifications/clear-popups.sh')),
@@ -470,7 +102,7 @@ keys.extend([
 ])
 
 keys.extend([
-    EzKeyChord('M-s', expand_with_rest_keys([
+    EzKeyChord('M-s', utils.expand_with_other_keys([
        EzKey('e', lazy.spawn('emacsclient -c')),
        EzKey('c', lazy.group['scratchpad'].dropdown_toggle('ipcam')),
        EzKey('s', lazy.group['scratchpad'].dropdown_toggle('spotify')),
@@ -517,16 +149,7 @@ keys.extend([
     EzKey('M-C-q', lazy.shutdown()),
 ])
 
-if len(screens) >= 4:
-    monitor_navigation_keys = ['q', 'w', 'e', 'r']
-else:
-    monitor_navigation_keys = ['w', 'e', 'r']
-
-for i, key in enumerate(monitor_navigation_keys):
-    keys.extend([
-        EzKey(f'M-{key}', go_to_screen(i), desc = f'Move focus to screen {i}'),
-        EzKey(f'M-S-{key}', lazy.window.toscreen(i), desc = f'Move window to screen {i}'),
-    ])
+init_navigation_keys(keys, screens)
 
 if qtile.core.name == 'x11':
     keys.append(EzKey('M-S-z', lazy.spawn('clipmenu')))
@@ -543,7 +166,7 @@ group_defaults = {
         'layout': 'max'
     }
 }
-logger.info(group_defaults.get('9'))
+
 groups = [Group(i) if not (i in group_defaults.keys()) else Group(i, **group_defaults.get(i)) for i in '123456789']
 
 for i in groups:
@@ -551,7 +174,7 @@ for i in groups:
         [
             EzKey(
                 f'M-{i.name}',
-                go_to_group(i.name),
+                functions.go_to_group(i.name),
                 desc='Switch to group {}'.format(i.name),
             ),
             Key(
@@ -639,75 +262,6 @@ bring_front_click = False
 wl_input_rules = {}
 wmname = 'LG3D'
 
-from threading import Timer
-
-def debounce(wait):
-    """ Decorator that will postpone a functions
-        execution until after wait seconds
-        have elapsed since the last time it was invoked. """
-    def decorator(fn):
-        def debounced(*args, **kwargs):
-            def call_it():
-                fn(*args, **kwargs)
-            try:
-                debounced.t.cancel()
-            except(AttributeError):
-                pass
-            debounced.t = Timer(wait, call_it)
-            debounced.t.start()
-        return debounced
-    return decorator
-
-
-# Monitors changing connected displays and the lid.
-# Calls autorandr to change the outputs, and QTile
-# restart
-async def _observe_monitors():
-    from pydbus import SystemBus
-    from gi.repository import GLib
-    from libqtile.utils import add_signal_receiver
-    from dbus_next.message import Message
-    import pyudev
-
-    @debounce(0.2)
-    def call_autorandr():
-        subprocess.call(['autorandr', '--change', '--default', 'horizontal'])
-        time.sleep(0.3)
-        subprocess.call(['qtile', 'cmd-obj', '-o', 'cmd', '-f', 'restart'])
-
-    def on_upower_event(message: Message):
-        args = message.body
-        properties = args[1]
-        logger.info(message.body)
-        if 'LidIsClosed' in properties:
-            call_autorandr()
-
-    def on_drm_event(action=None, device=None):
-        if action == "change":
-            call_autorandr()
-
-    context = pyudev.Context()
-    monitor = pyudev.Monitor.from_netlink(context)
-    monitor.filter_by(subsystem = 'drm')
-    monitor.enable_receiving()
-
-    # bus = SystemBus()
-    # upower = bus.get('org.freedesktop.UPower', '/org/freedesktop/UPower')
-    # upower.PropertiesChanged.connect(on_upower_event)
-
-    logger.warning("Adding signal receiver")
-    subscribe = await add_signal_receiver(
-        on_upower_event,
-        session_bus = False,
-        signal_name = "PropertiesChanged",
-        path = '/org/freedesktop/UPower',
-        dbus_interface = 'org.freedesktop.DBus.Properties',
-    )
-    logger.warning(f"Add signal receiver: {subscribe}")
-
-    observer = pyudev.MonitorObserver(monitor, on_drm_event)
-    observer.start()
-
 # Swallow windows,
 # when a process with window spawns
 # another process with a window as a child, minimize the first
@@ -715,36 +269,37 @@ async def _observe_monitors():
 # is done.
 # @hook.subscribe.client_new
 #   I don't like this much :( hence I commented it out
-def _swallow(window):
-    pid = window.window.get_net_wm_pid()
-    ppid = psutil.Process(pid).ppid()
-    cpids = {c.window.get_net_wm_pid(): wid for wid, c in window.qtile.windows_map.items()}
-    for i in range(5):
-        if not ppid:
-            return
-        if ppid in cpids:
-            parent = window.qtile.windows_map.get(cpids[ppid])
-            parent.minimized = True
-            window.parent = parent
-            return
-        ppid = psutil.Process(ppid).ppid()
+# def _swallow(window):
+#     pid = window.window.get_net_wm_pid()
+#     ppid = psutil.Process(pid).ppid()
+#     cpids = {c.window.get_net_wm_pid(): wid for wid, c in window.qtile.windows_map.items()}
+#     for i in range(5):
+#         if not ppid:
+#             return
+#         if ppid in cpids:
+#             parent = window.qtile.windows_map.get(cpids[ppid])
+#             parent.minimized = True
+#             window.parent = parent
+#             return
+#         ppid = psutil.Process(ppid).ppid()
 
-# @hook.subscribe.client_killed
-def _unswallow(window):
-    if hasattr(window, 'parent'):
-        window.parent.minimized = False
+# # @hook.subscribe.client_killed
+# def _unswallow(window):
+#     if hasattr(window, 'parent'):
+#         window.parent.minimized = False
 
 # Startup setup,
 # windows to correct workspaces,
 # start autostart.sh
 @hook.subscribe.startup_once
 def autostart():
+    import subprocess
     subprocess.call([f'{configLocation}/autostart.sh'])
 
 
 @hook.subscribe.startup
 async def observer_start():
-    await _observe_monitors()
+    await observe_monitors()
 
 firefoxInstance = 0
 @hook.subscribe.client_new

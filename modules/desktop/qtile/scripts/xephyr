@@ -6,6 +6,8 @@ XDISPLAY=${XDISPLAY:-:1}
 LOG_LEVEL=${LOG_LEVEL:-INFO}
 APP=${APP:-$(python -c "from libqtile.utils import guess_terminal; print(guess_terminal())")}
 
+cp ~/.config/qtile/nixenvironment.py "$HERE"/../config
+
 Xephyr +extension RANDR -screen ${SCREEN_SIZE} ${XDISPLAY} -ac &
 XEPHYR_PID=$!
 (

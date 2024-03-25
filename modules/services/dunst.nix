@@ -10,10 +10,18 @@ in
 {
   home.packages = lib.mkIf config.services.dunst.enable [ pkgs.libnotify ];                   # Dependency
 
+  # Remove dunst dbus Notification link so it's not started under Gnome!
+  xdg.dataFile."dbus-1/services/org.knopwob.dunst.service".enable = false;
+
   systemd.user.services.dunst = lib.mkIf config.services.dunst.enable {
     Unit = {
       PartOf = lib.mkForce [ "qtile-services.target" ];
       After = lib.mkForce [];
+    };
+    Service = {
+      # Remove reference to BusName so dunst is not started under Gnome!
+      Type = lib.mkForce "simple";
+      BusName = lib.mkForce "empty.dbus.name.placeholder";
     };
     Install = {
       WantedBy = lib.mkForce [ "qtile-services.target" ];

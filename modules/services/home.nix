@@ -16,4 +16,6 @@
   ./picom.nix
   ./udiskie.nix
   ./redshift.nix
+  ./mpris-ctl.nix
+  ./autorandr.nix
 ]
