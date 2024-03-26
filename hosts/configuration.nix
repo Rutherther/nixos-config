@@ -161,7 +161,7 @@
     settings = {
       connect-timeout = 5;
 
-      flake-registry = builtins.toFile "global-registry.json" ''{"flakes":[],"version":2}'';
+      flake-registry = "";
 
       auto-optimise-store = true;           # Optimise syslinks
       substituters = [
