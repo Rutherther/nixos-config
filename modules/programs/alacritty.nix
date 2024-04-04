@@ -7,12 +7,37 @@
 { pkgs, lib, ... }:
 
 {
+
   programs = {
     dircolors = {
       enable = true;
       settings = {
         OTHER_WRITABLE = "01;35"; # Make ntfs colors readable
       };
+    };
+
+    iamb = {
+      enable = true;
+      settings = {
+        profiles = {
+          "ditigal.xyz" = {
+            user_id = "@ruther:ditigal.xyz";
+          };
+        };
+        settings = {
+          username_display = "displayname";
+          image_preview = {};
+        };
+      };
+    };
+
+    kitty = {
+      enable = true;
+      font = {
+        name = "FiraCode Nerd Font";
+        size = 12;
+      };
+      theme = "Chalk";
     };
 
     alacritty = {

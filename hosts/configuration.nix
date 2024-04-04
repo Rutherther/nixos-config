@@ -11,7 +11,7 @@
 #           └─ default.nix
 #
 
-{ config, lib, pkgs, inputs, user, ... }:
+{ config, nixpkgs, lib, pkgs, inputs, user, ... }:
 
 {
   imports =                                   # Home Manager Modules
@@ -28,7 +28,7 @@
   users.groups.plugdev.members = [ "${user}" ];
   users.users.${user} = {                   # System User
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "kvm" "libvirtd" "plex" "podman" ];
+    extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "kvm" "libvirtd" "plex" "podman" "input" "tty" ];
     shell = pkgs.zsh;                       # Default shell
   };
   programs.zsh.enable = true; # has to be here to set shell to zsh
@@ -158,26 +158,34 @@
       "nixpkgs-stable=flake:nixpkgs-stable"
     ];
 
+    # package = pkgs.nixVersions.stable.overrideAttrs (old: {
+    #   patches = old.patches or [ ] ++ [
+    #     (pkgs.fetchpatch {
+    #       url = "https://github.com/NixOS/nix/commit/b6ae3be9c6ec4e9de55479188e76fc330b2304dd.patch";
+    #       hash = "sha256-VyIywGo1ie059wXmGWx+bNeHz9lNk6nlkJ/Qgd1kmzw=";
+    #     })
+    #   ];
+    # });
+
     settings = {
+      # reject-flake-config = true;
+
       connect-timeout = 5;
 
-      flake-registry = "";
+      flake-registry = ""; # Do not pollute with external flake registry
 
       auto-optimise-store = true;           # Optimise syslinks
       substituters = [
         "https://cache.nixos.org"
-        "https://rutherther.cachix.org"
-      ];
-      trusted-public-keys = [
-        "rutherther.cachix.org-1:O9st5Dq/VHb0T8+vwZ0aP4sjzzCn7Ry60wSyXaRW7j8="
       ];
     };
+
     gc = {                                  # Automatic garbage collection
       automatic = true;
       dates = "weekly";
       options = "--delete-older-than 2d";
     };
-    package = pkgs.nixVersions.unstable;    # Enable nixFlakes on system
+
     extraOptions = ''
       experimental-features = nix-command flakes
       keep-outputs          = true
@@ -185,6 +193,12 @@
     '';
   };
   nixpkgs.config.allowUnfree = true;        # Allow proprietary software.
+
+  # nixpkgs.overlays = [
+  #   (final: prev: {
+  #     xz = inputs.nixpkgs-stable.legacyPackages.${prev.hostPlatform.system}.xz;
+  #   })
+  # ];
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 

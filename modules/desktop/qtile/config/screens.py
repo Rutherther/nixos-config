@@ -16,17 +16,13 @@ def init_screens():
     screens_count = len(screens_info)
     screens = [None] * screens_count
 
-    logger.warning(f'setting up {screens_count} screens')
-
     for i in range(0, screens_count):
         screen_info = screens_info[i]
         systray = False
         if screens_count <= 2 and i == 0:
             systray = True
-            print(f'Putting systray on {i}')
         elif i == 1:
             systray  = True
-            print(f'Putting systray on {i}')
 
         top_bar = bars.create_top_bar(systray = systray)
 
@@ -34,16 +30,24 @@ def init_screens():
 
     return screens
 
-def init_navigation_keys(keys, screens):
-    if len(screens) >= 4:
-        monitor_navigation_keys = ['q', 'w', 'e', 'r']
-    else:
-        monitor_navigation_keys = ['w', 'e', 'r']
+def get_screen_physical_order():
+    screens = enumerate(screeninfo.get_monitors())
+    s = sorted(screens, key = lambda x: (x[1].y, x[1].x))
+    return map(lambda x: x[0], s)
 
+def init_navigation_keys(keys, screens):
+    order = list(get_screen_physical_order())
+
+    # TODO: how to specify this better?
+    # Could be based on the fingerprint for example
+    monitor_navigation_keys = ['r', 'w', 'e', 'q']
     for i, key in enumerate(monitor_navigation_keys):
+        if i >= len(order):
+            break
+
         keys.extend([
-            EzKey(f'M-{key}', go_to_screen(i), desc = f'Move focus to screen {i}'),
-            EzKey(f'M-S-{key}', lazy.window.toscreen(i), desc = f'Move window to screen {i}'),
+            EzKey(f'M-{key}', go_to_screen(order[i]), desc = f'Move focus to screen {i}'),
+            EzKey(f'M-S-{key}', lazy.window.toscreen(order[i]), desc = f'Move window to screen {i}'),
         ])
 
 # Monitors changing connected displays and the lid.

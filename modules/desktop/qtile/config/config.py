@@ -78,9 +78,10 @@ keys.extend([
 
 # Spwning programs
 keys.extend([
-    EzKey('M-<semicolon>', lazy.spawn('rofi -show drun')),
+    EzKey('M-<semicolon>', lazy.spawn('rofi -show drun -show-icons')),
     EzKey('A-<semicolon>', lazy.spawn('rofi -show windowcd -modi window,windowcd')),
-    EzKey('M-S-<semicolon>', lazy.spawn('rofi -show window -modi window,windowcd')),
+    EzKey('M-S-<semicolon>', lazy.spawn('rofi -show drun -theme launchpad -show-icons')),
+    # EzKey('M-S-<semicolon>', lazy.spawn('rofi -show window -modi window,windowcd')),
     EzKey('M-S-<Return>', lazy.spawn(terminal)),
 ])
 
@@ -133,7 +134,8 @@ keys.extend([
 
 # Printscreen
 keys.extend([
-    EzKey('<Print>', lazy.spawn('flameshot gui')),
+    EzKey('<Print>', lazy.spawn('ksnip -r')),
+    # EzKey('S-<Print>', lazy.spawn('ksnip -r -s')),
 ])
 
 # Locking

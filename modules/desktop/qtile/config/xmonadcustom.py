@@ -801,7 +801,7 @@ class MonadTall(_SimpleLayoutBase):
             self.master_length = 1
 
         if normalize:
-            self.group.layout_all()
+            # self.group.layout_all()
             self.normalize()
 
     @expose_command()
@@ -811,7 +811,7 @@ class MonadTall(_SimpleLayoutBase):
             self.master_length = len(self.clients) - 1
 
         if normalize:
-            self.group.layout_all()
+            # self.group.layout_all()
             self.normalize()
 
     @expose_command

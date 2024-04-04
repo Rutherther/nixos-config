@@ -156,12 +156,14 @@
       comma
       bat
       ripgrep
+
+      pinta
     ];
 
     pointerCursor = {                         # This will set cursor system-wide so applications can not choose their own
       gtk.enable = true;
-      name = "Catppuccin-Frappe-Lavender-Cursors";
-      package = pkgs.catppuccin-cursors.frappeLavender;
+      name = "Catppuccin-Frappe-Sapphire-Cursors";
+      package = pkgs.catppuccin-cursors.frappeSapphire;
       size = 16;
     };
     stateVersion = "23.05";

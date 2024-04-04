@@ -8,6 +8,10 @@
     };
   };
 
+  home.packages = [
+    pkgs.ksnip
+  ];
+
   xdg.configFile."qtile/config.py".source = ./config/config.py;
   xdg.configFile."qtile/utils.py".source = ./config/utils.py;
   xdg.configFile."qtile/functions.py".source = ./config/functions.py;

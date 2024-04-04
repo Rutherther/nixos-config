@@ -14,10 +14,10 @@
     enable = true;
     hooks = {
       postswitch = {
-        "notify-qtile" = "qtile cmd-obj -o cmd -f restart";
+        # "notify-qtile" = "qtile cmd-obj -o cmd -f restart";
         # Looks to me like after restarting QTile,
         # the system becomes slower until picom is restarted
-        "restart-picom" = "systemctl restart --user picom";
+        # "restart-picom" = "systemctl restart --user picom";
       };
     };
     profiles = {
