@@ -11,33 +11,56 @@
 #           └─ default.nix
 #
 
-{ config, nixpkgs, lib, pkgs, inputs, user, ... }:
+{ stable, pkgs, inputs, config, ... }:
 
 {
-  imports =                                   # Home Manager Modules
-    [(import ../modules/desktop)] ++
-    (import ../modules/services);
+  imports = [
+    ../modules/desktop
+    ../modules/services
+    ./nixos-config-options.nix
+
+    inputs.home-manager.nixosModules.home-manager
+  ];
 
   boot.tmp = {
     cleanOnBoot = true;
     useTmpfs = true;
   };
 
+  home-manager.useUserPackages = true;
+  home-manager.useGlobalPkgs = true;
+  home-manager.extraSpecialArgs = {
+    inherit inputs stable;
+  };
+  home-manager.users.${config.nixos-config.defaultUser} = {
+    imports = [
+      inputs.nix-index-database.hmModules.nix-index
+      ./home.nix
+      ./${config.networking.hostName}/home.nix
+      ./nixos-config-options.nix
+
+      {
+        nixos-config = {
+          inherit (config.nixos-config) defaultUser location;
+        };
+      }
+    ];
+  };
+
   hardware.pulseaudio.enable = false;
 
-  users.groups.plugdev.members = [ "${user}" ];
-  users.users.${user} = {                   # System User
+  users.users.${config.nixos-config.defaultUser} = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "kvm" "libvirtd" "plex" "podman" "input" "tty" ];
-    shell = pkgs.zsh;                       # Default shell
+    extraGroups = [
+      "wheel" "video" "audio" "camera"
+      "networkmanager" "lp" "scanner"
+      "plex" ];
+    shell = pkgs.zsh;
   };
-  programs.zsh.enable = true; # has to be here to set shell to zsh
-    # zsh is configured at home-manager level afterwards
+  programs.zsh.enable = true;
 
   networking.networkmanager.enable = true;
-
   programs.command-not-found.enable = false;
-
   security.sudo.wheelNeedsPassword = true;
   programs.dconf.enable = true;
   services.udisks2.enable = true;
@@ -45,15 +68,11 @@
   time.timeZone = "Europe/Prague";        # Time zone and internationalisation
   i18n = {
     defaultLocale = "en_US.UTF-8";
-    extraLocaleSettings = {                 # Extra locale settings that need to be overwritten
-      # LC_TIME = "cs_CZ.UTF-8";
-      # LC_MONETARY = "cs_CZ.UTF-8";
-    };
   };
 
   console = {
     font = "Lat2-Terminus16";
-    keyMap = "us";                          # or us/azerty/etc
+    keyMap = "us";
   };
 
   security.rtkit.enable = true;
@@ -99,9 +118,9 @@
 
   environment = {
     variables = {
-      TERMINAL = "alacritty";
-      EDITOR = "nvim";
-      VISUAL = "nvim";
+      TERMINAL = "kitty";
+      EDITOR = "emacsclient";
+      VISUAL = "emacsclient";
     };
     pathsToLink = [ "/share/zsh" ];
     systemPackages = with pkgs; [           # Default packages installed system-wide
@@ -131,23 +150,8 @@
     };
   };
 
-  # services.pipewire.wireplumber.configPackages =
-  # environment.etc = {
-  #   "wireplumber/bluetooth.lua.d/51-bluez-config.lua".text = ''
-  #     bluez_monitor.properties = {
-  #       ["bluez5.msbc-support"] = true;
-  #       ["bluez5.sbc-xq-support"] = true;
-  #       ["bluez5.enable-faststream"] = true;
-  #       ["bluez5.headset-roles"] = "[ hsp_hs hsp_ag ]";
-  #       ["bluez5.hfphsp-backend"] = "hsphfpd";
-  #     }
-  #   '';
-  # };
-
   systemd.network = {
-    wait-online = {
-      enable = false;
-    };
+    wait-online.enable = false;
   };
 
   nix = {                                   # Nix Package Manager settings
@@ -158,18 +162,7 @@
       "nixpkgs-stable=flake:nixpkgs-stable"
     ];
 
-    # package = pkgs.nixVersions.stable.overrideAttrs (old: {
-    #   patches = old.patches or [ ] ++ [
-    #     (pkgs.fetchpatch {
-    #       url = "https://github.com/NixOS/nix/commit/b6ae3be9c6ec4e9de55479188e76fc330b2304dd.patch";
-    #       hash = "sha256-VyIywGo1ie059wXmGWx+bNeHz9lNk6nlkJ/Qgd1kmzw=";
-    #     })
-    #   ];
-    # });
-
     settings = {
-      # reject-flake-config = true;
-
       connect-timeout = 5;
 
       flake-registry = ""; # Do not pollute with external flake registry
@@ -178,6 +171,10 @@
       substituters = [
         "https://cache.nixos.org"
       ];
+
+      keep-outputs = true;
+      keep-derivations = true;
+      experimental-features = [ "nix-command" "flakes" ];
     };
 
     gc = {                                  # Automatic garbage collection
@@ -185,24 +182,12 @@
       dates = "weekly";
       options = "--delete-older-than 2d";
     };
-
-    extraOptions = ''
-      experimental-features = nix-command flakes
-      keep-outputs          = true
-      keep-derivations      = true
-    '';
   };
-  nixpkgs.config.allowUnfree = true;        # Allow proprietary software.
-
-  # nixpkgs.overlays = [
-  #   (final: prev: {
-  #     xz = inputs.nixpkgs-stable.legacyPackages.${prev.hostPlatform.system}.xz;
-  #   })
-  # ];
+  nixpkgs.config.allowUnfree = true;
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
-  system = {                                # NixOS settings
+  system = {
     stateVersion = "23.05";
   };
 }

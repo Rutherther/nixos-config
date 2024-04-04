@@ -5,7 +5,7 @@
 # Do not forget to enable Steam play for all title in the settings menu
 #
 
-{ config, pkgs, nur, lib, ... }:
+{ pkgs, lib, ... }:
 
 {
   environment.systemPackages = [

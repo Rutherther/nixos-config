@@ -10,11 +10,13 @@
 #               └─ ...
 #
 
-[
-  ./alacritty.nix
-  ./iamb.nix
-  ./rofi.nix
-  ./clipmenu.nix
-  ./firefox.nix
-  ./email.nix
-]
+{
+  imports = [
+    ./alacritty.nix
+    ./iamb.nix
+    ./rofi.nix
+    ./clipmenu.nix
+    ./firefox.nix
+    ./email.nix
+  ];
+}

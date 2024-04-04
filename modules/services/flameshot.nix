@@ -2,10 +2,10 @@
 # Screenshots
 #
 
-{ config, lib, pkgs, user, ... }:
+{ config, lib, ... }:
 
 let
-  screensDir = "/home/${user}/screens";
+  screensDir = "${config.home.homeDirectory}/screens";
 in {
 
   systemd.user.services.flameshot = lib.mkIf config.services.flameshot.enable {

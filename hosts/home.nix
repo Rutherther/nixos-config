@@ -11,20 +11,21 @@
 #           └─ default.nix
 #
 
-{ config, lib, nix-index-database, nixpkgs, inputs, stable, pkgs, user, location, ... }:
+{ config, inputs, pkgs, ... }:
 
 {
-  imports =                                   # Home Manager Modules
-    (import ../modules/programs/home.nix) ++
-    (import ../modules/shell/home.nix) ++
-    (import ../modules/editors/home.nix) ++
-    (import ../modules/services/home.nix);
+  imports = [
+    ../modules/programs/home.nix
+    ../modules/shell/home.nix
+    ../modules/editors/home.nix
+    ../modules/services/home.nix
+  ];
 
-  # nixpkgs.config.allowUnfree = true;
   nix = {
     registry.nixpkgs.flake = inputs.nixpkgs;
     registry.nixpkgs-stable.flake = inputs.nixpkgs-stable;
   };
+
   home.sessionVariables.NIX_PATH =
     "nixpkgs=flake:nixpkgs$\{NIX_PATH:+:$NIX_PATH}";
 
@@ -92,8 +93,8 @@
   };
 
   home = {
-    username = "${user}";
-    homeDirectory = "/home/${user}";
+    username = config.nixos-config.defaultUser;
+    homeDirectory = "/home/${config.nixos-config.defaultUser}";
 
     packages = with pkgs; [
       # Terminal

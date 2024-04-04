@@ -1,18 +1,13 @@
-{ inputs, config, lib, nixpkgs, pkgs, ... }:
+{ inputs, config, pkgs, ... }:
 
 let
-  nur = config.nur.repos;
-  buildFirefoxXpiAddon = pkgs.nur.repos.rycee.firefox-addons.buildFirefoxXpiAddon;
-  my-nur = import (builtins.fetchTarball {
-    url = "https://github.com/Rutherther/nur-pkgs/archive/179f884ebb068f1803bd54647aee1f672b90db49.tar.gz";
-    sha256 = "06kx9pn0682gn1r4kfhjbsg3b80gp4wpp8mp0p8v47zhbcvwqka6";
-  }) { inherit pkgs; };
+  nur = import inputs.nur {
+    # TODO replace this x86 64 linux with actual host system
+    #  will have to be passed from nixos config probably
+    nurpkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
+    inherit pkgs;
+  };
 in {
-  nixpkgs.overlays = [
-    # my-nur.overlays.firefoxpwa
-    # my-nur.overlays.firefox-native-messaging
-  ];
-
   home.packages = [
     # pkgs.firefoxpwa
   ];
@@ -34,7 +29,7 @@ in {
           #navigator-toolbox { font-family:Ubuntu !important }
         '';
 
-        extensions = with nur.rycee.firefox-addons; [
+        extensions = with nur.repos.rycee.firefox-addons; [
           # Basic
           proton-pass                # Password manager
           darkreader                 # Dark pages

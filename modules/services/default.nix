@@ -10,8 +10,10 @@
 #               └─ ...
 #
 
-[
-  ./syncthing.nix
-  ./wireguard.nix
-  ./ssh.nix
-]
+{
+  imports = [
+    ./syncthing.nix
+    ./wireguard.nix
+    ./ssh.nix
+  ];
+}

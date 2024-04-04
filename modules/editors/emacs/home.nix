@@ -11,10 +11,10 @@
 #
 
 
-{ config, user, unstable, pkgs, inputs, location, ... }:
+{ lib, pkgs, config, ... }:
 
 let
-  doomRev = "844a82c";
+  doomRev = "5f5a163c49207a7083ab1ecc9e78d268fd6600b8";
 in {
   services.emacs = {
     enable = true;
@@ -44,9 +44,14 @@ in {
             if [ ! -d "$EMACS" ]; then
               ${pkgs.git}/bin/git clone https://github.com/doomemacs/doomemacs $EMACS
               (cd $EMACS && ${pkgs.git}/bin/git checkout ${doomRev})
+            else
+              curr_rev=$(cd $EMACS && ${lib.getExe pkgs.git} rev-parse HEAD)
+              if [[ "$curr_rev" != "${doomRev}" ]]; then
+                (cd $EMACS && ${lib.getExe pkgs.git} fetch --all && ${lib.getExe pkgs.git} checkout ${doomRev})
+              fi
             fi
             if [ ! -d "$HOME/.doom.d" ]; then
-                ln -s ${location}/modules/editors/emacs/doom.d $HOME/.doom.d
+                ln -s ${config.nixos-config.location}/modules/editors/emacs/doom.d $HOME/.doom.d
             fi
         '';
     };

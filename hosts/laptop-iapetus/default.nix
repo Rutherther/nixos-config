@@ -16,19 +16,16 @@
 #           └─ default.nix
 #
 
-{ inputs, config, pkgs, lib, user, ... }:
+{ pkgs, ... }:
 
 {
-  imports =                                               # For now, if applying to other system, swap files
-    [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
-    [(import ../../modules/desktop/dm/sddm.nix)] ++       # Desktop manager
-    [(import ../../modules/desktop/qtile/default.nix)] ++ # Window Manager
-    (import ../../modules/hardware) ++
-    (import ../../modules/desktop/virtualisation) ++
-    [(import ../../modules/programs/fpga/vivado {
-      inherit pkgs lib config;
-      vivadoPath = "/data/fpga/xilinx/Vivado/2023.1/bin/vivado";
-    })];                      # Hardware devices
+  imports = [
+    ./hardware-configuration.nix
+    ../../modules/desktop/dm/sddm.nix
+    ../../modules/desktop/qtile/default.nix
+    ../../modules/hwardware
+    ../../modules/desktop/virtualisation
+  ];
 
   networking.hostName = "laptop-iapetus";
 
@@ -56,8 +53,8 @@
   };
 
   environment = {
-    systemPackages = with pkgs; [
-      xorg.xf86videointel
+    systemPackages = [
+      pkgs.xorg.xf86videointel
     ];
   };
 
@@ -102,20 +99,5 @@
     };
   };
 
-  networking.wireguard.interfaces = {
-    wg0 = {
-      ips = [ "${inputs.semi-secrets.wg.lan.laptopIp}/32" ];
-    };
-  };
-
-  nix = {
-    settings = {
-      substituters = [
-        "desktop.local"
-      ];
-      trusted-substituters = [
-        "desktop.local:3XEsbBcVpKcx0ViXnZwcagllTUazVnc+Rzx5DKUU1Rs="
-      ];
-    };
-  };
+  wg.ip = "192.168.32.22";
 }

@@ -10,6 +10,8 @@
 #           └─ default.nix *
 #               └─ ...
 #
-[
-  ./bluetooth.nix
-]
+{
+  imports = [
+    ./bluetooth.nix
+  ];
+}

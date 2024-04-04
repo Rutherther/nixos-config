@@ -1,17 +1,16 @@
 #
-# Qemu/KVM with virt-manager 
+# Qemu/KVM with virt-manager
 #
 
-{ config, pkgs, user, ... }:
+{ config, pkgs, ... }:
 
 {
-  users.groups.libvirtd.members = [ "root" "${user}" ];
-  users.groups.kvm.members = [ "root" "${user}" ];
+  users.groups.libvirtd.members = [ "root" config.nixos-config.defaultUser ];
+  users.groups.kvm.members = [ "root" config.nixos-config.defaultUser ];
 
   virtualisation = {
     libvirtd = {
-      enable = true;                          # Virtual drivers
-      #qemuPackage = pkgs.qemu_kvm;           # Default
+      enable = true;
       qemu = {
         ovmf.enable = true;
         ovmf.packages = [ pkgs.OVMFFull.fd ];
@@ -23,7 +22,6 @@
     };
     spiceUSBRedirection.enable = true;        # USB passthrough
   };
-
 
   environment = {
     etc = {
@@ -41,12 +39,12 @@
       virt-viewer
       qemu
       OVMF
-      gvfs                                    # Used for shared folders between Linux and Windows
+      gvfs # Used for shared folders between Linux and Windows
       swtpm
     ];
   };
 
-  services = {                                # Enable file sharing between OS
+  services = { # Enable file sharing between OS
     gvfs.enable = true;
   };
 }

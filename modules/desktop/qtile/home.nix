@@ -1,4 +1,4 @@
-{ config, lib, pkgs, user, location, ... }:
+{ config, pkgs, ... }:
 
 {
   systemd.user.targets.qtile-services = {
@@ -27,12 +27,12 @@
     from string import Template
     import os
 
-    setupLocationRef = Template("${location}")
-    configLocationRef = Template("${location}/modules/desktop/qtile/config")
+    setupLocationRef = Template("${config.nixos-config.location}")
+    configLocationRef = Template("${config.nixos-config.location}/modules/desktop/qtile/config")
 
     setupLocation = setupLocationRef.substitute(os.environ)
     configLocation = configLocationRef.substitute(os.environ)
 
-    sequenceDetectorExec = "sequence_detector -c /home/${user}/.config/qtile/sequence-detector.config.json "
+    sequenceDetectorExec = "sequence_detector -c /home/${config.nixos-config.defaultUser}/.config/qtile/sequence-detector.config.json "
   '';
 }

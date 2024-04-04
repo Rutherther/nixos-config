@@ -88,21 +88,6 @@
         "type": "github"
       }
     },
-    "flake-utils_2": {
-      "locked": {
-        "lastModified": 1659877975,
-        "narHash": "sha256-zllb8aq3YO3h8B/U0/J1WBgAL8EX5yWf5pMj3G0NAmc=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "c0e246b9b83f637f4681389ecabcb2681b4f3af0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
     "gitignore": {
       "inputs": {
         "nixpkgs": [
@@ -210,27 +195,6 @@
       "original": {
         "owner": "nix-community",
         "repo": "nix-index-database",
-        "type": "github"
-      }
-    },
-    "nixgl": {
-      "inputs": {
-        "flake-utils": "flake-utils_2",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1710868679,
-        "narHash": "sha256-V1o2bCZdeYKP/0zgVp4EN0KUjMItAMk6J7SvCXUI5IU=",
-        "owner": "guibou",
-        "repo": "nixGL",
-        "rev": "d709a8abcde5b01db76ca794280745a43c8662be",
-        "type": "github"
-      },
-      "original": {
-        "owner": "guibou",
-        "repo": "nixGL",
         "type": "github"
       }
     },
@@ -350,12 +314,10 @@
         "lanzaboote": "lanzaboote",
         "nix-fpga-tools": "nix-fpga-tools",
         "nix-index-database": "nix-index-database",
-        "nixgl": "nixgl",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable_2",
-        "nur": "nur",
-        "semi-secrets": "semi-secrets"
+        "nur": "nur"
       }
     },
     "rust-overlay": {
@@ -381,26 +343,6 @@
         "owner": "oxalica",
         "repo": "rust-overlay",
         "type": "github"
-      }
-    },
-    "semi-secrets": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1710275391,
-        "narHash": "sha256-YF9Yey+QQltY+WpuI4NxhkFVlHdCfc0Ck0TVS67A7AY=",
-        "ref": "refs/heads/main",
-        "rev": "a592efb2437f8a0ef332faf7e95b29a2499c0c98",
-        "revCount": 4,
-        "type": "git",
-        "url": "ssh://git@github.com/Rutherther/nixos-semi-secrets"
-      },
-      "original": {
-        "type": "git",
-        "url": "ssh://git@github.com/Rutherther/nixos-semi-secrets"
       }
     },
     "systems": {

@@ -263,4 +263,4 @@
 
 (remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
 
-(add-hook 'write-file-hooks 'delete-trailing-whitespace)
+(add-hook 'write-file-functions 'delete-trailing-whitespace)

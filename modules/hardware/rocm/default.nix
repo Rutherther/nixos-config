@@ -1,4 +1,4 @@
-{ config, nixpkgs, lib, pkgs, ... }:
+{ pkgs }:
 
 {
   systemd.tmpfiles.rules = [

@@ -1,6 +1,9 @@
-{ inputs, config, lib, pkgs, user, ... }:
+{ config, ... }:
 
-{
+let
+  user = config.nixos-config.defaultUser;
+  homePath = config.home-manager.users.${user}.home.homeDirectory;
+in {
   networking.firewall = {
     allowedTCPPorts = [ 22000 ];
     allowedUDPPorts = [ 22000 21027 ];
@@ -16,28 +19,27 @@
     settings = {
 
       devices = {
-        "phone" = { id = inputs.semi-secrets.syncthing.devices.phone; };
-        "desktop" = { id = inputs.semi-secrets.syncthing.devices.desktop; };
-        "laptop-old" = { id = inputs.semi-secrets.syncthing.devices.laptop; };
-        "laptop" = { id = inputs.semi-secrets.syncthing.devices.laptopPhobos; };
+        phone = { id = "SRCBWOD-UBR76WT-ZB4OLV2-34U6TRL-YLVMSGQ-I5JYZP6-VD7XR6S-5732ZAZ"; };
+        desktop = { id = "BVFWKZE-DWZTSJR-OHCLGY3-X2PU7F3-XMPMGEH-QONACL5-MMRJE5O-CHRY4Q5"; };
+        laptop = { id = "3AGVM6S-RFTHVHR-OGK5RHI-YDEO6GN-RU4ZH77-VLBZAC7-JVHD6S6-VISXGQT"; };
       };
 
       folders = {
         "uni" = {
-          path = "/home/${user}/doc/uni";
-          devices = [ "phone" "desktop" "laptop" "laptop-old" ];
+          path = "${homePath}/doc/uni";
+          devices = [ "phone" "desktop" "laptop" ];
         };
         "notes" = {
-          path = "/home/${user}/doc/notes/obsidian/Notes";
-          devices = [ "phone" "desktop" "laptop" "laptop-old" ];
+          path = "${homePath}/doc/notes/obsidian/Notes";
+          devices = [ "phone" "desktop" "laptop" ];
         };
         "camera" = {
-          path = "/home/${user}/doc/camera";
-          devices = [ "phone" "desktop" "laptop" "laptop-old" ];
+          path = "${homePath}/doc/camera";
+          devices = [ "phone" "desktop" "laptop" ];
         };
         "study" = {
-          path = "/home/${user}/doc/study";
-          devices = [ "phone" "desktop" "laptop" "laptop-old" ];
+          path = "${homePath}/doc/study";
+          devices = [ "phone" "desktop" "laptop" ];
         };
       };
       options = {
@@ -45,7 +47,6 @@
         relaysEnabled = false;
         globalAnnounceEnabled = false;
         localAnnounceEnabled = true;
-        #alwaysLocalNets = true;
       };
     };
   };
