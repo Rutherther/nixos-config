@@ -48,11 +48,16 @@
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
     in {
       nixosConfigurations = (
-        import ./hosts {
+        import ./nixos {
           inherit (nixpkgs) lib;
           inherit inputs nixpkgs nixpkgs-stable nix-index-database nur;
         }
       );
+
+      packages.x86_64-linux = {
+        mpris-ctl = pkgs.callPackage ./pkgs/rutherther/mpris-ctl.nix {};
+        sequence-detector = pkgs.callPackage ./pkgs/rutherther/sequence-detector.nix {};
+      };
 
       devShells.x86_64-linux.default = pkgs.mkShell {
         packages = [
