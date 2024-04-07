@@ -12,8 +12,11 @@
     registry.nixpkgs-stable.flake = inputs.nixpkgs-stable;
   };
 
-  home.sessionVariables.NIX_PATH =
-    "nixpkgs=flake:nixpkgs$\{NIX_PATH:+:$NIX_PATH}";
+  home.sessionVariables = {
+    NIX_PATH = "nixpkgs=flake:nixpkgs$\{NIX_PATH:+:$NIX_PATH}";
+    TERMINAL = config.home-config.defaultTerminal.meta.mainProgram;
+    EDITOR = "emacsclient -cn";
+  };
 
   xdg = {
     userDirs = let dir = s: "${config.home.homeDirectory}/${s}"; in {
