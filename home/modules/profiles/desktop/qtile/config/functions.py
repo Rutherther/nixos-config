@@ -40,8 +40,11 @@ def go_to_screen(qtile: Qtile, index: int):
         qtile.core.warp_pointer(x, y)
 
     qtile.to_screen(index)
-    qtile.current_group.focus(qtile.current_group.current_window)
-    qtile.current_window.focus()
+
+    if qtile.current_group != None:
+        qtile.current_group.focus(qtile.current_group.current_window)
+    if qtile.current_window != None:
+        qtile.current_window.focus()
 
 @lazy.function
 def go_to_group(qtile: Qtile, group_name: str, switch_monitor: bool = False):

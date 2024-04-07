@@ -12,7 +12,7 @@ from libqtile.backend.wayland import InputConfig
 import qtile_extras.widget as widget
 from qtile_extras.widget.decorations import BorderDecoration, PowerLineDecoration, RectDecoration
 import xmonadcustom
-from nixenvironment import setupLocation, configLocation, sequenceDetectorExec
+from nixenvironment import nixConfig
 import functions
 import utils
 from screens import init_screens, observe_monitors, init_navigation_keys
@@ -22,7 +22,7 @@ import time
 # #####################################
 # Environment
 mod = 'mod4'
-terminal = 'alacritty'
+terminal = nixConfig.defaults.terminal
 
 layout_theme = {
     'border_focus': colors['active'],
@@ -93,10 +93,10 @@ keys.extend([
        EzKey('m', functions.focus_window_by_class('element')),
 
        # notifications
-       EzKey('l', lazy.spawn(f'{setupLocation}/scripts/notifications/clear-popups.sh')),
-       EzKey('p', lazy.spawn(f'{setupLocation}/scripts/notifications/pause.sh')),
-       EzKey('u', lazy.spawn(f'{setupLocation}/scripts/notifications/unpause.sh')),
-       EzKey('t', lazy.spawn(f'{setupLocation}/scripts/notifications/show-center.sh')),
+       EzKey('l', lazy.spawn(f'{nixConfig.scripts.notifications.clear_popups}')),
+       EzKey('p', lazy.spawn(f'{nixConfig.scripts.notifications.pause}')),
+       EzKey('u', lazy.spawn(f'{nixConfig.scripts.notifications.unpause}')),
+       EzKey('t', lazy.spawn(f'{nixConfig.scripts.notifications.show_center}')),
 
        EzKey('e', lazy.spawn('emacsclient -c')),
     ], 'M-a'), name = 'a')
@@ -122,14 +122,14 @@ keys.extend([
 
 # media keys
 keys.extend([
-    EzKey('<XF86AudioPlay>', lazy.spawn(f'{sequenceDetectorExec} -g mpris play')),
-    EzKey('<XF86AudioPause>', lazy.spawn(f'{sequenceDetectorExec} -g mpris pause')),
-    EzKey('<XF86AudioStop>', lazy.spawn(f'{sequenceDetectorExec} -g mpris stop')),
-    EzKey('<XF86AudioNext>', lazy.spawn(f'{sequenceDetectorExec} -g mpris next')),
-    EzKey('<XF86AudioPrev>', lazy.spawn(f'{sequenceDetectorExec} -g mpris prev')),
+    EzKey('<XF86AudioPlay>', lazy.spawn(f'{nixConfig.programs.sequence_detector} -g mpris play')),
+    EzKey('<XF86AudioPause>', lazy.spawn(f'{nixConfig.programs.sequence_detector} -g mpris pause')),
+    EzKey('<XF86AudioStop>', lazy.spawn(f'{nixConfig.programs.sequence_detector} -g mpris stop')),
+    EzKey('<XF86AudioNext>', lazy.spawn(f'{nixConfig.programs.sequence_detector} -g mpris next')),
+    EzKey('<XF86AudioPrev>', lazy.spawn(f'{nixConfig.programs.sequence_detector} -g mpris prev')),
     EzKey('<XF86AudioMute>', lazy.spawn('amixer -D pulse set Master 1+ toggle')),
-    EzKey('<XF86MonBrightnessUp>', lazy.spawn(f'{configLocation}/brightness.sh up')),
-    EzKey('<XF86MonBrightnessDown>', lazy.spawn(f'{configLocation}/brightness.sh down')),
+    EzKey('<XF86MonBrightnessUp>', lazy.spawn(f'{nixConfig.scripts.brightness} up')),
+    EzKey('<XF86MonBrightnessDown>', lazy.spawn(f'{nixConfig.scripts.brightness} down')),
 ])
 
 # Printscreen
@@ -296,7 +296,12 @@ wmname = 'LG3D'
 @hook.subscribe.startup_once
 def autostart():
     import subprocess
-    subprocess.call([f'{configLocation}/autostart.sh'])
+    # subprocess.call([f'{configLocation}/autostart.sh'])
+
+    for hook in nixConfig.startup.hooks:
+        subprocess.Popen(hook.split())
+    for app in nixConfig.startup.apps:
+        subprocess.Popen(app.split())
 
 
 @hook.subscribe.startup

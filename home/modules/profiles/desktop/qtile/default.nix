@@ -1,6 +1,32 @@
-{ lib, config, pkgs, ... }:
+{ lib, inputs, config, pkgs, ... }:
 
-{
+let
+  configFormat = pkgs.formats.json {};
+  configJson = configFormat.generate "qtile-config.json" {
+    scripts = {
+      brightness = ./config/brightness.sh;
+      notifications = {
+        clear_popups = "${inputs.self}/scripts/notifications/clear-popups.sh";
+        pause = "${inputs.self}/scripts/notifications/pause.sh";
+        unpause = "${inputs.self}/scripts/notifications/unpause.sh";
+        show_center = "${inputs.self}/scripts/notifications/show-center.sh";
+      };
+    };
+    wallpaper = "${inputs.self}/wall.png";
+    defaults = {
+      terminal = config.home-config.defaultTerminal.meta.mainProgram;
+    };
+    programs = {
+      sequence_detector = "${lib.getExe inputs.self.packages.${pkgs.system}.sequence-detector} -c ${./config/sequence-detector.config.json}";
+    };
+    startup = {
+      apps = config.home-config.startup.apps;
+      hooks = [
+        "systemctl start --user wm-services.target"
+      ];
+    };
+  };
+in {
   imports = [
     ./launcher.nix
     ./services.nix
@@ -19,6 +45,24 @@
       pkgs.ksnip
     ];
 
+    # xdg.configFile."qtile/config.py".text = ''
+    #   import sys
+    #   sys.path.insert(0, "${./config}")
+    #   import config
+    # '';
+
+    xdg.configFile."qtile/nixenvironment.py".text = ''
+      import json
+
+      class obj(object):
+          def __init__(self, dict_):
+              self.__dict__.update(dict_)
+
+      with open('${configJson}', 'r') as f:
+        nixConfig = json.load(f, object_hook = obj)
+      print('Loaded nix config')
+    '';
+
     xdg.configFile."qtile/config.py".source = ./config/config.py;
     xdg.configFile."qtile/utils.py".source = ./config/utils.py;
     xdg.configFile."qtile/functions.py".source = ./config/functions.py;
@@ -28,19 +72,5 @@
 
     xdg.configFile."qtile/tasklist.py".source = ./config/tasklist.py;
     xdg.configFile."qtile/xmonadcustom.py".source = ./config/xmonadcustom.py;
-    xdg.configFile."qtile/sequence-detector.config.json".source = ./config/sequence-detector.config.json;
-
-    xdg.configFile."qtile/nixenvironment.py".text = ''
-      from string import Template
-      import os
-
-      setupLocationRef = Template("${config.nixos-config.location}")
-      configLocationRef = Template("${config.nixos-config.location}/modules/desktop/qtile/config")
-
-      setupLocation = setupLocationRef.substitute(os.environ)
-      configLocation = configLocationRef.substitute(os.environ)
-
-      sequenceDetectorExec = "sequence_detector -c /home/${config.nixos-config.defaultUser}/.config/qtile/sequence-detector.config.json "
-    '';
   };
 }

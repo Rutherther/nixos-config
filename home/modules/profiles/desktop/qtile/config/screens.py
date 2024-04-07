@@ -6,11 +6,11 @@ import screeninfo
 import utils
 import bars
 from functions import focus_window_by_class, warp_cursor_to_focused_window, go_to_screen, go_to_group
-from nixenvironment import setupLocation, configLocation, sequenceDetectorExec
+from nixenvironment import nixConfig
 from libqtile.log_utils import logger
 
 def init_screens():
-    wallpaper = f'{setupLocation}/wall.png'
+    wallpaper = nixConfig.wallpaper
 
     screens_info = screeninfo.get_monitors()
     screens_count = len(screens_info)
@@ -26,7 +26,7 @@ def init_screens():
 
         top_bar = bars.create_top_bar(systray = systray)
 
-        screens[i] = Screen(top=top_bar, bottom=bars.create_bottom_bar(), wallpaper=f'{setupLocation}/wall.png', width=screen_info.width, height=screen_info.height)
+        screens[i] = Screen(top=top_bar, bottom=bars.create_bottom_bar(), wallpaper=wallpaper, width=screen_info.width, height=screen_info.height)
 
     return screens
 

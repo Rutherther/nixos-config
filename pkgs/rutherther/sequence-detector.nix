@@ -32,6 +32,7 @@ rustPlatform.buildRustPackage rec {
 
   meta = {
     license = [ lib.licenses.mit ];
+    mainProgram = "sequence_detector";
     maintainers = [];
   };
 }

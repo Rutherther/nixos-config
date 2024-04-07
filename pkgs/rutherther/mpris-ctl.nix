@@ -30,4 +30,8 @@ rustPlatform.buildRustPackage rec {
 
   checkInputs = [ cargo rustc dbus ];
   doCheck = true;
+
+  meta = {
+    mainProgram = "mpris-ctl";
+  };
 }

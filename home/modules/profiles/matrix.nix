@@ -39,6 +39,6 @@
       };
     };
 
-    home-config.startup.apps = [ (lib.getExe pkgs.element) ];
+    home-config.startup.apps = [ (lib.getExe pkgs.element-desktop) ];
   };
 }
