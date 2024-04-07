@@ -3,7 +3,7 @@ import re
 from libqtile import layout, bar, qtile
 from qtile_extras.widget.decorations import BorderDecoration, PowerLineDecoration, RectDecoration
 import qtile_extras.widget as widget
-from styling import colors
+from nixenvironment import nixConfig
 from libqtile.widget import Mpris2, Bluetooth
 from tasklist import TaskList
 
@@ -15,13 +15,13 @@ def create_top_bar(systray = False):
     }
 
     widgets = [
-        widget.Sep(padding = 5, size_percent = 0, background = colors['background_secondary']),
+        widget.Sep(padding = 5, size_percent = 0, background = nixConfig.theme.background.secondary,
         widget.CurrentScreen(
             active_text = 'I',
-            active_color = colors['active'],
+            active_color = nixConfig.theme.foreground.active,
             padding = 3,
             fontsize = 16,
-            background = colors['background_secondary'],
+            background = nixConfig.theme.background.secondary,
         ),
         widget.GroupBox(
             markup = False,
@@ -30,22 +30,22 @@ def create_top_bar(systray = False):
             margin_x = 2,
             disable_drag = True,
             use_mouse_wheel = True,
-            active = colors['white'],
-            inactive = colors['grey'],
+            active = nixConfig.theme.foreground.activeAlt,
+            inactive = nixConfig.theme.foreground.inactive,
             urgent_alert_method = 'line',
-            urgent_border = colors['urgent'],
-            this_current_screen_border = colors['active'],
-            this_screen_border = colors['secondary'],
-            other_screen_border = colors['inactive'],
+            urgent_border = nixConfig.theme.urgent,
+            this_current_screen_border = nixConfig.theme.foreground.active,
+            this_screen_border = nixConfig.theme.foreground.secondary,
+            other_screen_border = nixConfig.theme.background.inactive,
             other_current_screen_border = '6989c0',
-            background = colors['background_secondary'],
+            background = nixConfig.theme.background.secondary,
         ),
         widget.CurrentScreen(
             active_text = 'I',
-            active_color = colors['active'],
+            active_color = nixConfig.theme.foreground.active,
             padding = 3,
             fontsize = 16,
-            background = colors['background_secondary'],
+            background = nixConfig.theme.background.secondary,
             decorations = [
                 PowerLineDecoration(path = 'forward_slash'),
             ],
@@ -57,14 +57,14 @@ def create_top_bar(systray = False):
         ),
         widget.Prompt(),
         widget.WindowName(
-            foreground = colors['primary'],
+            foreground = nixConfig.theme.foreground.primary,
             width = bar.CALCULATED,
             padding = 10,
             empty_group_string = 'Desktop',
             max_chars = 160,
             decorations = [
                 RectDecoration(
-                    colour = colors['black'],
+                    colour = nixConfig.theme.background.box,
                     radius = 0,
                     padding_y = 4,
                     padding_x = 0,
@@ -78,7 +78,7 @@ def create_top_bar(systray = False):
             padding = 15,
             decorations = [
                 RectDecoration(
-                    colour = colors['black'],
+                    colour = nixConfig.theme.background.box,
                     radius = 0,
                     padding_y = 4,
                     padding_x = 6,
@@ -91,7 +91,7 @@ def create_top_bar(systray = False):
         #     interface = 'enp24s0',
         #     prefix='M',
         #     format = '{down:6.2f} {down_suffix:<2}↓↑{up:6.2f} {up_suffix:<2}',
-        #     background = colors['background_secondary'],
+        #     background = nixConfig.theme.background.secondary,
         #     **powerline,
         # ),
         widget.Memory(
@@ -102,7 +102,7 @@ def create_top_bar(systray = False):
         widget.CPU(
             format = '{load_percent} %',
             fmt = '   {}',
-            background = colors['background_secondary'],
+            background = nixConfig.theme.background.secondary,
             **powerline,
         ),
         widget.DF(
@@ -122,16 +122,16 @@ def create_top_bar(systray = False):
         ),
         widget.Clock(
             timezone='Europe/Prague',
-            foreground = colors['primary'],
+            foreground = nixConfig.theme.foreground.primary,
             format='%A, %B %d - %H:%M:%S',
-            background = colors['background_secondary'],
+            background = nixConfig.theme.background.secondary,
             **powerline
         ),
         widget.Volume(
             fmt = '🕫  {}',
         ),
         widget.Sep(
-            foreground = colors['background_secondary'],
+            foreground = nixConfig.theme.background.secondary,
             size_percent = 70,
             linewidth = 3,
         ),
@@ -149,7 +149,7 @@ def create_top_bar(systray = False):
 
     if systray:
         widgets.append(widget.Sep(
-            foreground = colors['background_secondary'],
+            foreground = nixConfig.theme.background.secondary,
             size_percent = 70,
             linewidth = 2,
         ))
@@ -184,7 +184,7 @@ def create_bottom_bar():
             padding = 10,
             decorations = [
                 RectDecoration(
-                    colour = colors['black'],
+                    colour = nixConfig.theme.background.box,
                     radius = 0,
                     padding_y = 4,
                     padding_x = 5,
@@ -202,7 +202,7 @@ def create_bottom_bar():
             padding = 10,
             decorations = [
                 RectDecoration(
-                    colour = colors['black'],
+                    colour = nixConfig.theme.background.box,
                     radius = 0,
                     padding_y = 4,
                     padding_x = 5,
@@ -219,7 +219,7 @@ def create_bottom_bar():
         widget.Wttr(
             location = {'Odolena_Voda': ''},
             format = '%t %c',
-            background = colors['background_secondary'],
+            background = nixConfig.theme.background.secondary,
             **powerline,
         ),
     ], 30)

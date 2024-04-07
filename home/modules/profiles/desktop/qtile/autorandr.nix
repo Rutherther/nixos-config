@@ -1,16 +1,5 @@
-{ inputs, config, lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
-let
-  inherit (config.lib.formats.rasi) mkLiteral;        # Theme.rasi alternative. Add Theme here
-  colors = import "${inputs.self}/themes/colors.nix";
-
-  themes-collection = pkgs.fetchFromGitHub {
-    owner = "newmanls";
-    repo = "rofi-themes-collection";
-    rev = "f87e08300cb1c984994efcaf7d8ae26f705226fd";
-    hash = "sha256-A6zIAQvjfe/XB5GZefs4TWgD+eGICQP2Abz/sQynJPo=";
-  };
-in
 {
   config = lib.mkIf config.profiles.desktop.qtile.enable {
     programs.autorandr = {

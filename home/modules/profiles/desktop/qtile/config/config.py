@@ -16,7 +16,6 @@ from nixenvironment import nixConfig
 import functions
 import utils
 from screens import init_screens, observe_monitors, init_navigation_keys
-from styling import colors
 import time
 
 # #####################################
@@ -25,8 +24,8 @@ mod = 'mod4'
 terminal = nixConfig.defaults.terminal
 
 layout_theme = {
-    'border_focus': colors['active'],
-    'border_normal': colors['inactive'],
+    'border_focus': nixConfig.theme.foreground.active,
+    'border_normal': nixConfig.theme.background.inactive,
     'border_width': 1,
     'margin': 3,
 }
@@ -41,8 +40,8 @@ widget_defaults = dict(
     font = 'Roboto Bold',
     fontsize = 13,
     padding = 3,
-    background = colors['background_primary'],
-    foreground = colors['white'],
+    background = nixConfig.theme.background.primary,
+    foreground = nixConfig.theme.foreground.activeAlt,
 )
 extension_defaults = widget_defaults.copy()
 

@@ -3,6 +3,7 @@
 let
   configFormat = pkgs.formats.json {};
   configJson = configFormat.generate "qtile-config.json" {
+    theme = config.themes.default;
     scripts = {
       brightness = ./config/brightness.sh;
       notifications = {
@@ -68,7 +69,6 @@ in {
     xdg.configFile."qtile/functions.py".source = ./config/functions.py;
     xdg.configFile."qtile/bars.py".source = ./config/bars.py;
     xdg.configFile."qtile/screens.py".source = ./config/screens.py;
-    xdg.configFile."qtile/styling.py".source = ./config/styling.py;
 
     xdg.configFile."qtile/tasklist.py".source = ./config/tasklist.py;
     xdg.configFile."qtile/xmonadcustom.py".source = ./config/xmonadcustom.py;

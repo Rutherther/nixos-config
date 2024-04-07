@@ -1,7 +1,6 @@
 { inputs, config, lib, pkgs, ... }:
 
 let
-  colors = import "${inputs.self}/themes/colors.nix";
   mpris-ctl = inputs.self.packages.${pkgs.system}.mpris-ctl;
   sequence-detector = inputs.self.packages.${pkgs.system}.sequence-detector;
 in {
@@ -26,7 +25,7 @@ in {
           package = pkgs.papirus-icon-theme;
           size = "16x16";
         };
-        settings = with colors.scheme.doom; {               # Settings
+        settings = with config.themes.default; {               # Settings
           global = {
             monitor = 0;
             follow = "keyboard";
@@ -39,9 +38,10 @@ in {
             shrink = "yes";
             transparency = 10;
             padding = 16;
+            gap_size = 5;
             horizontal_padding = 16;
-            frame_width = 3;
-            frame_color = "#${bg}";
+            frame_width = 2;
+            frame_color = "#${background.active}";
             separator_color = "frame";
             font = "FiraCode Nerd Font 10";
             line_height = 4;
@@ -60,19 +60,19 @@ in {
             hide_duplicate_count = true;
           };
           urgency_low = {                                   # Colors
-            background = "#${bg}";
-            foreground = "#${text}";
+            background = "#${background.primary}";
+            foreground = "#${foreground.text}";
             timeout = 4;
           };
           urgency_normal = {
-            background = "#${bg}";
-            foreground = "#${text}";
+            background = "#${background.primary}";
+            foreground = "#${foreground.text}";
             timeout = 4;
           };
           urgency_critical = {
-            background = "#${bg}";
-            foreground = "#${text}";
-            frame_color = "#${red}";
+            background = "#${background.primary}";
+            foreground = "#${foreground.text}";
+            frame_color = "#${urgent}";
             timeout = 10;
           };
         };

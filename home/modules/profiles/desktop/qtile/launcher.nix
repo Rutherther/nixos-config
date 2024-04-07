@@ -1,8 +1,7 @@
-{ inputs,  config, lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   inherit (config.lib.formats.rasi) mkLiteral;        # Theme.rasi alternative. Add Theme here
-  colors = import "${inputs.self}/themes/colors.nix";
 
   themes-collection = pkgs.fetchFromGitHub {
     owner = "newmanls";
@@ -26,17 +25,17 @@ in
         terminal = "${config.home-config.defaultTerminalExe}";
         location = "center";
         font = "${config.home-config.defaultFont} 11";
-        theme =  with colors.scheme.doom; {
+        theme = with config.themes.default; {
           # Based on spotlight theme
           "*" = {
             font =  "Montserrat 12";
 
-            bg0 = mkLiteral "#222223e6";
-            bg1 = mkLiteral "#44444480";
-            bg2 = mkLiteral "#51afefe6";
-            fg0 = mkLiteral "#${text}";
-            fg1 = mkLiteral "#d5d5d5";
-            fg2 = mkLiteral "#${fg}";
+            bg0 = mkLiteral "#${background.primary}e6";
+            bg1 = mkLiteral "#${background.secondary}80";
+            bg2 = mkLiteral "#${background.active}e6";
+            fg0 = mkLiteral "#${foreground.text}";
+            fg1 = mkLiteral "#${foreground.activeAlt}";
+            fg2 = mkLiteral "#${foreground.inactive}";
 
             background-color = mkLiteral "transparent";
             text-color = mkLiteral "@fg0";
@@ -48,6 +47,8 @@ in
 
           "window" = {
             background-color = mkLiteral "@bg0";
+            border = mkLiteral "2px 0 0";
+            border-color = mkLiteral "@bg2";
 
             location = mkLiteral "center";
             width = mkLiteral "640";
