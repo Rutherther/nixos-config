@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, config, ... }:
 
 {
   options.nixos-config = {
@@ -9,7 +9,8 @@
 
     location = lib.mkOption  {
       type = lib.types.str;
-      default = "$HOME/.setup";
+      default = "${config.home-manager.users.${config.nixos-config.defaultUser}.home.homeDirectory}/.setup";
+      defaultText = "$HOME/.setup";
     };
 
     isLaptop = lib.mkOption {

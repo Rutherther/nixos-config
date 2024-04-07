@@ -51,12 +51,11 @@ in {
                   (cd $EMACS && ${lib.getExe pkgs.git} fetch --all && ${lib.getExe pkgs.git} checkout ${doomRev})
                 fi
               fi
-              if [ ! -d "$HOME/.doom.d" ]; then
-                  ln -s ${config.nixos-config.location}/modules/editors/emacs/doom.d $HOME/.doom.d
-              fi
           '';
       };
     };
+
+    home.file.".doom.d".source = config.lib.file.mkOutOfStoreSymlink "${config.nixos-config.location}/home/modules/profiles/development/emacs/doom.d";
 
     home.packages = with pkgs; [
       emacs-all-the-icons-fonts
