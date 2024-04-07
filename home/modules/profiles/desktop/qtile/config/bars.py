@@ -15,7 +15,7 @@ def create_top_bar(systray = False):
     }
 
     widgets = [
-        widget.Sep(padding = 5, size_percent = 0, background = nixConfig.theme.background.secondary,
+        widget.Sep(padding = 5, size_percent = 0, background = nixConfig.theme.background.secondary),
         widget.CurrentScreen(
             active_text = 'I',
             active_color = nixConfig.theme.foreground.active,
