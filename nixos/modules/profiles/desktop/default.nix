@@ -23,7 +23,7 @@
       xserver = {
         enable = true;
 
-        displayManager.gdm.enable = true;
+        # displayManager.gdm.enable = true;
 
         xkb = {
           layout = "us,cz";                              # Keyboard layout & €-sign

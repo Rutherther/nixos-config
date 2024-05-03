@@ -16,6 +16,7 @@ in {
 
     services = {                            # Applets
       network-manager-applet.enable = true; # Network
+      blueman-applet.enable = true;
       autorandr.enable = true;
 
       dunst = {
@@ -140,10 +141,19 @@ in {
     };
     xdg.dataFile."dbus-1/services/org.knopwob.dunst.service".source = "${pkgs.dunst}/share/dbus-1/services/org.knopwob.dunst.service";
 
+    systemd.user.targets.xorg-wm-services = {
+      Unit = {
+        Description = "A target that is enabled when starting Qtile";
+        Requires = [ "graphical-session.target" "wm-services.target" ];
+        PartOf = [ "graphical-session.target" ];
+      };
+    };
+
     systemd.user.targets.wm-services = {
       Unit = {
         Description = "A target that is enabled when starting Qtile";
         Requires = [ "graphical-session.target" ];
+        PartOf = [ "graphical-session.target" ];
       };
     };
 
@@ -171,9 +181,17 @@ in {
         Install.WantedBy = lib.mkForce [ "wm-services.target" ];
       };
 
-      autorandr = lib.mkIf config.services.autorandr.enable {
-        Unit.PartOf = lib.mkForce [ "wm-services.target" ];
+      blueman-applet = lib.mkIf config.services.network-manager-applet.enable {
+        Unit = {
+          After = lib.mkForce [];
+          PartOf = lib.mkForce [ "wm-services.target" ];
+        };
         Install.WantedBy = lib.mkForce [ "wm-services.target" ];
+      };
+
+      autorandr = lib.mkIf config.services.autorandr.enable {
+        Unit.PartOf = lib.mkForce [ "xorg-wm-services.target" ];
+        Install.WantedBy = lib.mkForce [ "xorg-wm-services.target" ];
       };
 
       dunst = lib.mkIf config.services.dunst.enable {
@@ -211,7 +229,7 @@ in {
 
       redshift = lib.mkIf config.services.redshift.enable {
         Unit = {
-          PartOf = lib.mkForce [ "wm-services.target" ];
+          PartOf = lib.mkForce [ "xorg-wm-services.target" ];
         };
         Install = {
           WantedBy = lib.mkForce [ "wm-services.target" ];

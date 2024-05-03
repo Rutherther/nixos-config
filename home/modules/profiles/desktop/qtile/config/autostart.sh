@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
-systemctl start --user wm-services.target
+# systemctl start --user wm-services.target
+systemctl start --user xorg-wm-services.target
 
 # Browser
 firefox &

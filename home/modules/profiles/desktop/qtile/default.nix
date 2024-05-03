@@ -23,7 +23,7 @@ let
     startup = {
       apps = config.home-config.startup.apps;
       hooks = [
-        "systemctl start --user wm-services.target"
+        "systemctl start --user xorg-wm-services.target"
       ];
     };
   };
@@ -41,10 +41,25 @@ in {
   };
 
   config = lib.mkIf config.profiles.desktop.qtile.enable {
+    profiles.desktop.enable = true;
 
     home.packages = [
       pkgs.ksnip
     ];
+
+    home.file.".sessions/start-qtile".source = pkgs.writeShellApplication {
+      name = "start-qtile";
+      runtimeInputs = [
+        pkgs.xorg.xinit
+      ];
+      text = ''
+        startx ${pkgs.writeShellScript "qtile-internal" ''
+          autorandr -c
+          qtile start -b x11
+          systemctl stop --user graphical-session.target
+        ''}
+      '';
+    } + "/bin/start-qtile";
 
     # xdg.configFile."qtile/config.py".text = ''
     #   import sys

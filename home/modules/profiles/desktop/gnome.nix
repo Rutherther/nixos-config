@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   options = {
@@ -8,6 +8,22 @@
   };
 
   config = lib.mkIf config.profiles.desktop.gnome.enable {
+    profiles.desktop.enable = true;
+
+    home.file.".sessions/start-gnome".source = pkgs.writeShellApplication {
+      name = "start-gnome";
+      runtimeInputs = [
+        pkgs.xorg.xinit
+      ];
+      text = ''
+        startx ${pkgs.writeShellScript "gnome-internal" ''
+          gnome-session
+          pid=$!
+          wait $pid
+          systemctl stop --user graphical-session.target
+        ''}
+      '';
+    } + "/bin/start-gnome";
 
     dconf.settings = {
       "org/gnome/shell" = {

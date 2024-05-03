@@ -6,6 +6,8 @@
     ../modules
   ];
 
+  services.xserver.displayManager.startx.enable = true;
+
   home-manager.useUserPackages = true;
   home-manager.useGlobalPkgs = true;
   home-manager.extraSpecialArgs = {
