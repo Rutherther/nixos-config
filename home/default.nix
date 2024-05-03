@@ -15,7 +15,7 @@
   home.sessionVariables = {
     NIX_PATH = "nixpkgs=flake:nixpkgs$\{NIX_PATH:+:$NIX_PATH}";
     TERMINAL = config.home-config.defaultTerminal.meta.mainProgram;
-    EDITOR = "emacsclient -cn";
+    EDITOR = "emacsclient -nc";
   };
 
   xdg = {
@@ -34,9 +34,9 @@
         imageViewer = "sxiv.desktop";
         videoViewer = "mpv.desktop";
         pdfViewer = "org.pwmt.zathura.desktop";
-        textEditor = "emacs-client.desktop";
+        textEditor = "emacsclient.desktop";
         webBrowser = "firefox.desktop";
-        fileBrowser = "emacs-client.desktop"; # "nautilus.desktop";
+        fileBrowser = "emacsclient.desktop"; # "nautilus.desktop";
       in {
         # see https://www.iana.org/assignments/media-types/media-types.xhtml
 
