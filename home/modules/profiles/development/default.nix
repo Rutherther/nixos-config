@@ -23,6 +23,9 @@
         enable = true;
         includes = [{
           contents = {
+            core = {
+              editor = "emacsclient -c";
+            };
             user = {
               email = "rutherther@proton.me";
               name = "Rutherther";
