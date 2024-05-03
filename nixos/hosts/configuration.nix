@@ -172,4 +172,9 @@
   system = {
     stateVersion = "23.05";
   };
+
+  virtualisation.vmVariant = {
+    users.users.ruther.password = "vm";
+    users.users.root.password = "vm";
+  };
 }
