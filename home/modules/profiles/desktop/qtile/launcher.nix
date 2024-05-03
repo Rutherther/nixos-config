@@ -22,6 +22,7 @@ in
     programs = {
       rofi = {
         enable = true;
+        package = pkgs.rofi-wayland;
         terminal = "${config.home-config.defaultTerminalExe}";
         location = "center";
         font = "${config.home-config.defaultFont} 11";

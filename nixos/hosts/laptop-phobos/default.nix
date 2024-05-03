@@ -116,6 +116,12 @@
     };
   };
 
+  security.pam.services.waylock = {
+    text = ''
+      auth include login
+    '';
+  };
+
   # Wireguard
   profiles.vpn.lanIp = "192.168.32.25";
 }
