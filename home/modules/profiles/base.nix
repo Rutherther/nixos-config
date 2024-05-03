@@ -156,6 +156,8 @@ in {
 
               "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
 
+              "full-screen-api.warning.timeout" = 0;
+
               # Privacy
               "browser.search.hiddenOneOffs" =
                 "Google,Yahoo,Bing,Amazon.com,Twitter";
