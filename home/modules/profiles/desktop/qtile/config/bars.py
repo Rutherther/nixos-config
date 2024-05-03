@@ -4,7 +4,7 @@ from libqtile import layout, bar, qtile
 from qtile_extras.widget.decorations import BorderDecoration, PowerLineDecoration, RectDecoration
 import qtile_extras.widget as widget
 from nixenvironment import nixConfig
-from libqtile.widget import Mpris2, Bluetooth
+from libqtile.widget import Mpris2
 from tasklist import TaskList
 
 def create_top_bar(systray = False):
@@ -135,16 +135,16 @@ def create_top_bar(systray = False):
             size_percent = 70,
             linewidth = 3,
         ),
-        Bluetooth(
-            device = '/dev_88_C9_E8_49_93_16',
-            symbol_connected = '',
-            symbol_paired = ' DC\'d',
-            symbol_unknown = '',
-            symbol_powered = ('', ''),
-            device_format = '{battery_level}{symbol}',
-            device_battery_format = ' {battery} %',
-            format_unpowered = '',
-        ),
+        # Bluetooth(
+        #     device = '/dev_88_C9_E8_49_93_16',
+        #     symbol_connected = '',
+        #     symbol_paired = ' DC\'d',
+        #     symbol_unknown = '',
+        #     symbol_powered = ('', ''),
+        #     device_format = '{battery_level}{symbol}',
+        #     device_battery_format = ' {battery} %',
+        #     format_unpowered = '',
+        # ),
     ]
 
     if systray:

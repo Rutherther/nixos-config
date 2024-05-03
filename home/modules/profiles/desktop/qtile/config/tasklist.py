@@ -235,7 +235,7 @@ class TaskList(base._Widget, base.PaddingMixin, base.MarginMixin):
         elif window.floating:
             state = self.txt_floating
             markup_str = self.markup_floating
-        elif window is window.group.current_window:
+        elif window.group != None and window is window.group.current_window:
             markup_str = self.markup_focused
 
         window_location = (

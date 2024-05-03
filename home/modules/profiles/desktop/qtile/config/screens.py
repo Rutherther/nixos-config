@@ -26,7 +26,7 @@ def init_screens():
 
         top_bar = bars.create_top_bar(systray = systray)
 
-        screens[i] = Screen(top=top_bar, bottom=bars.create_bottom_bar(), wallpaper=wallpaper, width=screen_info.width, height=screen_info.height)
+        screens[i] = Screen(top=top_bar, bottom=bars.create_bottom_bar(), wallpaper=wallpaper, wallpaper_mode="stretch", width=screen_info.width, height=screen_info.height)
 
     return screens
 
@@ -60,7 +60,7 @@ async def observe_monitors():
     from dbus_next.message import Message
     import pyudev
 
-    @utils.debounce(0.2)
+    @utils.debounce(1.0)
     def call_autorandr():
         # Autorandr restarts QTile automatically
         subprocess.call(['autorandr', '--change', '--default', 'horizontal'])
