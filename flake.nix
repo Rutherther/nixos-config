@@ -57,6 +57,8 @@
       packages.x86_64-linux = {
         mpris-ctl = pkgs.callPackage ./pkgs/rutherther/mpris-ctl.nix {};
         sequence-detector = pkgs.callPackage ./pkgs/rutherther/sequence-detector.nix {};
+        dwlmsg = pkgs.callPackage ./pkgs/dwlmsg.nix {};
+        dwlb = pkgs.callPackage ./pkgs/dwlb.nix {};
       };
 
       devShells.x86_64-linux.default = pkgs.mkShell {
