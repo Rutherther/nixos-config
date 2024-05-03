@@ -94,16 +94,15 @@
 
   services = {
     logind.lidSwitch = "suspend";           # suspend on lid close
+    libinput = {
+      enable = true;
+      touchpad = {
+        naturalScrolling = true;
+        tapping = true;
+      };
+    };
 
     xserver = {
-      libinput = {
-        enable = true;
-        touchpad = {
-          naturalScrolling = true;
-          tapping = true;
-        };
-      };
-
       videoDrivers = [ "amdgpu" ];
       deviceSection = ''Option "TearFree" "true"'';
     };

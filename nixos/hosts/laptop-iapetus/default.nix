@@ -82,7 +82,7 @@
     auto-cpufreq.enable = true;
     blueman.enable = true;
 
-    xserver.libinput = {
+    libinput = {
       enable = true;
       touchpad = {
         naturalScrolling = true;
