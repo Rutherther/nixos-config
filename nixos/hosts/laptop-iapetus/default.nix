@@ -1,22 +1,4 @@
-#
-#  Specific system configuration settings for desktop
-#
-#  flake.nix
-#   ├─ ./hosts
-#   │   └─ ./laptop
-#   │        ├─ default.nix *
-#   │        └─ hardware-configuration.nix
-#   └─ ./modules
-#       ├─ ./desktop
-#       │   ├─ ./bspwm
-#       │   │   └─ default.nix
-#       │   └─ ./virtualisation
-#       │       └─ docker.nix
-#       └─ ./hardware
-#           └─ default.nix
-#
-
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
   imports = [
@@ -74,6 +56,11 @@
       enable = true;
       lockerCommand = "${xsecurelock}/bin/xsecurelock";
     };
+  };
+
+  systemd.user.services.xss-lock = {
+    partOf = lib.mkForce [ "xorg-wm-session.target" ];
+    wantedBy = lib.mkForce [ "xorg-wm-session.target" ];
   };
 
   services = {

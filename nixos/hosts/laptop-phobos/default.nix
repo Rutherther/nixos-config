@@ -92,6 +92,10 @@
     };
   };
 
+  systemd.user.services.xss-lock = {
+    partOf = lib.mkForce [ "xorg-wm-session.target" ];
+    wantedBy = lib.mkForce [ "xorg-wm-session.target" ];
+  };
   services = {
     logind.lidSwitch = "suspend";           # suspend on lid close
     libinput = {
