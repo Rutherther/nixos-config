@@ -1,6 +1,6 @@
 * {
     /* `otf-font-awesome` is required to be installed for icons */
-    font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+    font-family: FontAwesome, Ubuntu;
     font-size: 13px;
 }
 
@@ -342,4 +342,12 @@ label:focus {
 #tags button.focused {
     background-color: #2980b9;
     box-shadow: inset 0 -3px #1bd6e0;
+}
+
+#tags button.urgent {
+    background-color: #eb4d4b;
+}
+
+#tags button.urgent.focused {
+    background-color: #f0932b;
 }
