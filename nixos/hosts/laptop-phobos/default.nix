@@ -96,8 +96,14 @@
     partOf = lib.mkForce [ "xorg-wm-session.target" ];
     wantedBy = lib.mkForce [ "xorg-wm-session.target" ];
   };
+
   services = {
-    logind.lidSwitch = "suspend";           # suspend on lid close
+    logind.lidSwitch = "suspend";                # suspend on lid close
+    logind.lidSwitchDocked = "ignore";           # suspend on lid close
+    # TODO: this is here because when the laptop is docked, and Wayland/X session
+    # ends, it is for a brief moment not in docked state, which suspends it.
+    # Since it is also on external power, this effectively means it will be ignored
+    logind.lidSwitchExternalPower = "ignore";    # suspend on lid close
     libinput = {
       enable = true;
       touchpad = {
