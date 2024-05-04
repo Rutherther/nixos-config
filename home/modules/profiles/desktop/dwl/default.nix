@@ -1,6 +1,23 @@
 { lib, inputs, config, pkgs, ... }:
 
 let
+  # TODO save only those that are on in somewhere like tmp,
+  # after enable is called, wake up only these if the file exists
+  wlopmScreens = operation: pkgs.writeShellApplication {
+    name = "wlopm-all-screens-${operation}";
+    runtimeInputs = [
+      pkgs.wlopm
+      pkgs.gawk
+      pkgs.findutils
+    ];
+    text = ''
+      screens=$(wlopm | awk '{print $1}')
+      echo "$screens" | xargs -l wlopm --${operation}
+    '';
+  };
+
+  wlopmDisableScreens = wlopmScreens "off";
+  wlopmEnableScreens = wlopmScreens "on";
 in {
   imports = [
   ];
@@ -54,17 +71,20 @@ in {
     home.file.".config/dwl/sequence-detector.config.json".source = ../qtile/config/sequence-detector.config.json;
 
     home.packages = [
+      # Clipboard
       pkgs.cliphist
       pkgs.wl-clipboard
+      # PrintScreening
       pkgs.grim
       pkgs.slurp
       # pkgs.wldash
       pkgs.imv
+      # DWL control
       inputs.self.packages.${pkgs.system}.dwlb
       inputs.self.packages.${pkgs.system}.dwlmsg
-      pkgs.waylock
       pkgs.wlr-randr
       pkgs.wlrctl
+      pkgs.wlopm
 
       ((pkgs.dwl.override {
         conf = ./config.h;
@@ -76,8 +96,8 @@ in {
         src = pkgs.fetchFromGitHub {
           owner = "Rutherther";
           repo = "dwl";
-          rev = "3c1dea9f64747d325cd64a9ec53a831e38870763";
-          hash = "sha256-yi1zvcA61xy9tXdGr7Y3vk8IIt54In9hTn9a9RcGH0U=";
+          rev = "ea81b93e3b29fc39c83c1c92bc025e30b71b376e";
+          hash = "sha256-RDWIWuVjR525541ME2dolAQYN1t5BWy1ifY+cno8PVM=";
         };
       }))
     ];
@@ -86,6 +106,29 @@ in {
       enable = true;
       configPackages = [ pkgs.xdg-desktop-portal-wlr ];
       extraPortals = [ pkgs.xdg-desktop-portal-wlr ];
+    };
+
+    programs = {
+      swaylock = {
+        enable = true;
+        settings = {
+          color = "808080";
+          indicator-radius = 100;
+          show-failed-attempts = true;
+        };
+      };
+    };
+
+    services.swayidle = {
+      enable = true;
+      events = [
+        { event = "before-sleep"; command = "${lib.getExe pkgs.swaylock} -Ff"; }
+        { event = "lock"; command = "${lib.getExe pkgs.swaylock} -Ff"; }
+      ];
+      timeouts = [
+        { timeout = 300; command = lib.getExe wlopmDisableScreens; resumeCommand = lib.getExe wlopmEnableScreens; }
+        { timeout = 1800; command = "${lib.getExe' pkgs.systemd "systemctl"} suspend"; }
+      ];
     };
 
     services.kanshi = {
@@ -121,6 +164,11 @@ in {
       temperature.night = 3000;
       latitude = 50.2332933;
       longitude = 14.3225926;
+    };
+
+    systemd.user.services.swayidle = {
+      Install.WantedBy = lib.mkForce [ "wlr-session.target" ];
+      Unit.PartOf = lib.mkForce [ "wlr-session.target" ];
     };
 
     systemd.user.services.gammastep = {

@@ -116,11 +116,9 @@
     };
   };
 
-  security.pam.services.waylock = {
-    text = ''
-      auth include login
-    '';
-  };
+  # TODO put these in relevant files instead
+  security.pam.services.waylock = {};
+  security.pam.services.swaylock = {};
 
   # Wireguard
   profiles.vpn.lanIp = "192.168.32.25";
