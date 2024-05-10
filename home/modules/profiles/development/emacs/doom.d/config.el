@@ -264,3 +264,29 @@
 (remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
 
 (add-hook 'write-file-functions 'delete-trailing-whitespace)
+
+(add-to-list 'vterm-eval-cmds '("update-pwd" (lambda (path) (setq default-directory path))))
+
+;; (after! vterm
+;;   (defun mog_cd_for_toggle (arg)
+;;     (vterm-send-string (concat "cd " arg) t)
+;;     (vterm-send-return)
+;;     )
+;;   (defun my_cd_on_toggle (oldfun &rest arg)
+;;  (let* ((project-root (or (doom-project-root) default-directory))
+;;          (default-directory
+;;            (if arg
+;;                default-directory
+;;              project-root))
+;;          display-buffer-alist)
+;;      (apply oldfun arg)
+;;     (vterm-send-C-a)
+;;     (vterm-send-C-k)
+;;     (sleep-for 0.01)
+;;     (if
+;;         (vterm-cursor-in-command-buffer-p)
+;;         (mog_cd_for_toggle project-root)
+;;       )
+;; ))
+;;   (advice-add #'+vterm/toggle :around #'my_cd_on_toggle)
+;; ))

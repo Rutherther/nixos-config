@@ -14,7 +14,9 @@
 { config, lib, pkgs, ... }:
 
 let
-  doomRev = "5f5a163c49207a7083ab1ecc9e78d268fd6600b8";
+  doomRev = "9620bb45ac4cd7b0274c497b2d9d93c4ad9364ee";
+  vterm = pkgs.emacsPackages.vterm;
+  emacsVtermPath = "${vterm}/share/emacs/site-lisp/elpa/${vterm.pname}-${vterm.version}";
 in {
   config = lib.mkIf config.profiles.development.enable {
     services.emacs = {
@@ -34,6 +36,30 @@ in {
         epkgs.treesit-grammars.with-all-grammars
       ];
     };
+
+    programs.zsh.initExtra = ''
+      # Emacs
+      if [[ "$INSIDE_EMACS" = 'vterm' ]] \
+          && [[ -n ${emacsVtermPath} ]] \
+          && [[ -f ${emacsVtermPath}/etc/emacs-vterm-zsh.sh ]]; then
+        source ${emacsVtermPath}/etc/emacs-vterm-zsh.sh
+
+        find_file() {
+            vterm_cmd find-file "$(realpath "''${@:-.}")"
+        }
+
+        say() {
+            vterm_cmd message "%s" "$*"
+        }
+
+        vterm_set_directory() {
+            vterm_cmd update-pwd "$PWD/"
+        }
+
+        autoload -U add-zsh-hook
+        add-zsh-hook -Uz chpwd (){ vterm_set_directory }
+      fi
+    '';
 
     home.activation = {
       linkDoomConfig = {
