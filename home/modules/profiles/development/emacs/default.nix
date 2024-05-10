@@ -27,7 +27,7 @@ in {
 
     programs.emacs = {
       enable = true;
-      package = pkgs.emacs29-gtk3;
+      package = pkgs.emacs29-pgtk;
       extraPackages = epkgs: [
         epkgs.vterm
         epkgs.sqlite
