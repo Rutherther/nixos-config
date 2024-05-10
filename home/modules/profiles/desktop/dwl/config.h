@@ -16,7 +16,8 @@ static const float fullscreen_bg[]         = {0.1f, 0.1f, 0.1f, 1.0f}; /* You ca
 
 enum {
 	PROGRAM_LAUNCHER,
-	SCRATCHPADS
+	SCRATCHPADS,
+	PASSTHROUGH,
 };
 const char *modes_labels[] = {
 	"launcher",
@@ -35,7 +36,7 @@ static const Rule rules[] = {
 	{ "Alacritty", "scratchpad",0,          1,          0,      0,         -1,     'a' },
 	{ "kitty",     NULL,      0,            0,          1,      1,         -1,     0 },
 	{ "foot",      NULL,      0,            0,          1,      1,         -1,     0 },
-	{ "Spotify",   NULL,      0,            1,          0,      0,         -1,     's' },
+	{ NULL,        "Spotify Premium",0,     1,          0,      0,         -1,     's' },
 };
 
 /* layout(s) */
@@ -222,6 +223,7 @@ static const Key keys[] = {
 	{ 0,                         Key_XF86AudioStop,         spawn, SHCMD(SEQUENCE_DETECTOR "-g mpris stop") },
 	{ 0,                         Key_XF86AudioPause,        spawn, SHCMD(SEQUENCE_DETECTOR "-g mpris pause") },
 	{ 0,                         Key_XF86AudioPlay,         spawn, SHCMD(SEQUENCE_DETECTOR "-g mpris play") },
+	{ 0,                         Key_XF86AudioPlay2,         spawn, SHCMD(SEQUENCE_DETECTOR "-g mpris play") },
 	{ 0,                         Key_XF86AudioNext,         spawn, SHCMD(SEQUENCE_DETECTOR "-g mpris next") },
 	{ 0,                         Key_XF86AudioPrev,         spawn, SHCMD(SEQUENCE_DETECTOR "-g mpris prev") },
 	{ 0,                         Key_XF86MonBrightnessUp,   spawn, SHCMD("$HOME/.config/dwl/scripts/brightness.sh up") },
@@ -250,6 +252,7 @@ static const Modekey modekeys[] = {
 	{ SCRATCHPADS, { 0, Key_s, entermode, {.i = NORMAL} } },
 	{ SCRATCHPADS, { 0, Key_t, focusortogglematchingscratch, {.v = scratchpadcmd_alacritty} } },
 	{ SCRATCHPADS, { 0, Key_t, entermode, {.i = NORMAL} } },
+	{ SCRATCHPADS, { 0, Key_p, entermode, {.i = PASSTHROUGH} } },
 	{ SCRATCHPADS, { 0, Key_Escape, entermode, {.i = NORMAL} } },
 
 	{ PROGRAM_LAUNCHER, { 0, Key_e, spawn, EMACS("")} },
@@ -260,6 +263,8 @@ static const Modekey modekeys[] = {
 	{ PROGRAM_LAUNCHER, { 0, Key_t, entermode, {.i = NORMAL} } },
 
 	{ PROGRAM_LAUNCHER, { 0, Key_Escape, entermode, {.i = NORMAL} } },
+
+	{ PASSTHROUGH,      { MODKEY|WLR_MODIFIER_ALT, Key_Escape, entermode, {.i = NORMAL} } },
 };
 
 static const Button buttons[] = {
