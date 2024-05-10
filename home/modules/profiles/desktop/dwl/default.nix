@@ -83,6 +83,7 @@ in {
       pkgs.wlr-randr
       pkgs.wlrctl
       pkgs.wlopm
+      pkgs.kanshi
 
       ((pkgs.dwl.override {
         conf = ./config.h;
@@ -117,6 +118,11 @@ in {
       };
     };
 
+    services.cliphist = {
+      enable = true;
+      systemdTarget = "wlr-session.target";
+    };
+
     services.swayidle = {
       enable = true;
       events = [
@@ -135,22 +141,22 @@ in {
       profiles = {
         ntb = {
           outputs = [
-            { criteria = "eDP-1"; mode = "1920x1200"; }
+            { criteria = "eDP-1"; status = "enable"; mode = "1920x1200"; position = "0,0"; }
           ];
         };
-        # docked-lid-open = {
-        #   outputs = [
-        #     { criteria = "DP-7"; position = "1920,0"; }
-        #     { criteria = "DP-8"; position = "3840,0"; }
-        #     { criteria = "DP-9"; position = "0,0"; }
-        #     { criteria = "eDP-1"; mode = "1920x1200"; position = "1920,1080"; }
-        #   ];
-        # };
-        docked-lid-closed = {
+        docked-1 = {
           outputs = [
             { criteria = "DP-7"; position = "1920,0"; }
             { criteria = "DP-8"; position = "3840,0"; }
             { criteria = "DP-9"; position = "0,0"; }
+            { criteria = "eDP-1"; status = "disable"; }
+          ];
+        };
+        docked-2 = {
+          outputs = [
+            { criteria = "DP-10"; position = "1920,0"; }
+            { criteria = "DP-11"; position = "3840,0"; }
+            { criteria = "DP-12"; position = "0,0"; }
             { criteria = "eDP-1"; status = "disable"; }
           ];
         };
