@@ -68,14 +68,15 @@ in {
         };
 
         initExtra = ''
-            function loc {
-            nix-locate --top-level -w /bin/$1
-            }
             function exa-nixpkgs-derivation {
             nix run nixpkgs#eza -- --tree $(nix build nixpkgs#$1 --print-out-paths --out-link /tmp/$1)
             }
 
-            # source /etc/set-environment
+            mkreal() {
+              cp $1 $1.bcp
+              chmod +w $1.bcp
+              mv $1.bcp $1
+            }
         '';
       };
 
