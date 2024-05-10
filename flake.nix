@@ -30,6 +30,12 @@
 
       nixos-hardware = {
         url = "github:NixOS/nixos-hardware/master";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+
+      wrapper-manager = {
+        url = "github:viperML/wrapper-manager";
+        inputs.nixpkgs.follows = "nixpkgs";
       };
 
       lanzaboote = {

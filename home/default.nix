@@ -1,6 +1,30 @@
 { config, inputs, pkgs, ... }:
 
-{
+let
+  electronWaylandFlags = [
+    "--enable-features=UseOzonePlatform"
+    "--ozone-platform=wayland"
+  ];
+  wrapped-sw = inputs.wrapper-manager.lib.build {
+    inherit pkgs;
+    modules = [
+      ({ pkgs, ... }: {
+        wrappers.spotify = {
+          basePackage = pkgs.spotify;
+          flags = electronWaylandFlags;
+        };
+        wrappers.element = {
+          basePackage = pkgs.element-desktop;
+          flags = electronWaylandFlags;
+        };
+        wrappers.discord = {
+          basePackage = pkgs.discord;
+          flags = electronWaylandFlags;
+        };
+      })
+    ];
+  };
+in {
   imports = [
     ./modules
     ../nixos/modules/nixos-config.nix
@@ -126,13 +150,11 @@
       kitty
 
       # Desktop
-      discord           # Chat
+      # vesktop           # Chat
       telegram-desktop  # Chat
-      element-desktop  # Chat
       cinny-desktop     # Chat
       ffmpeg           # Video Support (dslr)
 
-      spotify
       # obsidian        # Text Editor
 
       comma
@@ -142,6 +164,8 @@
       pinta
 
       easyeffects
+
+      wrapped-sw
     ];
 
     stateVersion = "23.05";
