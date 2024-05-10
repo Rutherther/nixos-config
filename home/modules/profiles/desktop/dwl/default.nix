@@ -39,11 +39,9 @@ in {
     };
 
     home.file.".sessions/start-dwl".source = pkgs.writeShellScript "start-dwl" ''
-    export XDG_CURRENT_DESKTOP="wlroots"
-    export GDK_BACKEND=wayland QT_QPA_PLATFORM=wayland
+    export XDG_CURRENT_DESKTOP=wlroots XDG_BACKEND=wayland QT_QPA_PLATFORM=wayland MOZ_ENABLE_WAYLAND=1 _JAVA_AWT_WM_NONREPARENTING=1
         dwl -s "${pkgs.writeShellScript "dwl-internal" ''
-          dbus-update-activation-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP DISPLAY
-          systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP DISPLAY
+          dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP DISPLAY
           systemctl start --user wlr-session.target
         ''}" &
       pid=$!
