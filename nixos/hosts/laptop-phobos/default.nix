@@ -16,7 +16,7 @@
 #           └─ default.nix
 #
 
-{ pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports = [
@@ -71,6 +71,12 @@
         keyFileTimeout = 10;
       };
     };
+  };
+
+  # TODO under profiles
+  systemd.services."getty@tty1" = {
+    overrideStrategy = "asDropin";
+    serviceConfig.ExecStart = [ "" "@${pkgs.util-linux}/sbin/agetty agetty --login-program '${config.services.getty.loginProgram}' --login-options '-p -- ruther' --skip-login --noclear --keep-baud %I 115200,38400,9600 $TERM" ];
   };
 
   # TODO under qtile
