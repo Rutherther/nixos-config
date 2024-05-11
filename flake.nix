@@ -47,6 +47,11 @@
         url = "github:Rutherther/nix-fpga";
         inputs.nixpkgs.follows = "nixpkgs";
       };
+
+      noshell = {
+        url = "github:Rutherther/noshell/fix/transparent-zeroth-argument";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
     };
 
   outputs = inputs @ { self, nixpkgs, nixpkgs-stable, nix-index-database, home-manager, nur, nixos-hardware, lanzaboote, ... }:
@@ -56,7 +61,7 @@
       nixosConfigurations = (
         import ./nixos {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-stable nix-index-database nur;
+          inherit inputs;
         }
       );
 

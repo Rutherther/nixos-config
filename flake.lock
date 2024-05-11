@@ -262,6 +262,27 @@
         "type": "github"
       }
     },
+    "noshell": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1715441577,
+        "narHash": "sha256-YV67wGW/1qWB6zTIxbbHGmp3nNhoCkhwk3d39O+hMhk=",
+        "owner": "Rutherther",
+        "repo": "noshell",
+        "rev": "48ce746f5a6c3859dd3391eb64ebe2dac9bdefe8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Rutherther",
+        "ref": "fix/transparent-zeroth-argument",
+        "repo": "noshell",
+        "type": "github"
+      }
+    },
     "nur": {
       "locked": {
         "lastModified": 1715414244,
@@ -317,6 +338,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable_2",
+        "noshell": "noshell",
         "nur": "nur",
         "wrapper-manager": "wrapper-manager"
       }

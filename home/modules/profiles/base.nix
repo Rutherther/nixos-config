@@ -18,6 +18,18 @@ in {
   config = lib.mkIf config.profiles.base.enable {
     home-config.startup.apps = [ (lib.getExe pkgs.firefox) ];
 
+    home.activation = {
+      noshellLink = {
+        after = [ "writeBoundery" "createXdgUserDirectories" ];
+        before = [];
+        data = ''
+          if [[ ! -f "$HOME/.config/shell" ]]; then
+            ln -s ${lib.getExe pkgs.zsh} $HOME/.config/shell
+          fi
+        '';
+      };
+    };
+
     programs = {
 
     dircolors = {

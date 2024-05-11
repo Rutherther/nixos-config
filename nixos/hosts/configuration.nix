@@ -4,7 +4,10 @@
   imports = [
     inputs.home-manager.nixosModules.home-manager
     ../modules
+    inputs.noshell.nixosModules.default
   ];
+  users.users.root.shell = pkgs.bash;
+  programs.noshell.enable = true;
 
   services.xserver.displayManager.startx.enable = true;
 
@@ -37,9 +40,7 @@
       "wheel" "video" "audio" "camera"
       "networkmanager" "lp" "scanner"
       "plex" ];
-    shell = pkgs.zsh;
   };
-  programs.zsh.enable = true;
 
   networking.networkmanager.enable = true;
   programs.command-not-found.enable = false;
