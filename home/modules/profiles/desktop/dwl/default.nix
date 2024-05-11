@@ -95,8 +95,8 @@ in {
         src = pkgs.fetchFromGitHub {
           owner = "Rutherther";
           repo = "dwl";
-          rev = "ea81b93e3b29fc39c83c1c92bc025e30b71b376e";
-          hash = "sha256-RDWIWuVjR525541ME2dolAQYN1t5BWy1ifY+cno8PVM=";
+          rev = "3f0c3849948e160019f63af2a1384dd449a0f949";
+          hash = "sha256-BjzaXJNoq8tZFrxxQVOxjdMDV9pTxpCnkEhx5jMvknM=";
         };
       }))
     ];

@@ -32,11 +32,11 @@ static int log_level = WLR_ERROR;
 
 static const Rule rules[] = {
 	/* app_id     title       tags mask     isfloating   isterm noswallow monitor scratchkey */
-	{ "Alacritty", NULL,      0,            0,          1,      1,         -1,     0 },
-	{ "Alacritty", "scratchpad",0,          1,          0,      0,         -1,     'a' },
-	{ "kitty",     NULL,      0,            0,          1,      1,         -1,     0 },
-	{ "foot",      NULL,      0,            0,          1,      1,         -1,     0 },
-	{ NULL,        "Spotify Premium",0,     1,          0,      0,         -1,     's' },
+	{ "alacritty-run", NULL,      0,            0,          1,      1,         -1,     0 },
+	{ "kitty-run",     NULL,      0,            0,          1,      1,         -1,     0 },
+	{ "foot-run",      NULL,      0,            0,          1,      1,         -1,     0 },
+	{ NULL,     "Spotify Premium",0,            1,          0,      0,         -1,    's' },
+	{ "MATLAB",        "Figure",  1 << 4,       0,          0,      0,         -1,     0 },
 };
 
 /* layout(s) */
@@ -208,7 +208,6 @@ static const Key keys[] = {
 	{ MODKEY|WLR_MODIFIER_SHIFT, Key_w,          tagnthmon,      {.i = monitor_order[1]} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, Key_e,          tagnthmon,      {.i = monitor_order[2]} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, Key_r,          tagnthmon,      {.i = monitor_order[3]} },
-
 
 	TAGKEYS(                     Key_1,                          0),
 	TAGKEYS(                     Key_2,                          1),
