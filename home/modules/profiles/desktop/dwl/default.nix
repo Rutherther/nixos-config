@@ -138,29 +138,32 @@ in {
     services.kanshi = {
       enable = true;
       systemdTarget = "wlr-session.target";
-      profiles = {
-        ntb = {
-          outputs = [
+      settings = [
+        {
+          profile.name = "ntb";
+          profile.outputs = [
             { criteria = "eDP-1"; status = "enable"; mode = "1920x1200"; position = "0,0"; }
           ];
-        };
-        docked-1 = {
-          outputs = [
+        }
+        {
+          profile.name = "docked-1";
+          profile.outputs = [
             { criteria = "DP-7"; position = "1920,0"; }
             { criteria = "DP-8"; position = "3840,0"; }
             { criteria = "DP-9"; position = "0,0"; }
             { criteria = "eDP-1"; status = "disable"; }
           ];
-        };
-        docked-2 = {
-          outputs = [
+        }
+        {
+          profile.name = "docked-2";
+          profile.outputs = [
             { criteria = "DP-10"; position = "1920,0"; }
             { criteria = "DP-11"; position = "3840,0"; }
             { criteria = "DP-12"; position = "0,0"; }
             { criteria = "eDP-1"; status = "disable"; }
           ];
-        };
-      };
+        }
+      ];
     };
 
     services.gammastep = {
