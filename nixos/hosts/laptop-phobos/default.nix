@@ -102,7 +102,10 @@
     wantedBy = lib.mkForce [ "xorg-wm-session.target" ];
   };
 
+  systemd.services."NetworkManager-wait-online".enable = false;
+
   services = {
+    power-profiles-daemon.enable = true;
     logind.lidSwitch = "suspend";                # suspend on lid close
     logind.lidSwitchDocked = "ignore";           # suspend on lid close
     # TODO: this is here because when the laptop is docked, and Wayland/X session
