@@ -14,21 +14,21 @@
 { lib, inputs, ...}:
 
 {
-  laptop-iapetus = lib.nixosSystem {                                # Laptop profile
-    # Ideapad S540
-    specialArgs = {
-      inherit inputs;
-    };
-    modules = [
-      inputs.nixos-hardware.nixosModules.common-cpu-intel
-      inputs.nixos-hardware.nixosModules.common-gpu-intel
-      inputs.nixos-hardware.nixosModules.common-pc-laptop
-      inputs.nixos-hardware.nixosModules.common-pc-laptop-acpi_call
-      inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
-      ./hosts/laptop-iapetus
-      ./hosts/configuration.nix
-    ];
-  };
+  # laptop-iapetus = lib.nixosSystem {                                # Laptop profile
+  #   # Ideapad S540
+  #   specialArgs = {
+  #     inherit inputs;
+  #   };
+  #   modules = [
+  #     inputs.nixos-hardware.nixosModules.common-cpu-intel
+  #     inputs.nixos-hardware.nixosModules.common-gpu-intel
+  #     inputs.nixos-hardware.nixosModules.common-pc-laptop
+  #     inputs.nixos-hardware.nixosModules.common-pc-laptop-acpi_call
+  #     inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
+  #     ./hosts/laptop-iapetus
+  #     ./hosts/configuration.nix
+  #   ];
+  # };
 
   laptop-phobos = lib.nixosSystem {                                # Laptop profile
     # Thinkpad T14s
@@ -43,23 +43,23 @@
     ];
   };
 
-  desktop-clotho = lib.nixosSystem {                               # Desktop profile
-    specialArgs = {
-      inherit inputs;
-    };
-    modules = [
-      ./hosts/desktop-clotho
-      ./hosts/configuration.nix
-    ];
-  };
+  # desktop-clotho = lib.nixosSystem {                               # Desktop profile
+  #   specialArgs = {
+  #     inherit inputs;
+  #   };
+  #   modules = [
+  #     ./hosts/desktop-clotho
+  #     ./hosts/configuration.nix
+  #   ];
+  # };
 
-  vm = lib.nixosSystem {                                    # VM profile
-    specialArgs = {
-      inherit inputs;
-    };
-    modules = [
-      ./hosts/vm
-      ./hosts/configuration.nix
-    ];
-  };
+  # vm = lib.nixosSystem {                                    # VM profile
+  #   specialArgs = {
+  #     inherit inputs;
+  #   };
+  #   modules = [
+  #     ./hosts/vm
+  #     ./hosts/configuration.nix
+  #   ];
+  # };
 }

@@ -9,7 +9,7 @@ let
     ppkgs.pydbus
   ];
   finalPackage = pkgs.qtile-unwrapped.overridePythonAttrs(oldAttrs: {
-    propagatedBuildInputs = oldAttrs.propagatedBuildInputs ++ pythonEnvPackages pkgs.python3Packages;
+    propagatedBuildInputs = (oldAttrs.propagatedBuildInputs or []) ++ pythonEnvPackages pkgs.python3Packages;
     passthru.providedSessions = [ "qtile" "qtile-wayland" ];
     postInstall = (oldAttrs.postInstall or "") + ''
       mkdir -p $out/share/xsessions $out/share/wayland-sessions
