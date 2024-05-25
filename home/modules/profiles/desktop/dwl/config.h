@@ -147,7 +147,8 @@ static const enum libinput_config_tap_button_map button_map = LIBINPUT_CONFIG_TA
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static const char *termcmd[] = { "alacritty", NULL };
+static const char *termcmd[] = { "foot", NULL };
+static const char *runcmd[] = { "foot", "--app-id", "foot-run", NULL };
 static const char *menucmd[] = { "rofi", "-show", "drun", NULL };
 
 /* named scratchpads - First arg only serves to match against key in rules*/
@@ -155,8 +156,8 @@ static const char *scratchpadcmd_spotify[] = {
 	"s", "spotify", NULL,
 };
 
-static const char *scratchpadcmd_alacritty[] = {
-	"a", "alacritty", "-t", "scratchpad", NULL,
+static const char *scratchpadcmd_foot[] = {
+	"a", "foot", "--app-id", "foot-scratchpad", NULL,
 };
 
 /* static const char *scratchpadcmd_notes[] = { */
@@ -171,6 +172,7 @@ static const int monitor_order[] = { 3, 2, 1, 0 };
 static const Key keys[] = {
 	/* modifier                  key                 function        argument */
 	{ MODKEY,                    Key_semicolon,  spawn,          {.v = menucmd} },
+	{ MODKEY|WLR_MODIFIER_SHIFT, Key_semicolon,  spawn,          {.v = runcmd} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, Key_Return,     spawn,          {.v = termcmd} },
 
 	{ MODKEY,                    Key_j,          focusstack,     {.i = +1} },
@@ -249,7 +251,7 @@ static const Modekey modekeys[] = {
 	/* mode      modifier                  key                 function        argument */
 	{ SCRATCHPADS, { 0, Key_s, focusortogglematchingscratch, {.v = scratchpadcmd_spotify} } },
 	{ SCRATCHPADS, { 0, Key_s, entermode, {.i = NORMAL} } },
-	{ SCRATCHPADS, { 0, Key_t, focusortogglematchingscratch, {.v = scratchpadcmd_alacritty} } },
+	{ SCRATCHPADS, { 0, Key_t, focusortogglematchingscratch, {.v = scratchpadcmd_foot} } },
 	{ SCRATCHPADS, { 0, Key_t, entermode, {.i = NORMAL} } },
 	{ SCRATCHPADS, { 0, Key_p, entermode, {.i = PASSTHROUGH} } },
 	{ SCRATCHPADS, { 0, Key_Escape, entermode, {.i = NORMAL} } },
