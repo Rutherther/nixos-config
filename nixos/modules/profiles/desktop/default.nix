@@ -18,6 +18,14 @@
       pkgs.xkblayout-state
     ];
 
+    xdg.portal = {
+      wlr.enable = true;
+      extraPortals = [
+        pkgs.xdg-desktop-portal-gtk
+      ];
+      config.wlroots.deafult = lib.mkDefault [ "wlr" "gtk" ];
+    };
+
     services = {
       libinput.enable = true;
       xserver = {
