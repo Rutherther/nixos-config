@@ -153,6 +153,23 @@ in {
       ];
     };
 
+    xdg.portal = {
+      enable = true;
+      extraPortals = [
+        pkgs.xdg-desktop-portal-wlr
+        pkgs.xdg-desktop-portal-gtk
+      ];
+      config = {
+        wlroots = {
+          default = [ "gtk" "wlr" ];
+          "org.freedesktop.impl.portal.ScreenCast" = "wlr";
+          "org.freedesktop.impl.portal.Screenshot" = "wlr";
+          # https://github.com/labwc/labwc/discussions/1503
+          "org.freedesktop.impl.portal.Inhibit" = "none";
+        };
+      };
+    };
+
     services.kanshi = {
       enable = true;
       systemdTarget = "wlr-session.target";
