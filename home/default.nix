@@ -1,4 +1,4 @@
-{ config, inputs, pkgs, ... }:
+{ config, lib, inputs, pkgs, ... }:
 
 let
   electronWaylandFlags = [
@@ -31,10 +31,9 @@ in {
     ./laptop.nix
   ];
 
-  nix = {
-    registry.nixpkgs.flake = inputs.nixpkgs;
-    registry.nixpkgs-stable.flake = inputs.nixpkgs-stable;
-  };
+  nix.registry = lib.mapAttrs (n: input: {
+    flake = input;
+  }) inputs;
 
   home.sessionVariables = {
     NIX_PATH = "nixpkgs=flake:nixpkgs$\{NIX_PATH:+:$NIX_PATH}";

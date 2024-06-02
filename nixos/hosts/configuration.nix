@@ -1,4 +1,4 @@
-{ stable, pkgs, inputs, config, ... }:
+{ lib, stable, pkgs, inputs, config, ... }:
 
 {
   imports = [
@@ -140,8 +140,10 @@
   };
 
   nix = {                                   # Nix Package Manager settings
-    registry.nixpkgs.flake = inputs.nixpkgs;
-    registry.nixpkgs-stable.flake = inputs.nixpkgs-stable;
+    registry = lib.mapAttrs (n: input: {
+      flake = input;
+    }) inputs;
+
     nixPath = [
       "nixpkgs=flake:nixpkgs"
       "nixpkgs-stable=flake:nixpkgs-stable"
