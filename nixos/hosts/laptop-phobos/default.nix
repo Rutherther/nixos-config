@@ -102,6 +102,10 @@
     wantedBy = lib.mkForce [ "xorg-wm-session.target" ];
   };
 
+  programs.steam = {
+    enable = true;
+  };
+
   systemd.services."NetworkManager-wait-online".enable = false;
 
   services = {
