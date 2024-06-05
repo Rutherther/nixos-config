@@ -71,6 +71,11 @@
         dwlb = pkgs.callPackage ./pkgs/dwlb.nix {};
       };
 
+      installIsos = import ./nixos/isos {
+        inherit (nixpkgs-stable) lib;
+        inherit inputs;
+      };
+
       devShells.x86_64-linux.default = pkgs.mkShell {
         packages = [
           pkgs.nil
