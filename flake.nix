@@ -69,6 +69,7 @@
         sequence-detector = pkgs.callPackage ./pkgs/rutherther/sequence-detector.nix {};
         dwlmsg = pkgs.callPackage ./pkgs/dwlmsg.nix {};
         dwlb = pkgs.callPackage ./pkgs/dwlb.nix {};
+        dwl = pkgs.callPackage ./pkgs/dwl {};
       };
 
       installIsos = import ./nixos/isos {
