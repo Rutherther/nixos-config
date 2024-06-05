@@ -18,7 +18,7 @@ let
           flags = electronWaylandFlags;
         };
         wrappers.discord = {
-          basePackage = pkgs.discord;
+          basePackage = pkgs.vesktop;
           flags = electronWaylandFlags;
         };
       })
