@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ config, lib, ... }:
 
 {
   options.usersList = lib.mkOption {
@@ -7,9 +7,11 @@
 
   config = {
     usersList = [ "root" "nixos" "ruther" ];
-    # usersList = lib.attrNames config.users.users? infrec?
 
     users.users = lib.mkMerge [
+      (lib.genAttrs config.usersList (name: {
+        extraGroups = [ "input" ];
+      }))
       {
         ruther = {
           isNormalUser = true;

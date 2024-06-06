@@ -13,9 +13,19 @@
 
   fonts.packages = [
     (pkgs.nerdfonts.override {
-      fonts = [ "FiraCode" ];
+      fonts = [ "FiraCode" "Ubuntu" ];
     })
+    pkgs.font-awesome
+    pkgs.ubuntu_font_family
   ];
+
+  fonts.fontconfig = {
+    defaultFonts = {
+      serif = [ "Ubuntu" ];
+      sansSerif = [ "Ubuntu" ];
+      monospace = [ "Ubuntu Mono" ];
+    };
+  };
 
   environment.systemPackages = [
     pkgs.foot

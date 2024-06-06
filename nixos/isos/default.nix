@@ -18,13 +18,13 @@ let
       ];
     };
 
-    # dwl-install-iso = system: lib.nixosSystem {
-    #   modules = [
-    #     ./dwl-installation.nix
-    #     depsInjectModule
-    #     (systemModule system)
-    #   ];
-    # };
+    dwl-install-iso = system: lib.nixosSystem {
+      modules = [
+        ./dwl-installation.nix
+        depsInjectModule
+        (systemModule system)
+      ];
+    };
   };
   systems = [ "x86_64-linux" "aarch64-linux" ];
 in lib.genAttrs systems (system:
