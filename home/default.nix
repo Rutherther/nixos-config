@@ -185,7 +185,7 @@ in {
 
   home.pointerCursor = {
     gtk.enable = true;
-    name = "Catppuccin-Frappe-Sapphire-Cursors";
+    name = "catppuccin-frappe-sapphire-cursors";
     package = pkgs.catppuccin-cursors.frappeSapphire;
     size = 16;
   };
