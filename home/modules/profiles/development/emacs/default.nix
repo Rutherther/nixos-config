@@ -34,6 +34,7 @@ in {
         epkgs.vterm
         epkgs.sqlite
         epkgs.treesit-grammars.with-all-grammars
+        epkgs.pdf-tools
       ];
     };
 
@@ -50,6 +51,10 @@ in {
 
         say() {
             vterm_cmd message "%s" "$*"
+        }
+
+        open_file_below() {
+            vterm_cmd find-file-below "$(realpath "''${@:-.}")"
         }
 
         vterm_set_directory() {
