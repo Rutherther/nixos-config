@@ -1,5 +1,10 @@
 { inputs, config, lib, pkgs, ... }:
 
+# TODO put most of this to more
+# generic file since these services
+# are not used only for qtile,
+# but also for dwl for example...
+
 let
   mpris-ctl = inputs.self.packages.${pkgs.system}.mpris-ctl;
   sequence-detector = inputs.self.packages.${pkgs.system}.sequence-detector;
@@ -139,7 +144,6 @@ in {
         tray = "auto";                    # Will only show up in systray when active
       };
     };
-    xdg.dataFile."dbus-1/services/org.knopwob.dunst.service".source = "${pkgs.dunst}/share/dbus-1/services/org.knopwob.dunst.service";
 
     systemd.user.targets.xorg-wm-services = {
       Unit = {
@@ -194,15 +198,11 @@ in {
         Install.WantedBy = lib.mkForce [ "xorg-wm-services.target" ];
       };
 
+      xdg.dataFile."dbus-1/services/org.knopwob.dunst.service".source = "${pkgs.dunst}/share/dbus-1/services/org.knopwob.dunst.service";
       dunst = lib.mkIf config.services.dunst.enable {
         Unit = {
           PartOf = lib.mkForce [ "wm-services.target" ];
           After = lib.mkForce [];
-        };
-        Service = {
-          # Remove reference to BusName so dunst is not started under Gnome!
-          Type = lib.mkForce "simple";
-          BusName = lib.mkForce "empty.dbus.name.placeholder";
         };
         Install = {
           WantedBy = lib.mkForce [ "wm-services.target" ];
