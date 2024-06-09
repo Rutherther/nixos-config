@@ -85,7 +85,7 @@ static const TagRule tagrules[] = {
 static const struct xkb_rule_names xkb_rules = {
   .layout = "us,cz",
   .variant = ",qwerty",
-  .options = "compose:ralt,ctrl:nocaps,grp:alt_shift_toggle",
+  .options = "compose:ralt,ctrl:nocaps,grp:shifts_toggle",
 };
 
 static const int repeat_rate = 25;
