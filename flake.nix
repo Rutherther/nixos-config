@@ -70,6 +70,7 @@
         dwlmsg = pkgs.callPackage ./pkgs/dwlmsg.nix {};
         dwlb = pkgs.callPackage ./pkgs/dwlb.nix {};
         dwl = pkgs.callPackage ./pkgs/dwl {};
+        tree-sitter-vhdl = pkgs.callPackage ./pkgs/tree-sitter-vhdl.nix {};
       };
 
       installIsos = import ./nixos/isos {

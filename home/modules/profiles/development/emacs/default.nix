@@ -11,7 +11,7 @@
 #
 
 
-{ config, lib, pkgs, ... }:
+{ config, lib, inputs, pkgs, ... }:
 
 let
   doomRev = "9620bb45ac4cd7b0274c497b2d9d93c4ad9364ee";
@@ -33,7 +33,9 @@ in {
       extraPackages = epkgs: [
         epkgs.vterm
         epkgs.sqlite
-        epkgs.treesit-grammars.with-all-grammars
+        (epkgs.treesit-grammars.with-grammars (p: [
+          inputs.self.packages.${pkgs.system}.tree-sitter-vhdl
+        ] ++ (builtins.attrValues p)))
         epkgs.pdf-tools
       ];
     };
@@ -92,10 +94,11 @@ in {
       emacs-all-the-icons-fonts
       #binutils # for native comp
 
-      ## Doom emacs dependencies
+      ## My emacs dependencies
       gnutls
       fd
       ripgrep
+      ripgrep-all
 
       delta
 
