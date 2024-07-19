@@ -46,7 +46,7 @@ static const Layout layouts[] = {
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
 	{ "TTT",      bstack },
-	{ "|M|",      centeredmaster }
+	/* { "|M|",      centeredmaster } */
 };
 
 /* monitors */
@@ -83,9 +83,9 @@ static const TagRule tagrules[] = {
 /* }; */
 
 static const struct xkb_rule_names xkb_rules = {
-  .layout = "us,cz",
-  .variant = ",qwerty",
-  .options = "compose:ralt,ctrl:nocaps,grp:shifts_toggle",
+  .layout = "cz",
+  .variant = "coder",
+  .options = "ctrl:nocaps",
 };
 
 static const int repeat_rate = 25;
@@ -193,7 +193,7 @@ static const Key keys[] = {
 	{ MODKEY|WLR_MODIFIER_SHIFT, Key_t,          setlayout,      {.v = &layouts[3]} },
 	{ MODKEY,                    Key_f,          setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                    Key_m,          setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                    Key_i,          setlayout,      {.v = &layouts[4]} },
+	/* { MODKEY,                    Key_i,          setlayout,      {.v = &layouts[4]} }, */
 	{ MODKEY|WLR_MODIFIER_SHIFT, Key_m,      togglefullscreen, {0} },
 
 	{ MODKEY,                    Key_space,      setlayout,      {0} },
