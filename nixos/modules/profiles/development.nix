@@ -66,6 +66,14 @@ let
       '';
     };
 
+    moonlander-udev-rules = pkgs.writeTextFile {
+      name = "moonlander-udev-rules";
+      destination = "/etc/udev/rules.d/100-moonlander.rules";
+      text = ''
+        SUBSYSTEM=="usb", ATTR{idVendor}=="0483", ATTR{idProduct}=="df11", MODE:="600", TAG+="uaccess", SYMLINK+="stm32_dfu"
+      '';
+    };
+
     cfg = config.profiles.development;
 in
 {
@@ -79,6 +87,11 @@ in
       mcu.cables = lib.mkOption {
         type = lib.types.listOf lib.types.str;
       };
+
+      keyboards = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+      };
+
     };
   };
 
@@ -88,6 +101,7 @@ in
       lib.lists.optional (builtins.elem "tiva-c" cfg.mcu.cables) ti-udev-rules ++
       lib.lists.optional (builtins.elem "trezor" cfg.mcu.cables) trezor-udev-rules ++
       lib.lists.optional (builtins.elem "ise" cfg.fpga.cables) inputs.nix-fpga-tools.packages.${pkgs.system}.ise-udev-rules ++
-      lib.lists.optional (builtins.elem "ise" cfg.fpga.cables) inputs.nix-fpga-tools.packages.${pkgs.system}.vivado-udev-rules;
+      lib.lists.optional (builtins.elem "ise" cfg.fpga.cables) inputs.nix-fpga-tools.packages.${pkgs.system}.vivado-udev-rules ++
+      lib.lists.optional (builtins.elem "moonlander" cfg.keyboards) moonlander-udev-rules;
   };
 }

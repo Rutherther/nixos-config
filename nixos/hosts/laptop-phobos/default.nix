@@ -33,6 +33,7 @@
 
     fpga.cables = [ "vivado" "ise" ];
     mcu.cables = [ "tiva-c" "st-link" "trezor" ];
+    keyboards = [ "moonlander" ];
   };
 
   networking.hostName = "laptop-phobos";
