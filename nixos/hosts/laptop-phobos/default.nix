@@ -25,7 +25,7 @@
 
   nixos-config.isLaptop = true;
   profiles.virtualisation.enable = true;
-  profiles.desktop.qtile.enable = true;
+  # profiles.desktop.qtile.enable = true;
   profiles.vpn.enable = true;
   profiles.sync.enable = true;
   profiles.development = {

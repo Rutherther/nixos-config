@@ -8,8 +8,30 @@
 let
   mpris-ctl = inputs.self.packages.${pkgs.system}.mpris-ctl;
   sequence-detector = inputs.self.packages.${pkgs.system}.sequence-detector;
+
+  getDunstDbusServicePath = pkg: "${pkg}/share/dbus-1/services/org.knopwob.dunst.service";
+  dunst = pkgs.symlinkJoin {
+    name = "dunst-wrapped";
+    paths = [ pkgs.dunst ];
+    postBuild = ''
+      mv $out/bin/dunst $out/bin/.dunst
+      echo "#!${pkgs.runtimeShell}" > "$out/bin/dunst"
+      echo "Dunst wrapper..."
+      echo "WAYLAND_DISPLAY, DISPLAY"
+      echo "${lib.getExe' pkgs.coreutils "printenv"} WAYLAND_DISPLAY DISPLAY" >> "$out/bin/dunst"
+      echo "exec $out/bin/.dunst \"$@\"" >> $out/bin/dunst
+      chmod +x $out/bin/dunst
+
+      dbusServicePath="${getDunstDbusServicePath "$out"}"
+      dbusRealServicePath=$(readlink "$dbusServicePath")
+      rm "$dbusServicePath"
+      cp "$dbusRealServicePath" "$dbusServicePath"
+      substituteInPlace "$dbusServicePath" \
+        --replace-fail "${pkgs.dunst}" "$out"
+    '';
+  };
 in {
-  config = lib.mkIf config.profiles.desktop.qtile.enable {
+  config = lib.mkIf (config.profiles.desktop.qtile.enable || config.profiles.desktop.dwl.enable) {
 
     home.packages = lib.mkMerge [
       (lib.mkIf config.services.dunst.enable [ pkgs.libnotify ])
@@ -161,6 +183,9 @@ in {
       };
     };
 
+    xdg.dataFile."dbus-1/services/org.knopwob.dunst.service".source = lib.mkForce (getDunstDbusServicePath dunst);
+    services.dunst.package = dunst;
+
     systemd.user.services = {
       mpris-ctld = {
         Unit = {
@@ -198,7 +223,6 @@ in {
         Install.WantedBy = lib.mkForce [ "xorg-wm-services.target" ];
       };
 
-      xdg.dataFile."dbus-1/services/org.knopwob.dunst.service".source = "${pkgs.dunst}/share/dbus-1/services/org.knopwob.dunst.service";
       dunst = lib.mkIf config.services.dunst.enable {
         Unit = {
           PartOf = lib.mkForce [ "wm-services.target" ];

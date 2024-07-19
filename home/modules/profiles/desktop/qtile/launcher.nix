@@ -11,7 +11,7 @@ let
   };
 in
 {
-  config = lib.mkIf config.profiles.desktop.qtile.enable {
+  config = lib.mkIf (config.profiles.desktop.qtile.enable || config.profiles.desktop.dwl.enable) {
     home.packages = [
       pkgs.rofi-power-menu
     ];
