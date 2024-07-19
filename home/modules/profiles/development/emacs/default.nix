@@ -14,7 +14,6 @@
 { config, lib, inputs, pkgs, ... }:
 
 let
-  doomRev = "9620bb45ac4cd7b0274c497b2d9d93c4ad9364ee";
   vterm = pkgs.emacsPackages.vterm;
   emacsVtermPath = "${vterm}/share/emacs/site-lisp/elpa/${vterm.pname}-${vterm.version}";
 in {
@@ -67,28 +66,6 @@ in {
         add-zsh-hook -Uz chpwd (){ vterm_set_directory }
       fi
     '';
-
-    home.activation = {
-      linkDoomConfig = {
-        after = [ "writeBoundary" "createXdgUserDirectories" ];
-        before = [  ];
-        data =
-          ''
-              EMACS=$HOME/.emacs.d
-              if [ ! -d "$EMACS" ]; then
-                ${pkgs.git}/bin/git clone https://github.com/doomemacs/doomemacs $EMACS
-                (cd $EMACS && ${pkgs.git}/bin/git checkout ${doomRev})
-              else
-                curr_rev=$(cd $EMACS && ${lib.getExe pkgs.git} rev-parse HEAD)
-                if [[ "$curr_rev" != "${doomRev}" ]]; then
-                  (cd $EMACS && ${lib.getExe pkgs.git} fetch --all && ${lib.getExe pkgs.git} checkout ${doomRev})
-                fi
-              fi
-          '';
-      };
-    };
-
-    home.file.".doom.d".source = config.lib.file.mkOutOfStoreSymlink "${config.nixos-config.location}/home/modules/profiles/development/emacs/doom.d";
 
     home.packages = with pkgs; [
       emacs-all-the-icons-fonts
