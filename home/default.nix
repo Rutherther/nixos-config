@@ -146,24 +146,32 @@ in {
       #
       # General home-manager
       alacritty
-      kitty
 
       # Desktop
       # vesktop           # Chat
       telegram-desktop  # Chat
       cinny-desktop     # Chat
-      ffmpeg           # Video Support (dslr)
+      ffmpeg            # Video Support (dslr)
 
       # obsidian        # Text Editor
 
+      # QoL CLI utilities
       comma
       bat
       ripgrep
+      pdfgrep
+      ripgrep-all
+      fd
+      nvd
+      nix-diff
+      nix-tree
+      # Add that pdf tool that can merge pdfs, get only some pages etc.
 
+      # Images
       pinta
-
+      # Sound
       easyeffects
-
+      # Wrapped software from wrapper-manager modules
       wrapped-sw
     ];
 
