@@ -79,16 +79,19 @@
   security.polkit.enable = true;
 
   fonts.packages = with pkgs; [                # Fonts
+    hack-font
     inter
     ubuntu_font_family
     fira-code
     roboto
-    carlito                                 # NixOS
-    vegur                                   # NixOS
+    carlito
+    vegur
     source-code-pro
     jetbrains-mono
-    font-awesome                            # Icons
-    corefonts                               # MS
+    noto-fonts
+    noto-fonts-color-emoji
+    font-awesome
+    corefonts
     vistafonts
     (nerdfonts.override {                   # Nerdfont Icons override
       fonts = [
