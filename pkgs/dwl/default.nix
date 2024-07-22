@@ -68,15 +68,17 @@ let
     wayland = wayland-git;
     wayland-scanner = wayland-scanner-git;
     wayland-protocols = wayland-protocols-git;
-    mesa = mesa-drm-git;
+    # mesa = mesa-drm-git;
   }).overrideAttrs (old: rec {
     version = "0.18.0";
     src = fetchFromGitLab {
       domain = "gitlab.freedesktop.org";
       owner = "wlroots";
       repo = "wlroots";
-      rev = version;
-      hash = "sha256-LiRnvu7qCbfSg+ONWVCtWwdzxxFZHfbgmy7zApCIW40=";
+      rev = "0a79bc28c7ebd4d3060f92dfd8893c6b981239e8";
+      hash = "sha256-GYlJXp6dFQgjJXc+T2Fs+1i7yuQjf5IM1+BWn+ivBOg=";
+      # rev = version;
+      # hash = "sha256-LiRnvu7qCbfSg+ONWVCtWwdzxxFZHfbgmy7zApCIW40=";
     };
     buildInputs = old.buildInputs ++ [
       lcms2
@@ -99,7 +101,7 @@ in ((dwl.override {
   src = fetchFromGitHub {
     owner = "Rutherther";
     repo = "dwl";
-    rev = "366c7fc21f08ed3edca89810071d8c68fec952d1";
-    hash = "sha256-rhPiq+Fd3axlwQHR46TYUX1wKKH5BvQ8vXSbExIcJPw=";
+    rev = "16bebf0e6eb6a012b12c4e0ffe7d12b29c379b28";
+    hash = "sha256-EiTONatB8BynKQVrWG9b0zAw+NKX79gMxro+kLZuMQk=";
   };
 }))
