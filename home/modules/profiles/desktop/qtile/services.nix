@@ -8,28 +8,6 @@
 let
   mpris-ctl = inputs.self.packages.${pkgs.system}.mpris-ctl;
   sequence-detector = inputs.self.packages.${pkgs.system}.sequence-detector;
-
-  getDunstDbusServicePath = pkg: "${pkg}/share/dbus-1/services/org.knopwob.dunst.service";
-  dunst = pkgs.symlinkJoin {
-    name = "dunst-wrapped";
-    paths = [ pkgs.dunst ];
-    postBuild = ''
-      mv $out/bin/dunst $out/bin/.dunst
-      echo "#!${pkgs.runtimeShell}" > "$out/bin/dunst"
-      echo "Dunst wrapper..."
-      echo "WAYLAND_DISPLAY, DISPLAY"
-      echo "${lib.getExe' pkgs.coreutils "printenv"} WAYLAND_DISPLAY DISPLAY" >> "$out/bin/dunst"
-      echo "exec $out/bin/.dunst \"$@\"" >> $out/bin/dunst
-      chmod +x $out/bin/dunst
-
-      dbusServicePath="${getDunstDbusServicePath "$out"}"
-      dbusRealServicePath=$(readlink "$dbusServicePath")
-      rm "$dbusServicePath"
-      cp "$dbusRealServicePath" "$dbusServicePath"
-      substituteInPlace "$dbusServicePath" \
-        --replace-fail "${pkgs.dunst}" "$out"
-    '';
-  };
 in {
   config = lib.mkIf (config.profiles.desktop.qtile.enable || config.profiles.desktop.dwl.enable) {
 
@@ -47,7 +25,7 @@ in {
       autorandr.enable = true;
 
       dunst = {
-        enable = true;
+        enable = config.profiles.desktop.qtile.enable;
         iconTheme = {                                       # Icons
           name = "Papirus Dark";
           package = pkgs.papirus-icon-theme;
@@ -182,9 +160,6 @@ in {
         PartOf = [ "graphical-session.target" ];
       };
     };
-
-    xdg.dataFile."dbus-1/services/org.knopwob.dunst.service".source = lib.mkForce (getDunstDbusServicePath dunst);
-    services.dunst.package = dunst;
 
     systemd.user.services = {
       mpris-ctld = {
