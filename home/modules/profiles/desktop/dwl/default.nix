@@ -20,6 +20,8 @@ let
   wlopmEnableScreens = wlopmScreens "on";
 in {
   imports = [
+    ./mako.nix
+    ./mako-hm-impl.nix
   ];
 
   options = {
@@ -112,6 +114,46 @@ in {
       };
     };
 
+    rutherther.programs.mako = {
+      enable = true;
+
+      config = with config.themes.default; {
+        default = {
+          font = "Ubuntu Mono 10";
+          text-color = "#${foreground.text}FF";
+          background-color = "#${background.primary}CC";
+
+          border-size = 2;
+          border-color = "#${foreground.active}FF";
+
+          height = 250;
+          margin = 5;
+          padding = 16;
+          max-icon-size = 16;
+          layer = "overlay";
+
+          default-timeout = 5000;
+        };
+
+        sections = [
+          {
+            conditions = { urgency = "critical"; };
+            config = {
+              border-color = "#${urgent}FF";
+            };
+          }
+
+          {
+            conditions = { mode = "idle"; };
+            config = {
+              ignore-timeout = 1;
+              default-timeout = 0;
+            };
+          }
+        ];
+      };
+    };
+
     services.cliphist = {
       enable = true;
       systemdTarget = "wlr-session.target";
@@ -126,6 +168,7 @@ in {
       timeouts = [
         { timeout = 300; command = lib.getExe wlopmDisableScreens; resumeCommand = lib.getExe wlopmEnableScreens; }
         { timeout = 1800; command = "${lib.getExe' pkgs.systemd "systemctl"} suspend"; }
+        { timeout = 5; command = "${lib.getExe' pkgs.mako "makoctl"} -a idle"; resumeCommand = "${lib.getExe' pkgs.mako "makoctl"} -r idle"; }
       ];
     };
 
