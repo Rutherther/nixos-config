@@ -128,26 +128,28 @@ in {
 
           height = 250;
           margin = 5;
-          padding = 16;
+          padding = 24;
           max-icon-size = 16;
           layer = "overlay";
 
           default-timeout = 5000;
+          ignore-timeout = 1;
         };
 
         sections = [
           {
-            conditions = { urgency = "critical"; };
+            conditions = { mode = "idle"; };
             config = {
-              border-color = "#${urgent}FF";
+              border-color = "#${background.secondary}FF";
+              ignore-timeout = 1;
+              default-timeout = 0;
             };
           }
 
           {
-            conditions = { mode = "idle"; };
+            conditions = { urgency = "critical"; };
             config = {
-              ignore-timeout = 1;
-              default-timeout = 0;
+              border-color = "#${urgent}FF";
             };
           }
         ];
@@ -168,7 +170,7 @@ in {
       timeouts = [
         { timeout = 300; command = lib.getExe wlopmDisableScreens; resumeCommand = lib.getExe wlopmEnableScreens; }
         { timeout = 1800; command = "${lib.getExe' pkgs.systemd "systemctl"} suspend"; }
-        { timeout = 5; command = "${lib.getExe' pkgs.mako "makoctl"} -a idle"; resumeCommand = "${lib.getExe' pkgs.mako "makoctl"} -r idle"; }
+        { timeout = 10; command = "${lib.getExe' pkgs.mako "makoctl"} mode -a idle"; resumeCommand = "${lib.getExe' pkgs.mako "makoctl"} mode -r idle"; }
       ];
     };
 
