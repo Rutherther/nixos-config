@@ -78,19 +78,42 @@ in {
 
       zsh = {
         enable = true;
-        autosuggestion.enable = true;
+        autosuggestion = {
+          enable = true;
+        };
         syntaxHighlighting.enable = true;
         enableCompletion = true;
         history.size = 100000;
 
-        oh-my-zsh = {                               # Extra plugins for zsh
-        enable = true;
-        plugins = [ "git" ];
-        };
+        plugins = let
+          inherit (pkgs) fetchFromGitHub;
+        in [
+          {
+            name = "emacs";
+            src = fetchFromGitHub {
+              owner = "Flinner";
+              repo = "emacs";
+              rev = "7d12669fe2738ef98444d857f2bbeaf409de2b06";
+              hash = "sha256-zqPSCziEJK32o9EzxzvhRRq5TRtj/daBEXd21XTsXsU=";
+            };
+          }
+          {
+            name = "zsh-vi-mode";
+            src = pkgs.zsh-vi-mode;
+            file = "share/zsh-vi-mode/zsh-vi-mode.plugin.zsh";
+          }
+        ];
+
+        # oh-my-zsh = {                               # Extra plugins for zsh
+        #   enable = true;
+        #   plugins = [ "git" ];
+        # };
 
         initExtra = ''
+            zstyle ':completion:*:*:*:*:*' menu select
+
             function exa-nixpkgs-derivation {
-            nix run nixpkgs#eza -- --tree $(nix build nixpkgs#$1 --print-out-paths --out-link /tmp/$1)
+              nix run nixpkgs#eza -- --tree $(nix build nixpkgs#$1 --print-out-paths --out-link /tmp/$1)
             }
 
             mkreal() {
