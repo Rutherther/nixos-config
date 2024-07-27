@@ -18,6 +18,10 @@ let
 
   wlopmDisableScreens = wlopmScreens "off";
   wlopmEnableScreens = wlopmScreens "on";
+
+  emacs-anywhere = pkgs.writeShellScriptBin "emacs-anywhere" ''
+    emacs --batch --script "${./emacs-anywhere.el}" | wl-copy
+  '';
 in {
   imports = [
     ./mako.nix
@@ -85,7 +89,6 @@ in {
 
     home.packages = [
       # Clipboard
-      pkgs.cliphist
       pkgs.wl-clipboard
       # PrintScreening
       pkgs.grim
@@ -99,6 +102,8 @@ in {
       pkgs.wlrctl
       pkgs.wlopm
       pkgs.kanshi
+
+      emacs-anywhere
 
       inputs.self.packages.${pkgs.system}.dwl
     ];
@@ -156,11 +161,6 @@ in {
       };
     };
 
-    services.cliphist = {
-      enable = true;
-      systemdTarget = "wlr-session.target";
-    };
-
     services.swayidle = {
       enable = true;
       events = [
@@ -170,7 +170,7 @@ in {
       timeouts = [
         { timeout = 300; command = lib.getExe wlopmDisableScreens; resumeCommand = lib.getExe wlopmEnableScreens; }
         { timeout = 1800; command = "${lib.getExe' pkgs.systemd "systemctl"} suspend"; }
-        { timeout = 10; command = "${lib.getExe' pkgs.mako "makoctl"} mode -a idle"; resumeCommand = "${lib.getExe' pkgs.mako "makoctl"} mode -r idle"; }
+        { timeout = 30; command = "${lib.getExe' pkgs.mako "makoctl"} mode -a idle"; resumeCommand = "${lib.getExe' pkgs.mako "makoctl"} mode -r idle"; }
       ];
     };
 

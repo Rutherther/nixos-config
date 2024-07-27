@@ -101,7 +101,7 @@ in ((dwl.override {
   src = fetchFromGitHub {
     owner = "Rutherther";
     repo = "dwl";
-    rev = "16bebf0e6eb6a012b12c4e0ffe7d12b29c379b28";
-    hash = "sha256-EiTONatB8BynKQVrWG9b0zAw+NKX79gMxro+kLZuMQk=";
+    rev = "a8e46f319f574876ce697a7097eb47a2080b1a87";
+    hash = "sha256-AdQW9zqPn9+X6fIQHlZEgWK+k1EwWM8kW4h0wyzHfso=";
   };
 }))
