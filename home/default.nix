@@ -54,7 +54,7 @@ in {
     mimeApps = {
       enable = true;
       defaultApplications = let
-        imageViewer = "sxiv.desktop";
+        imageViewer = "nsxiv.desktop";
         videoViewer = "mpv.desktop";
         pdfViewer = "org.pwmt.zathura.desktop";
         textEditor = "emacsclient.desktop";
@@ -118,7 +118,7 @@ in {
       lazygit           # Git tool
 
       # Video/Audio
-      sxiv              # Image Viewer
+      nsxiv             # Image Viewer
       feh               # Image Viewer
       mpv               # Media Player
       pavucontrol       # Audio Control
@@ -126,6 +126,7 @@ in {
 
       # Apps
       chromium          # Browser
+      vieb
 
       # File Management
       zathura            # PDF Viewer
@@ -133,13 +134,10 @@ in {
       foliate           # Ebook viewer
       rsync             # Syncer - $ rsync -r dir1/ dir2/
       unzip             # Zip Files
-      unrar             # Rar Files
       zip               # Zip
 
       # General configuration
-      alsa-utils	      # Audio Commands
       git               # Repositories
-      procps            # Stop Applications
       pipewire          # Sound
       wacomtablet       # Wacom Tablet
       wget              # Downloader
