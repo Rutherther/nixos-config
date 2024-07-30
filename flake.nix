@@ -51,6 +51,11 @@
         url = "github:Rutherther/noshell/fix/transparent-zeroth-argument";
         inputs.nixpkgs.follows = "nixpkgs";
       };
+
+      schizofox = {
+        url = "github:NotAShelf/schizofox";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
     };
 
   outputs = inputs @ { self, nixpkgs, nixpkgs-stable, nix-index-database, home-manager, nur, nixos-hardware, lanzaboote, ... }:
