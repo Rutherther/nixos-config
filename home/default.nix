@@ -146,9 +146,6 @@ in {
       alacritty
 
       # Desktop
-      # vesktop           # Chat
-      telegram-desktop  # Chat
-      cinny-desktop     # Chat
       ffmpeg            # Video Support (dslr)
 
       # obsidian        # Text Editor
@@ -167,8 +164,6 @@ in {
 
       # Images
       pinta
-      # Sound
-      easyeffects
       # Wrapped software from wrapper-manager modules
       wrapped-sw
     ];
@@ -183,10 +178,6 @@ in {
       enableBashIntegration = false;
       enableFishIntegration = false;
     };
-  };
-
-  services = {
-    easyeffects.enable = true;
   };
 
   home.pointerCursor = {
