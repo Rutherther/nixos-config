@@ -19,6 +19,8 @@ let
   wlopmDisableScreens = wlopmScreens "off";
   wlopmEnableScreens = wlopmScreens "on";
 
+  dwl = inputs.self.packages.${pkgs.system}.dwl;
+
   emacs-anywhere = pkgs.writeShellScriptBin "emacs-anywhere" ''
     emacs --batch --script "${./emacs-anywhere.el}" | wl-copy
   '';
@@ -35,6 +37,28 @@ in {
   };
 
   config = lib.mkIf config.profiles.desktop.dwl.enable {
+    desktopSessions.instances.dwl = let
+      dwlInternal = pkgs.writeShellScript "dwl-s" ''
+        exec <&-
+        dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP DISPLAY
+        systemctl start --user wlr-session.target
+      '';
+    in {
+      environment = {
+        XDG_CURRENT_DESKTOP = "wlroots";
+        XDG_BACKEND = "wayland";
+        QT_QPA_PLATFORM = "wayland";
+        MOZ_ENABLE_WAYLAND = "1";
+        _JAVA_AWT_WM_NONREPARENTING = "1";
+      };
+
+      executable = lib.getExe dwl;
+      arguments = [
+        "-s"
+        "${dwlInternal}"
+      ];
+    };
+
     profiles.desktop.enable = true;
     systemd.user.targets.wlr-session = {
       Unit = {
@@ -105,7 +129,7 @@ in {
 
       emacs-anywhere
 
-      inputs.self.packages.${pkgs.system}.dwl
+      dwl
     ];
 
     programs = {
