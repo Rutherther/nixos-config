@@ -9,10 +9,6 @@ let
     inherit pkgs;
     modules = [
       ({ pkgs, ... }: {
-        wrappers.spotify = {
-          basePackage = pkgs.spotify;
-          flags = electronWaylandFlags;
-        };
         wrappers.element = {
           basePackage = pkgs.element-desktop;
           flags = electronWaylandFlags;
@@ -29,7 +25,22 @@ in {
     ./modules
     ../nixos/modules/nixos-config.nix
     ./laptop.nix
+
+    inputs.spicetify.homeManagerModules.default
   ];
+
+  programs.spicetify = let
+    spicePkgs = inputs.spicetify.legacyPackages.${pkgs.system};
+  in {
+    enable = true;
+    enabledExtensions = with spicePkgs.extensions; [
+      adblock
+      shuffle
+      keyboardShortcut
+    ];
+    theme = spicePkgs.themes.catppuccin;
+    colorScheme = "mocha";
+  };
 
   nix.registry = lib.mapAttrs (n: input: {
     flake = input;

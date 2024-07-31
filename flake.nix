@@ -56,6 +56,11 @@
         url = "github:NotAShelf/schizofox";
         inputs.nixpkgs.follows = "nixpkgs";
       };
+
+      spicetify = {
+        url = "github:Gerg-L/spicetify-nix";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
     };
 
   outputs = inputs @ { self, nixpkgs, nixpkgs-stable, nix-index-database, home-manager, nur, nixos-hardware, lanzaboote, ... }:
