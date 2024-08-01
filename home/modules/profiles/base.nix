@@ -38,7 +38,7 @@ in {
     };
 
     home.packages = [
-      dmenu-wayland
+      pkgs.dmenu-wayland
     ];
 
     programs = {

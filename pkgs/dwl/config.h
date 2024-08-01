@@ -231,6 +231,9 @@ static const Key keys[] = {
 	{ 0,                         Key_XF86MonBrightnessDown, spawn, SHCMD("$HOME/.config/dwl/scripts/brightness.sh down") },
 	{ 0,                         Key_Print,                 spawn, SHCMD("$HOME/.config/dwl/scripts/print.sh -s") },
 
+	{ MODKEY,                    Key_y,          spawn,      SHCMD("emacs-anywhere") },
+	{ MODKEY,                    Key_p,          spawn,      SHCMD("passmenu") },
+
 	{ MODKEY,                    Key_c,          togglesticky,   {0} },
 	{ MODKEY,                    Key_s,          entermode,      {.i = SCRATCHPADS} },
 	{ MODKEY,                    Key_a,          entermode,      {.i = PROGRAM_LAUNCHER} },
