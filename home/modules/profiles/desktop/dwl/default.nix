@@ -68,31 +68,6 @@ in {
       };
     };
 
-    home.file.".sessions/start-dwl".source = pkgs.writeShellScript "start-dwl" ''
-      export XDG_CURRENT_DESKTOP=wlroots XDG_BACKEND=wayland QT_QPA_PLATFORM=wayland MOZ_ENABLE_WAYLAND=1 _JAVA_AWT_WM_NONREPARENTING=1
-      dwl -s "${pkgs.writeShellScript "dwl-internal" ''
-        exec <&-
-        dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP DISPLAY
-        systemctl start --user wlr-session.target
-      ''}" &
-      pid=$!
-      # Put something here
-      wait $pid
-      systemctl stop --user graphical-session.target
-    '';
-
-    home.file.".sessions/start-dwl-temp".source = pkgs.writeShellScript "start-dwl-temp" ''
-    export XDG_CURRENT_DESKTOP=wlroots XDG_BACKEND=wayland QT_QPA_PLATFORM=wayland MOZ_ENABLE_WAYLAND=1 _JAVA_AWT_WM_NONREPARENTING=1
-        $HOME/doc/projects/mine/nix/dwm/result/bin/dwl -s "${pkgs.writeShellScript "dwl-internal" ''
-          dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP DISPLAY
-          systemctl start --user wlr-session.target
-        ''}" &
-      pid=$!
-      # Put something here
-      wait $pid
-      systemctl stop --user graphical-session.target
-    '';
-
     home.file.".config/dwl/scripts/brightness.sh".source = ../qtile/config/brightness.sh;
     home.file.".config/dwl/scripts/print.sh".source = pkgs.writeShellScript "print.sh" ''
       #!/bin/sh -e
