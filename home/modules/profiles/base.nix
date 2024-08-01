@@ -30,7 +30,26 @@ in {
       };
     };
 
+    services = {
+      gpg-agent = {
+        enable = true;
+        pinentryPackage = pkgs.pinentry-qt;
+      };
+    };
+
+    home.packages = [
+      dmenu-wayland
+    ];
+
     programs = {
+
+      gpg = {
+        enable = true;
+      };
+
+      password-store = {
+        enable = true;
+      };
 
     dircolors = {
       enable = true;
@@ -128,7 +147,7 @@ in {
         enable = true;
         package = pkgs.firefox.override {
           nativeMessagingHosts = [
-            pkgs.tridactyl-native
+            pkgs.browserpass
           ];
         };
         profiles = {
@@ -144,6 +163,7 @@ in {
             extensions = with nur.repos.rycee.firefox-addons; [
               # Basic
               proton-pass                # Password manager
+              browserpass
               darkreader                 # Dark pages
               ublock-origin              # Ad block
               tridactyl                  # Vim-like keybindings
