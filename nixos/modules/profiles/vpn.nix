@@ -42,7 +42,8 @@
 
     networking.wireguard.interfaces = {
       wg0 = {
-        ips = [ "${config.profiles.vpn.lanIp}/32" ];
+        ips = [ "${config.profiles.vpn.lanIp}/24" ];
+        allowedIPsAsRoutes = false;
         listenPort = 51820;
 
         generatePrivateKeyFile = true;
