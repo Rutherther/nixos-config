@@ -144,9 +144,15 @@ in {
           {
             conditions = { mode = "idle"; };
             config = {
+              # Sadly this affects even existing notifications.
+              # It would be good if only those that actuallly came to
+              # be in this mode were colored with this border color.
               border-color = "#${background.secondary}FF";
               ignore-timeout = 1;
-              default-timeout = 0;
+              # mako overrides already existing notifications
+              # if the default timeout is 0, whereas otherwise
+              # it will keep the current one.
+              default-timeout = 3 * 60 * 60 * 1000;
             };
           }
 
