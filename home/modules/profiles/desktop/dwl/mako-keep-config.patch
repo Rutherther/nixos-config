@@ -1,0 +1,54 @@
+From 7f98798f30f27cda30282d140bbe3627c71fdd20 Mon Sep 17 00:00:00 2001
+From: Rutherther <rutherther@proton.me>
+Date: Sat, 3 Aug 2024 10:43:08 +0200
+Subject: [PATCH] Do not reapply config for already rendered notifications on
+ mode
+
+This removes reapplying config when mode is changing,
+and also on rendering, to prevent changing the notification's
+settings when it's already displayed. This allows for modes
+to change border's only of those notifications that are actually
+sent in that mode.
+---
+ dbus/mako.c | 4 ----
+ render.c    | 2 +-
+ 2 files changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/dbus/mako.c b/dbus/mako.c
+index 4c95881..6030473 100644
+--- a/dbus/mako.c
++++ b/dbus/mako.c
+@@ -335,8 +335,6 @@ static int handle_set_mode(sd_bus_message *msg, void *data,
+ 
+ 	set_modes(state, &mode, 1);
+ 
+-	reapply_config(state);
+-
+ 	return sd_bus_reply_method_return(msg, "");
+ }
+ 
+@@ -428,8 +426,6 @@ static int handle_set_modes(sd_bus_message *msg, void *data,
+ 
+ 	wl_array_release(&modes_arr);
+ 
+-	reapply_config(state);
+-
+ 	return sd_bus_reply_method_return(msg, "");
+ }
+ 
+diff --git a/render.c b/render.c
+index 5b68632..e734c15 100644
+--- a/render.c
++++ b/render.c
+@@ -355,7 +355,7 @@ void render(struct mako_surface *surface, struct pool_buffer *buffer, int scale,
+ 		// Immediately before rendering we need to re-match all of the criteria
+ 		// so that matches against the anchor and output work even if the
+ 		// output was automatically assigned by the compositor.
+-		int rematch_count = apply_each_criteria(&state->config.criteria, notif);
++    int rematch_count = 1;
+ 		if (rematch_count == -1) {
+ 			// We encountered an allocation failure or similar while applying
+ 			// criteria. The notification may be partially matched, but the
+-- 
+2.45.2
+
