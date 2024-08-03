@@ -52,45 +52,36 @@ in {
         package = pkgs.pass.withExtensions (exts: [ exts.pass-otp ]);
       };
 
-    dircolors = {
-      enable = true;
-      settings = {
-        OTHER_WRITABLE = "01;35"; # Make ntfs colors readable
-      };
-    };
-
-    kitty = {
-      enable = true;
-      font = {
-        name = "FiraCode Nerd Font";
-        size = 12;
-      };
-      theme = "Chalk";
-    };
-
-    alacritty = {
-      enable = true;
-      settings = {
-        font = {
-          normal.family = "FiraCode Nerd Font";
-          bold = { style = "Bold"; };
-          size = 12;
-        };
-        # offset = {                            # Positioning
-        #   x = -1;
-        #   y = 0;
-        # };
-      };
-    };
-
-    foot = {
-      enable = true;
-      settings = {
-        main = {
-          font = "FiraCode Nerd Font:size=12";
+      dircolors = {
+        enable = true;
+        settings = {
+          OTHER_WRITABLE = "01;35"; # Make ntfs colors readable
         };
       };
-    };
+
+      alacritty = {
+        enable = true;
+        settings = {
+          font = {
+            normal.family = "FiraCode Nerd Font";
+            bold = { style = "Bold"; };
+            size = 12;
+          };
+          # offset = {                            # Positioning
+          #   x = -1;
+          #   y = 0;
+          # };
+        };
+      };
+
+      foot = {
+        enable = true;
+        settings = {
+          main = {
+            font = "FiraCode Nerd Font:size=12";
+          };
+        };
+      };
 
       starship = {
         enable = true;
@@ -123,11 +114,6 @@ in {
             file = "share/zsh-vi-mode/zsh-vi-mode.plugin.zsh";
           }
         ];
-
-        # oh-my-zsh = {                               # Extra plugins for zsh
-        #   enable = true;
-        #   plugins = [ "git" ];
-        # };
 
         initExtra = ''
             zstyle ':completion:*:*:*:*:*' menu select
